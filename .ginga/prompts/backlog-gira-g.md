@@ -2,3 +2,5 @@
 - [x] PLAN-0009 TASK-01 (gira-g): docsite sem caso especial por nome de projeto. Worktree `gira-g-plan-0009` (branch `plan/0009`). (T04: RED 2243375, feat ebe56e1, verify pass seq 668)
 - worktree: gira-g-plan-0009
 - [x] PLAN-0009 TASK-03 (gira-g): `gira capabilities --json`. Só depois da TASK-01 com receipt `pass` na mesma branch. (T05: RED e5bbf59, feat 2bcdf0f, verify pass seq 671)
+- [ ] PLAN-0036 TASK-04 (gira-g): troca a LICENSE MIT pelo texto Apache-2.0 (`cp` do oficial) e linha no README; teste Go em `internal/license/license_test.go`. TASK em `.ginga/plans/PLAN-0036-licenca-apache-2/TASK-04-gira-g.md`. Go: `mise exec -- go test`. Worktree `gira-g-plan-0036` (branch `plan/0036`) a partir da `main`. Passada RED primeiro (regras de `.ginga/prompts/planner-red.md`: escreva os `tests_frozen` na worktree, `tasks/T<N>/PLAN.md` com id livre no `pinga queue --json`, `pinga prove-red` = RED, `pinga_task: T<N>` na TASK, commit `test(T<N>): RED`).
+- worktree: gira-g-plan-0036

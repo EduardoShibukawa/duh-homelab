@@ -20,11 +20,11 @@ O dono disse: "quero deixar tudo como open source, não MIT", escolheu **Apache-
 - Varredura de segredos (gitleaks, histórico inteiro): só fixtures de teste com valores falsos.
 - Clones frescos passam nas suítes: ginga 823, manda 420, p-inga 377 testes; `go test` do gira-g.
 
-## Pendente
+## Pendente (atualizado 2026-11-05)
 
-- **LICENSE Apache-2.0** nos 5 repos de código: TASK por repo (mudança em repo governado passa pelo harness).
-- **PRs de sync** p-inga #2 e gira-g #52 (CI verde, `main` do gira-g protegida): mergear com revisão do dono. As `main` do GitHub ainda não têm os 40 e 16 commits novos.
-- **Portabilidade macOS:** `/proc` em `ginga/src/proc_sample.ts`, `manda/src/run.ts` e `manda/src/runtime/port.ts`; `contrib/systemd` sem alternativa launchd; caminhos `/home/shibuka` em 29 arquivos do p-inga, 4 do ginga e 1 do gira-g.
-- **Testes com ID de canal do Discord** em `ginga/tests/notify_port.test.ts` e `p-inga/tests/discord_events.test.ts`: trocar por placeholder.
+- **LICENSE Apache-2.0:** docs-benchmark feito à mão (sem lane nem pinga). ginga, manda, p-inga e gira-g em [PLAN-0036](../../plans/PLAN-0036-licenca-apache-2/PLAN.md) (4 TASKs, backlog das lanes).
+- **Portabilidade macOS e caminhos do autor:** [PLAN-0037](../../plans/PLAN-0037-portabilidade-macos/PLAN.md) (`/proc` em manda, launchd no ginga, scripts do p-inga). Falhas novas que o Mac revelar viram PLAN novo.
+- **PRs de sync** p-inga #2 e gira-g #52 (CI verde, `main` do gira-g protegida): mergear com revisão do dono. As `main` do GitHub ainda não têm os 40 e 16 commits novos, nem o resultado dos PLANs acima, que as lanes mergeiam só na `main` local.
 - **spring-petclinic-modern:** o histórico tem `target/…SNAPSHOT.jar` de 51 MB (aviso do GitHub). Reescrever o histórico ou aceitar.
 - **Cleanup:** stashes (gira-g, ginga), branches `wt/task-01-state-db` e `work/red-t58`, 22 branches remotas velhas do gira-g, `_archive/`.
+- **Descartado:** o ID do canal do Discord nos testes `ginga/tests/notify_port.test.ts` e `p-inga/tests/discord_events.test.ts` aparece só em asserção negativa (`not.toContain`); não vaza nada além do ID, que sozinho não dá acesso. Fica.

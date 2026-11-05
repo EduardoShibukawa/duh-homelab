@@ -14,6 +14,8 @@
 
 ## Em execução
 
+**2026-11-05 13:30:** [PLAN-0036](plans/PLAN-0036-licenca-apache-2/PLAN.md) (LICENSE Apache-2.0 em ginga, manda, p-inga, gira-g) e [PLAN-0037](plans/PLAN-0037-portabilidade-macos/PLAN.md) (portabilidade macOS e caminhos do autor) enfileirados nos backlogs; o vigia subiu as lanes. Resultado vem pelo Discord (judge e merge-gate); depois é preciso empurrar as `main` ao GitHub.
+
 Nada na fila (2026-11-03 14:50, "TUDO PRONTO": backlogs vazios, nada aguardando gate). Lanes paradas; o `ginga-vigia.timer` (10 min) relança quando houver pendência. `handoffs/lane.env` (2026-11-03): escadas free só com Pi (laguna-s-2.1, north-mini, openrouter/free, muse, lightning) mais `opencode-go/iceman-contributor-free` (1º executor, último operador); Zen free segue sem cota; `ALLOW_PAID=0`.
 
 **Guard de segredos (PLAN-0033):** código mergeado (ginga 01/11, manda 01/11). A fiação das lanes (TASK-06: `bin/guard-env.sh`, `lane.sh`, `dispatch-task.sh`, `bin/tests/guard-env.test.sh`) foi aplicada em 2026-11-03 20:03 (backups `*.bak-2026-11-03-guard`); Fase 2 com `.env` falso no Pi: bloqueio `basename_env`, sem vazamento. Falta só a ativação do plugin Hermes (ação do dono, `plugins.enabled` do perfil) e o teste da Fase 2 no opencode.

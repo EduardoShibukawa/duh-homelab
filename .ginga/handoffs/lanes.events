@@ -1386,3 +1386,11 @@
 [21:03] [ginga] lane: nada pendente; encerrada
 [00:00] ✅ TUDO PRONTO: backlogs vazios, nada aguardando gate, lanes paradas. mains: manda bc7bd30; p-inga 94b4cb2; ginga 44c62cc;  Report: .ginga/handoffs/REPORT-2026-11-04.md + REPORT-2026-11-04.d/ (judge-e-gate.md, decisoes.md)
 [13:16] ✅ TUDO PRONTO: backlogs vazios, nada aguardando gate, lanes paradas. mains: manda bc7bd30; p-inga 94b4cb2; ginga 44c62cc;  Report: .ginga/handoffs/REPORT-2026-11-05.md + REPORT-2026-11-05.d/ (judge-e-gate.md, decisoes.md)
+[13:30] [vigia] lane ginga estava parada com 2 pendência(s): relançada
+[13:30] [ginga] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[13:30] [vigia] lane p-inga estava parada com 2 pendência(s): relançada
+[13:30] [p-inga] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[13:31] [vigia] lane manda estava parada com 2 pendência(s): relançada
+[13:31] [manda] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[13:31] [vigia] lane gira-g estava parada com 1 pendência(s): relançada
+[13:31] [gira-g] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
