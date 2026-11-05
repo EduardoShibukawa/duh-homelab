@@ -29,3 +29,6 @@ __pycache__/
 *.pyc
 node_modules/
 .DS_Store
+
+# Worktrees das lanes (<repo>-plan-NNNN)
+/*-plan-*/
