@@ -3,7 +3,8 @@ type: intent
 title: Usar a quota do agy (Antigravity) como operador e judge das lanes
 source: discord
 timestamp: 2026-10-30T17:00:00-03:00
-status: open
+status: planned
+plan: PLAN-0039-agy-nas-lanes
 ---
 ## Pedido do dono
 
@@ -30,3 +31,7 @@ status: open
 3. `judge-run.sh`: fallback `agy -p ... --model gemini-3.8-flash-high --mode plan` antes do `opencode/gpt-6-luna`, com a mesma guarda de árvore.
 4. Quota: ao ver "Individual quota reached" no log, pular o modelo e gravar `reset em` em `handoffs/.agy-quota` para o vigia não retentar antes.
 5. `done_when` prováveis: teste de shell em `.ginga/bin/tests/` com `agy` falso que (a) escreve ok, (b) devolve quota esgotada, (c) tenta escrever em modo plan.
+
+## Atualização 2026-11-05
+
+O dono voltou a ter quota no Gemini. Probe: `gemini-3.8-flash-low` e `gemini-4-argon-low` respondem "ok". Virou o [PLAN-0039](../plans/PLAN-0039-agy-nas-lanes/PLAN.md) (2 TASKs na raiz).

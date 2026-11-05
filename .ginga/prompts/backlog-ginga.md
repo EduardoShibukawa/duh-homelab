@@ -82,3 +82,5 @@
 - worktree: ginga-plan-0036
 - [ ] PLAN-0037 TASK-03 (ginga): `contrib/launchd` (2 plists + README) e `tests/e2e/autonomo.test.ts` sem caminho do autor. TASK em `.ginga/plans/PLAN-0037-portabilidade-macos/TASK-03-ginga-launchd.md`. Worktree `ginga-plan-0037` (branch `plan/0037`) a partir da `main`. Passada RED primeiro (regras de `.ginga/prompts/planner-red.md`: escreva os `tests_frozen` na worktree, `tasks/T<N>/PLAN.md` com id livre no `pinga queue --json`, `pinga prove-red` = RED, `pinga_task: T<N>` na TASK, commit `test(T<N>): RED`).
 - worktree: ginga-plan-0037
+- [ ] PLAN-0038 TASK-03 (ginga): `ginga handoff` lê também os learnings em bullet (`- TASK-NN (modelo): texto`, 10 mais recentes, até 600 caracteres). TASK em `.ginga/plans/PLAN-0038-learnings-que-funcionam/TASK-03-handoff-le-bullets.md`. Worktree `ginga-plan-0038` (branch `plan/0038`) a partir da `main`. Passada RED primeiro (regras de `.ginga/prompts/planner-red.md`: escreva os `tests_frozen` na worktree, `tasks/T<N>/PLAN.md` com id livre no `pinga queue --json`, `pinga prove-red` = RED, `pinga_task: T<N>` na TASK, commit `test(T<N>): RED`).
+- worktree: ginga-plan-0038

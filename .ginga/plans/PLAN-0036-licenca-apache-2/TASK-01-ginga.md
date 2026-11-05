@@ -5,6 +5,7 @@ goal: "o ginga passa a ter LICENSE Apache-2.0 (texto oficial idêntico ao da rai
 title: LICENSE Apache-2.0 no ginga
 plan: PLAN-0036-licenca-apache-2
 repo: ginga
+pinga_task: T369
 depends_on: []
 tier: free
 touch: [LICENSE, package.json, README.md, tests/license.test.ts]

@@ -16,6 +16,8 @@
 
 **2026-11-05 13:30:** [PLAN-0036](plans/PLAN-0036-licenca-apache-2/PLAN.md) (LICENSE Apache-2.0 em ginga, manda, p-inga, gira-g) e [PLAN-0037](plans/PLAN-0037-portabilidade-macos/PLAN.md) (portabilidade macOS e caminhos do autor) enfileirados nos backlogs; o vigia subiu as lanes. Resultado vem pelo Discord (judge e merge-gate); depois é preciso empurrar as `main` ao GitHub.
 
+**2026-11-05 14:00:** [PLAN-0038](plans/PLAN-0038-learnings-que-funcionam/PLAN.md) (learnings: captura limpa, replan com teto, handoff lê bullets; TASK-02 no backlog do manda, TASK-03 no do ginga; TASK-01 na raiz espera as lanes pararem; TASK-04 feita: 6 lições em `knowledge/lessons/`, entradas poluídas limpas) e [PLAN-0039](plans/PLAN-0039-agy-nas-lanes/PLAN.md) (Gemini/agy como operador, executor e judge; 2 TASKs na raiz, mesma espera; o dono voltou a ter quota, probe ok em `gemini-3.8-flash-low` e `gemini-4-argon-low`). Ordem na raiz: 0038-T01, depois 0039-T01 e T02, todas por `.new` + `mv` atômico.
+
 Nada na fila (2026-11-03 14:50, "TUDO PRONTO": backlogs vazios, nada aguardando gate). Lanes paradas; o `ginga-vigia.timer` (10 min) relança quando houver pendência. `handoffs/lane.env` (2026-11-03): escadas free só com Pi (laguna-s-2.1, north-mini, openrouter/free, muse, lightning) mais `opencode-go/iceman-contributor-free` (1º executor, último operador); Zen free segue sem cota; `ALLOW_PAID=0`.
 
 **Guard de segredos (PLAN-0033):** código mergeado (ginga 01/11, manda 01/11). A fiação das lanes (TASK-06: `bin/guard-env.sh`, `lane.sh`, `dispatch-task.sh`, `bin/tests/guard-env.test.sh`) foi aplicada em 2026-11-03 20:03 (backups `*.bak-2026-11-03-guard`); Fase 2 com `.env` falso no Pi: bloqueio `basename_env`, sem vazamento. Falta só a ativação do plugin Hermes (ação do dono, `plugins.enabled` do perfil) e o teste da Fase 2 no opencode.
@@ -69,5 +71,5 @@ SPEC-0004, PLAN-0030 (só código) e PLAN-0032: **approved** pelo dono em 2026-1
 | `models/` | Providers, modelos, roteamento e budget |
 | `knowledge/design/` | Documentos de design (revamp) |
 | `knowledge/decisions/` | ADRs (DECISION-0001 nomes, DECISION-0002 mensageria e fila, DECISION-0003 open source, DECISION-0004 repo g-inga, DECISION-0005 Apache-2.0 e publicação) |
-| `knowledge/lessons/` | Lições (vazio; o `LESSONS.md` da raiz ainda é usado pelo pi-harness) |
+| `knowledge/lessons/` | Lições curadas (LESSON-0001 a 0006, formato do `ginga lessons`; o `LESSONS.md` da raiz é da era do pi-harness e está defasado) |
 | `handoffs/` | Handoffs gerados (vazio) |

@@ -1,11 +1,11 @@
 - TASK-01 (opencode/glm-5.3-flash-free): os testes congelados já estavam pré-copiados no repo atual do plano, mas esperavam "bin/manda.ts" sem "./" no package.json — diferente da tentativa anterior em manda/ que usava "./bin/manda.ts"; implementar onde os testes vivem, não onde TASK aponta, foi o que desbloqueou.`
-- TASK-03 (opencode/deepseek-v4-pro): 403 FreeTierError do pi classifica como `unauthorized` → `infra` (não `quota_exhausted`), porque a regex de quota só pega 429/rate-limit/free-usage-limit.","time":{"start":1793141463243,"end":1793141463977}}}
+- TASK-03 (opencode/deepseek-v4-pro): 403 FreeTierError do pi classifica como `unauthorized` → `infra` (não `quota_exhausted`), porque a regex de quota só pega 429/rate-limit/free-usage-limit.
 - TASK-04 (opencode/deepseek-v4.1-flash-free): o teste congelado do agy exige `cmd[0] === "agy"` e `cmd.slice(0,2)` sem o binário; resolvi com uma view de argv que expõe o bin em `[0]` e mantém os args em `slice`/`join`.
 - TASK-05 (opencode/deepseek-v4.1-flash-free): o `git diff <base>` já cobre working tree + commits da branch + remoção de uma vez, então não precisei separar os três casos de `tests_frozen`.
 - TASK-06 (opencode/deepseek-v4.1-flash-free): o worktree vinha sem o código de T1–T5, então `src/run.ts` ficou autossuficiente e o `bin/manda.ts` precisou ser restaurado para o teste de CLI congelado.`
 - TASK-01 (opencode/deepseek-v4.1-flash-free): o `touch` lista `tests/cli.test.ts`, mas como é `tests_frozen` o correto foi deixá-lo intacto e fazer o código passar nele.
 - TASK-05 (opencode/deepseek-v4.1-flash-free): `git status --porcelain` só pega o não-comitado — foi preciso cruzar com `git diff base...HEAD` para o caso "mexido e comitado" do teste.
-- TASK-03 (opencode/deepseek-v4-pro): o `pi -p` sai com 0 mesmo em erro de API (403/429), então o sinal de falha vem do `stopReason`/`errorMessage` no NDJSON, não do exit code.","time":{"start":1793146265926,"end":1793146266301}}}
+- TASK-03 (opencode/deepseek-v4-pro): o `pi -p` sai com 0 mesmo em erro de API (403/429), então o sinal de falha vem do `stopReason`/`errorMessage` no NDJSON, não do exit code.
 - TASK-04 (opencode/deepseek-v4.1-flash-free): o teste do agy mistura índice com binário e slice sem binário; resolvi com uma visão de argv local em vez de tocar no teste congelado.
 - TASK-06 (opencode/deepseek-v4.1-flash-free): o stub do e2e ecoa `$*` e quebra por `\n` — congelado, ele força o prompt do executor a ser uma linha só.
 - TASK-07 (opencode/deepseek-v4.1-flash-free): o e2e já passava porque os stubs de runtime são gerados inline pelo próprio teste congelado, sem precisar de `tests/e2e/stubs/`.

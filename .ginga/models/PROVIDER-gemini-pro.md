@@ -14,3 +14,7 @@ quota_check: "manual: o agy mostra quotas e créditos restantes na barra de stat
 ## A confirmar
 
 - Limites do plano dentro do Antigravity e como ler o consumo.
+
+## Estado 2026-11-05
+
+Quota de volta (dono). Probe ok em `gemini-3.8-flash-low` e `gemini-4-argon-low`. Uso planejado: operador, executor e judge nas lanes (PLAN-0039).

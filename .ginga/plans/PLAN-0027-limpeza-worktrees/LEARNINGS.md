@@ -1,1 +1,1 @@
-- TASK-01 (opencode/qwen3.8-flash): o gate `hasRule()` é true por padrão sem rules.toml próprio, então a varredura liga sem tocar em `defaultRules()` — o mesmo truque que o sweep de ready usa para respeitar a contagem congelada de regras.","time":{"start":1793244389809,"end":1793244398624}}}
+- TASK-01 (opencode/qwen3.8-flash): o gate `hasRule()` é true por padrão sem rules.toml próprio, então a varredura liga sem tocar em `defaultRules()` — o mesmo truque que o sweep de ready usa para respeitar a contagem congelada de regras.
