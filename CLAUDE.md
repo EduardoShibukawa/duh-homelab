@@ -7,7 +7,7 @@ All agent sessions (Claude Code, Pi, OpenCode, Hermes, Codex, Antigravity) are s
 
 ## Transition (G-Ingá revamp, 2026-10-27)
 
-- **Workspace work** (this root, `.ginga/`): follows the new convention, INTENT → SPEC → PLAN → TASK (see `.ginga/knowledge/design/ginga-revamp/04-artefatos.md`). The root is not a git repo, so its PLANs run without the pinga ledger.
+- **Workspace work** (this root, `.ginga/`): follows the new convention, INTENT → SPEC → PLAN → TASK (see `.ginga/knowledge/design/ginga-revamp/04-artefatos.md`). The root is a git repo since 2026-11-05 (`duh-homelab`, no pinga governance), so its PLANs still run without the pinga ledger. `./bootstrap.sh` clones the sibling repos.
 - **Sibling repos** (`p-inga/`, `pi-harness/`, `gira-g/`): keep the current pinga flow (`tasks/T<N>/PLAN.md` → `prove-red` → `verify`, receipt status `pass`) until the migration PLAN of SPEC-0001 lands. Legacy `tasks/T<N>/` stay valid after it.
 - **Gira is optional** (context port with `rg` + `git` fallback). Use it where it is available; its absence never blocks work.
 

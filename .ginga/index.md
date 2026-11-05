@@ -30,6 +30,7 @@ Nada na fila (2026-11-03 14:50, "TUDO PRONTO": backlogs vazios, nada aguardando 
 | [PLAN-0033](plans/PLAN-0033-guard-de-segredos/PLAN.md) (guard de segredos) | Código e TASK-06 aplicados; falta o dono ativar o plugin Hermes num perfil de lane (`plugins.enabled`) |
 | [models/](models/ROUTING.md) | Budget do Zen quase no fim; quota do Claude via statusline |
 | [DECISION-0001](knowledge/decisions/DECISION-0001-nomes.md) | O "Pi" do P-Ingá é o agente Pi ou o π? |
+| [DECISION-0005](knowledge/decisions/DECISION-0005-apache-2-e-publicacao.md) (Apache-2.0 e publicação) | Repos publicados (2026-11-05). Falta mergear os PRs de sync p-inga #2 e gira-g #52 (o auto mode bloqueou o merge sem revisão) e as TASKs de LICENSE, portabilidade macOS e cleanup |
 
 SPEC-0004, PLAN-0030 (só código) e PLAN-0032: **approved** pelo dono em 2026-10-29; PLAN-0032 (4 TASKs) em judge/merge na lane manda; sua antiga TASK-04 virou o PLAN-0034 (approved, espera PLAN-0029, 0032 e 0033 TASK-07). SPEC-0001: **approved** (2026-10-27). PLAN-0012, 0013, 0014, 0016, 0028 e 0029: **approved** pelo dono em 2026-10-29.
 
@@ -65,6 +66,6 @@ SPEC-0004, PLAN-0030 (só código) e PLAN-0032: **approved** pelo dono em 2026-1
 | `plans/` | `PLAN-*/PLAN.md` + `TASK-*.md` + `log.md` |
 | `models/` | Providers, modelos, roteamento e budget |
 | `knowledge/design/` | Documentos de design (revamp) |
-| `knowledge/decisions/` | ADRs (DECISION-0001 nomes, DECISION-0002 mensageria e fila, DECISION-0003 open source, DECISION-0004 repo g-inga) |
+| `knowledge/decisions/` | ADRs (DECISION-0001 nomes, DECISION-0002 mensageria e fila, DECISION-0003 open source, DECISION-0004 repo g-inga, DECISION-0005 Apache-2.0 e publicação) |
 | `knowledge/lessons/` | Lições (vazio; o `LESSONS.md` da raiz ainda é usado pelo pi-harness) |
 | `handoffs/` | Handoffs gerados (vazio) |
