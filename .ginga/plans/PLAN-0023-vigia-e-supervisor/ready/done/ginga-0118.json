@@ -1,0 +1,8 @@
+{
+  "branch": "plan/0023",
+  "by": {
+    "pid": 2940750,
+    "cmd": "/home/shibuka/.local/share/mise/installs/bun/1.4.4/bin/bun /home/shibuka/Projetos/duh-homelab/ginga-plan-0023/src/cli.ts ready write --root /home/shibuka/Projetos/duh-homelab --plan PLAN-0023-vigia-e-supervisor --repo ginga --branch plan/0023 --worktree /home/shibuka/Projetos/duh-homelab/ginga-plan-0023"
+  },
+  "at": "2026-10-29T04:16:23.317Z"
+}

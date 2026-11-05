@@ -1,0 +1,8 @@
+{
+  "branch": "plan/0025",
+  "by": {
+    "pid": 2701529,
+    "cmd": "/home/shibuka/.local/share/mise/installs/bun/1.4.4/bin/bun /home/shibuka/Projetos/duh-homelab/ginga-plan-0025/bin/ginga.ts ready write --root . --plan PLAN-0025-hooks-llm-e-stale-ready --repo ginga --branch plan/0025"
+  },
+  "at": "2026-10-29T03:17:23.477Z"
+}

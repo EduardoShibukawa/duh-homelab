@@ -1,0 +1,122 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Discord.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "Discord — thread por PLAN",
+      "w": 1200,
+      "x": 0,
+      "y": 1520
+    },
+    "Ledger.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "title": "Ledger e Bench",
+      "w": 1440,
+      "x": 1520,
+      "y": 3370
+    },
+    "Main.dc.html": {
+      "expand": "fill",
+      "h": 1100,
+      "is_interactive": true,
+      "title": "Roda Web — Inbox, Quadro, PLAN, Modelos",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Metricas.dc.html": {
+      "expand": "fill",
+      "h": 2200,
+      "is_interactive": true,
+      "title": "Métricas — execuções, custo, fluxo, sessões",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "Onboarding.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "is_interactive": true,
+      "title": "Onboarding — ginga init",
+      "w": 1280,
+      "x": 3040,
+      "y": 3370
+    },
+    "Spec.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "title": "SPEC aberta — ler, responder, aprovar",
+      "w": 1440,
+      "x": 0,
+      "y": 3370
+    },
+    "Telegram.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "Telegram — celular",
+      "w": 390,
+      "x": 1280,
+      "y": 1520
+    },
+    "Tui.dc.html": {
+      "h": 760,
+      "is_interactive": true,
+      "title": "Roda TUI — tuios",
+      "w": 1280,
+      "x": 1750,
+      "y": 1520
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-10-27T15:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "t1": {
+      "kind": "title1",
+      "maxW": 4480,
+      "text": "Roda Web",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "t2": {
+      "kind": "title1",
+      "maxW": 3030,
+      "text": "Mensageria e terminal",
+      "w": 240,
+      "x": 0,
+      "y": 1220
+    },
+    "t3": {
+      "kind": "title1",
+      "maxW": 4320,
+      "text": "SPEC, Ledger/Bench e onboarding",
+      "w": 240,
+      "x": 0,
+      "y": 3070
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Discord.dc.html",
+    "Telegram.dc.html",
+    "Tui.dc.html",
+    "Spec.dc.html",
+    "Ledger.dc.html",
+    "Onboarding.dc.html",
+    "Metricas.dc.html"
+  ],
+  "pages": [],
+  "title": "Roda — protótipos G-Ingá"
+}

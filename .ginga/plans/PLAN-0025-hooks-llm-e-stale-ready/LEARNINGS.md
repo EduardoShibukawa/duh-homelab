@@ -1,0 +1,1 @@
+- TASK-02 (opencode/qwen3.8-flash): o \"Fazer\" (adicionar regras ao defaultRules) contradiz o teste congelado de follow-up anterior que fixa a contagem em 6 — o repo intencionalmente deixa essa falha de suite para o dono resolver, pois done_when só cobre o teste desta TASK","time":{"start":1793242973936,"end":1793242982529}}}

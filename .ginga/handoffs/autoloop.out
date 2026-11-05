@@ -1,0 +1,14 @@
+Pipeline auto-20261028-0937-r1: PLAN-0008-manda-routing-e-judge manda: gate 0;PLAN-0018-sandbox-done-when p-inga: gate 11;
+CRÍTICO: o operador alterou a main sem gate. Antes: manda 01ac57329afd8fc0f15f35992bf74bc5c9b5fff7 p-inga 670fe4a4f3c4aea8eecd2667faf6ea0050952082 ginga c48fb0c9ab5df40ebdc904c3a18c94ddb9934ef0 | Depois: manda 01ac57329afd8fc0f15f35992bf74bc5c9b5fff7 p-inga 6eb9c7ee6926aa7e8565790451b3e968bfc7407c ginga c48fb0c9ab5df40ebdc904c3a18c94ddb9934ef0. Gate não rodou.
+Recorded preimage for 'src/cli.ts'
+Recorded preimage for 'tasks/T13/PLAN.md'
+Recorded preimage for 'tasks/T14/PLAN.md'
+Recorded preimage for 'tasks/T15/PLAN.md'
+Recorded preimage for 'tasks/T16/PLAN.md'
+[14:28] Pipeline auto-20261028-1125-r1: PLAN-0006-install-sai-do-pinga ginga: gate 0;PLAN-0010-tick-serve-notifier ginga: gate 2;
+Recorded preimage for 'src/cli.ts'
+Recorded preimage for 'tasks/T13/PLAN.md'
+Recorded preimage for 'tasks/T14/PLAN.md'
+Recorded preimage for 'tasks/T15/PLAN.md'
+Recorded preimage for 'tasks/T16/PLAN.md'
+[15:49] Pipeline auto-20261028-1428-r2: PLAN-0010-tick-serve-notifier ginga: gate 2;

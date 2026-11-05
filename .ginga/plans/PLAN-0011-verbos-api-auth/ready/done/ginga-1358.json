@@ -1,0 +1,8 @@
+{
+  "branch": "plan/0011",
+  "by": {
+    "pid": 3890886,
+    "cmd": "/home/shibuka/.local/share/mise/installs/bun/1.4.4/bin/bun /home/shibuka/Projetos/duh-homelab/ginga-plan-0011/bin/ginga.ts ready write --root /home/shibuka/Projetos/duh-homelab --plan PLAN-0011-verbos-api-auth --repo ginga --branch plan/0011"
+  },
+  "at": "2026-10-29T16:53:12.065Z"
+}

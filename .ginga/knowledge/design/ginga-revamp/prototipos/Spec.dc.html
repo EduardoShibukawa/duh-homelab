@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>SPEC aberta</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F5F1;color:#1C1B18;font-family:'IBM Plex Sans',system-ui,sans-serif}
+a{color:#1D4ED8}a:hover{color:#1E3A8A}
+.btn{min-height:44px;padding:0 16px;border-radius:8px;border:1px solid #CFCBC1;background:#FFFFFF;color:#1C1B18;font:inherit;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap}
+.btn:hover{background:#EFEDE7}
+.btn-primary{background:#1C1B18;color:#FFFFFF;border-color:#1C1B18}
+.btn-primary:hover{background:#3A3832}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.card{background:#FFFFFF;border:1px solid #E2DED4;border-radius:12px}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.muted{color:#5F5B52}
+.h2{margin:0;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#5F5B52}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-direction: column">
+<header style="background: #1C1B18; color: #F6F5F1; padding: 14px 24px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: baseline">
+<span style="font-size: 22px; font-weight: 700">Roda</span>
+<span class="mono" style="font-size: 13px; color: #C9C5BA">Inbox › SPEC-0001</span>
+</header>
+<main style="width: 100%; max-width: 1240px; margin: 0 auto; padding: 32px 24px 48px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+
+<article style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span class="mono muted" style="font-size: 13px">SPEC-0001 · <a href="#intent">INTENT-0001</a> · bench: none · .ginga/specs/SPEC-0001-ginga-revamp.md</span>
+<h1 style="margin: 0; font-size: 32px; font-weight: 700">G-Ingá revamp</h1>
+<span style="{{ statusStyle }}">{{ status }}</span>
+</div>
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 10px">
+<h2 class="h2">Objetivo</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.6">Separar o harness em pacotes desacoplados e usáveis sozinhos (pinga como gate, um orquestrador agnóstico de runtime, ginga como UX, async e notificação) e unificar o trabalho em INTENT → SPEC → PLAN → TASK.</p>
+</section>
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 4px">
+<h2 class="h2" style="margin-bottom: 8px">Critérios de aceite</h2>
+<sc-for list="{{ acs }}" as="ac" hint-placeholder-count="5">
+<div style="display: flex; gap: 12px; padding: 10px 0; border-top: 1px solid #EFEDE7; align-items: flex-start">
+<span class="mono" style="flex: 0 0 44px; font-size: 13px; font-weight: 600">{{ ac.id }}</span>
+<span style="flex: 1 1 auto; font-size: 15px; line-height: 1.5">{{ ac.text }}</span>
+<span style="{{ ac.judgeStyle }}">{{ ac.judge }}</span>
+</div>
+</sc-for>
+</section>
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<h2 class="h2">Blockers</h2>
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 10px; background: {{ blockerBg }}">
+<div style="font-size: 16px; font-weight: 600">Qual o nome do orquestrador?</div>
+<div class="muted" style="font-size: 14px">Levantado pelo Spec Judge (agy · google). Proposta em DECISION-0001.</div>
+<sc-if value="{{ blockerOpen }}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<button type="button" class="btn btn-primary" onClick="{{ pickBerimbau }}">Manda-CARU</button>
+<button type="button" class="btn" onClick="{{ pickBatuque }}">Mand-Ingá</button>
+<button type="button" class="btn" onClick="{{ pickCiranda }}">Forr-Ingá</button>
+</div>
+</sc-if>
+<sc-if value="{{ blockerDone }}" hint-placeholder-val="{{ false }}">
+<div style="font-size: 14px; color: #134E48"><strong>Respondido:</strong> {{ answer }} · gravado em Respostas · Spec Judge reavaliando</div>
+</sc-if>
+</div>
+</section>
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 10px">
+<h2 class="h2">Respostas</h2>
+<sc-if value="{{ blockerDone }}" hint-placeholder-val="{{ false }}"><div class="mono" style="font-size: 13px">27/out · shibuka · via Roda Web — Nome do orquestrador: {{ answer }}</div></sc-if>
+<sc-if value="{{ blockerOpen }}" hint-placeholder-val="{{ true }}"><div class="muted" style="font-size: 14px">Nenhuma ainda.</div></sc-if>
+</section>
+</article>
+
+<aside style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<h2 class="h2">Veredito do Spec Judge</h2>
+<div style="display: flex; align-items: baseline; gap: 10px"><span style="font-size: 22px; font-weight: 700">{{ verdict }}</span><span class="mono muted" style="font-size: 13px">agy · gemini</span></div>
+<ul style="margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.6">
+<li>ACs 1–4 verificáveis por comando.</li>
+<li>AC-5 mede integração ponta a ponta: ok.</li>
+<li>{{ judgeNote }}</li>
+</ul>
+</section>
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<h2 class="h2">Decidir</h2>
+<button type="button" class="btn btn-primary" disabled="{{ approveDisabled }}" onClick="{{ approve }}">{{ approveLabel }}</button>
+<button type="button" class="btn">Pedir mudança…</button>
+<div class="muted" style="font-size: 13px; line-height: 1.5">{{ approveHint }}</div>
+</section>
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 8px">
+<h2 class="h2">Depois de aprovar</h2>
+<div style="font-size: 14px; line-height: 1.6">O Planner (claude) escreve os PLANs. Cada PLAN passa pelo linter e aparece no Inbox para aprovação, com a estimativa de custo.</div>
+</section>
+</aside>
+</main>
+<p style="margin: 0; position: absolute; left: 1232px; top: 3px">[</p></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { answer: null, approved: false };
+}
+renderVals() {
+const s = this.state;
+const pill = (bg, fg) => 'align-self: flex-start; font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 6px; background: ' + bg + '; color: ' + fg;
+const answered = !!s.answer;
+const ok = (t) => ({ judge: t, judgeStyle: 'flex: 0 0 auto; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 6px; background: #E7F3EF; color: #134E48' });
+const acs = [
+Object.assign({ id: 'AC-1', text: 'O pinga verifica TASK-*.md e PLAN.md e não referencia mais o pi-harness.' }, ok('verificável')),
+Object.assign({ id: 'AC-2', text: 'O orquestrador roda como CLI fora do Pi e sobe ao menos dois runtimes num mesmo PLAN.' }, ok('verificável')),
+Object.assign({ id: 'AC-3', text: 'O gira não tem caso especial para o pinga.' }, ok('verificável')),
+Object.assign({ id: 'AC-4', text: 'Cada ferramenta emite eventos em $GINGA_EVENTS e funciona sem ele.' }, ok('verificável')),
+Object.assign({ id: 'AC-5', text: 'Um repo novo, sem gira, roda INTENT → PLAN → TASK → verify só com Pi + pinga + orquestrador.' }, ok('verificável'))
+];
+const pick = (n) => () => this.setState({ answer: n });
+return {
+acs: acs,
+status: s.approved ? 'aprovada · Planner escrevendo PLANs' : (answered ? 'draft · pronta para aprovar' : 'draft · 1 blocker'),
+statusStyle: s.approved ? pill('#E7F3EF', '#134E48') : (answered ? pill('#DBEAFE', '#1E3A8A') : pill('#FEF3C7', '#78350F')),
+blockerOpen: !answered, blockerDone: answered, answer: s.answer || '',
+blockerBg: answered ? '#E7F3EF' : '#FEF3C7',
+pickBerimbau: pick('Manda-CARU'), pickBatuque: pick('Mand-Ingá'), pickCiranda: pick('Forr-Ingá'),
+verdict: answered ? 'aprovável' : 'bloqueada',
+judgeNote: answered ? 'Blocker resolvido: nome definido.' : 'Blocker: falta o nome do orquestrador (afeta AC-2 e o CLI).',
+approveDisabled: !answered || s.approved,
+approve: () => this.setState({ approved: true }),
+approveLabel: s.approved ? 'Aprovada' : 'Aprovar SPEC',
+approveHint: s.approved ? 'Registrado em log.md e emitido como evento; o Discord recebe o card na thread da SPEC.' : (answered ? 'Sem blockers abertos. A aprovação libera o Planner.' : 'Resolva o blocker para liberar a aprovação.')
+};
+}
+}
+</script>
+</body>
+</html>

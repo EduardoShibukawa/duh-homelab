@@ -1,0 +1,1 @@
+- TASK-02 (opencode/qwen3.8-flash): o revert antigo chamava `rmSync` para qualquer symlink em `~/.local/bin/ginga` sem comparar o alvo — um link do usuário para outro binário era destruído pelo `--revert`.","time":{"start":1793244749478,"end":1793244753737}}}

@@ -1,0 +1,10 @@
+- [x] PLAN-0010 TASK-06 (p-inga): pinga sem Discord. Use a worktree `p-inga-plan-0010` (se já existir, `git merge main` antes) e o `ready/p-inga.json` próprio.
+- worktree: p-inga-plan-0010
+- [x] PLAN-0021 (p-inga): teste comportamental do holdout com exit 97 (follow-up do judge do 0018). Worktree `p-inga-plan-0021` a partir da `main`.
+# Lane p-inga (2026-10-29). Passada RED primeiro (regras de `.ginga/prompts/planner-red.md`: escreva os `tests_frozen` na worktree, `tasks/T<N>/PLAN.md` com id livre no `pinga queue --json`, `pinga prove-red` = RED, `pinga_task: T<N>` na TASK, commit `test(T<N>): RED` na `plan/NNNN`); depois despache (`dispatch-task.sh`), `pinga verify` e grave o `ready` quando todas as TASKs do repo no item tiverem `pass`.
+- [x] PLAN-0009 TASK-06 (p-inga): mensagens do pinga só citam o gira quando o provider é o gira (A6). Worktree `p-inga-plan-0009` (branch `plan/0009`).
+- worktree: p-inga-plan-0009
+- [x] PLAN-0009 TASK-02 (p-inga): seção `docsite:` no `gira.yaml`. **Só quando** `git -C gira-g log main --oneline | grep -q 'PLAN-0009'` (TASK-01 mergeada no gira-g) **e** o gira reinstalado da main (`cd gira-g && mise run install`). Antes disso, pule este item.
+- [x] PLAN-0006 TASK-04 (p-inga): remover install/adopt/adapters do pinga (já existem no `ginga install`, PLAN-0006/0026), comandos apontam para `ginga install`, `! rg -n 'pi-harness' src bin web`. Nunca rodou (a passada RED de 2026-10-27 pulou por não ter `tests_frozen`): o próprio `done_when` é o RED; materialize `tasks/T<N>/PLAN.md` e rode `pinga prove-red`. Worktree `p-inga-plan-0006` (branch `plan/0006`). Depois da TASK-06 do PLAN-0009 (ambas tocam `src/doctor.ts`).
+- [x] PLAN-0013 TASK-09 (p-inga): `pinga learn propose|promote` avisam no stderr que as lições migraram para o ginga (`src/lessons_migrado.ts` + ramo `learn` do `src/cli.ts`; não toque no `src/lessons.ts`). Worktree `p-inga-plan-0013` (branch `plan/0013`) a partir da `main`; grave `plans/PLAN-0013-handoff-e-learnings/ready/p-inga.json`.
+- worktree: p-inga-plan-0013

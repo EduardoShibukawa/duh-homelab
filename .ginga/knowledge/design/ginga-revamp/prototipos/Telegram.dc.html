@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Telegram — celular</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.kb{min-height:44px;flex:1 1 0;border-radius:10px;border:0;background:#E3ECF5;color:#14365A;font:inherit;font-size:14px;font-weight:600;cursor:pointer;padding:0 8px}
+.kb:hover{background:#D3E1EE}
+.quick{min-height:44px;padding:0 14px;border-radius:22px;border:1px solid #C9D4DF;background:#FFFFFF;color:#14365A;font:inherit;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #DCE3EA; font-family: 'IBM Plex Sans', system-ui, sans-serif; color: #17212B; overflow: hidden">
+<header style="background: #FFFFFF; padding: 14px 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #C9D4DF">
+<div aria-hidden="true" style="width: 40px; height: 40px; border-radius: 50%; background: #1C1B18; color: #F6F5F1; display: flex; align-items: center; justify-content: center; font-weight: 700">G</div>
+<div style="display: flex; flex-direction: column">
+<span style="font-weight: 700; font-size: 16px">ginga</span>
+<span style="font-size: 12px; color: #4A5868">bot · duh-homelab (mock do Telegram)</span>
+</div>
+</header>
+<div style="flex: 1 1 auto; overflow-y: auto; padding: 14px 12px; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{ messages }}" as="m" hint-placeholder-count="3">
+<div style="{{ m.wrapStyle }}">
+<div style="{{ m.bubbleStyle }}">
+<sc-if value="{{ m.hasTag }}" hint-placeholder-val="{{ true }}"><div style="{{ m.tagStyle }}">{{ m.tag }}</div></sc-if>
+<div style="font-size: 15px; line-height: 1.45; white-space: pre-line">{{ m.text }}</div>
+<div style="font-size: 11px; color: #4A5868; text-align: right; margin-top: 4px">{{ m.time }}</div>
+</div>
+<sc-if value="{{ m.hasKb }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px; width: 300px">
+<sc-for list="{{ m.rows }}" as="row" hint-placeholder-count="2">
+<div style="display: flex; gap: 6px">
+<sc-for list="{{ row.keys }}" as="k" hint-placeholder-count="2">
+<button type="button" class="kb" onClick="{{ k.run }}">{{ k.label }}</button>
+</sc-for>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+<div style="background: #FFFFFF; padding: 10px 12px; display: flex; gap: 8px; overflow-x: auto; border-top: 1px solid #C9D4DF">
+<button type="button" class="quick" onClick="{{ status }}">/status</button>
+<button type="button" class="quick" onClick="{{ inbox }}">/inbox</button>
+<button type="button" class="quick" onClick="{{ pauseAll }}">/pause</button>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { extra: [], answered: {} };
+}
+add(msgs, key) {
+const answered = Object.assign({}, this.state.answered);
+if (key) { answered[key] = true; }
+this.setState({ extra: this.state.extra.concat(msgs), answered: answered });
+}
+renderVals() {
+const s = this.state;
+const bot = (time, tag, kind, text, rows, key) => ({ me: false, time: time, tag: tag, kind: kind, text: text, rows: rows || [], key: key });
+const me = (text) => ({ me: true, time: 'agora', tag: '', kind: '', text: text, rows: [] });
+const reply = (label, answerText, key) => () => this.add([me(label), bot('agora', 'Registrado', 'ok', answerText)], key);
+const base = [
+bot('09:00', 'Digest', 'idle', '1 PLAN concluído · 1 executando\n2 itens esperando você\nZen pago US$ 1,80 / 10'),
+bot('14:02', 'Decisão · PLAN-0005', 'warn', 'TASK-03 falhou 2× em medium.\nStrong do Go sem quota.
+Usar Zen pago (~US$ 0,30)?', [
+[['Escalar', reply('Escalar', 'TASK-03 tentativa 3 em zen/deepseek-v4-pro. Aviso quando fechar.', 'p5')], ['Pausar', reply('Pausar', 'PLAN-0005 pausado.', 'p5')]],
+[['Abrir na Roda', () => {}]]
+], 'p5'),
+bot('14:10', 'Blocker · SPEC-0001', 'warn', 'Nome do orquestrador?\nProposta: Manda-CARU.', [
+[['Manda-CARU', reply('Manda-CARU', 'Resposta gravada em SPEC-0001. O Spec Judge vai reavaliar.', 's1')], ['Mand-Ingá', reply('Mand-Ingá', 'Resposta gravada em SPEC-0001.', 's1')]],
+[['Responder por texto', () => {}]]
+], 's1')
+];
+const tagStyles = { warn: 'background: #FDE7C2; color: #6B3A00', ok: 'background: #D4F0E2; color: #0F4A2E', idle: 'background: #E3ECF5; color: #14365A' };
+return {
+messages: base.concat(s.extra).map((m) => ({
+text: m.text, time: m.time, tag: m.tag, hasTag: !!m.tag,
+tagStyle: 'display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-bottom: 6px; ' + (tagStyles[m.kind] || tagStyles.idle),
+wrapStyle: 'display: flex; flex-direction: column; align-items: ' + (m.me ? 'flex-end' : 'flex-start'),
+bubbleStyle: 'max-width: 300px; padding: 8px 12px; border-radius: 14px; box-sizing: border-box; ' + (m.me ? 'background: #D9F5C5' : 'background: #FFFFFF'),
+hasKb: m.rows.length > 0 && !s.answered[m.key],
+rows: m.rows.map((r) => ({ keys: r.map((k) => ({ label: k[0], run: k[1] })) }))
+})),
+status: () => this.add([me('/status'), bot('agora', 'Status', 'idle', 'Executando: PLAN-0005 (2/4)\nEsperando você: SPEC-0001, PLAN-0006\nFila: 1 PLAN aguardando quota')]),
+inbox: () => this.add([me('/inbox'), bot('agora', 'Inbox', 'idle', '1. SPEC-0001 · blocker\n2. PLAN-0006 · aprovar (~US$ 0,40)\nResponda pelos botões acima ou abra a Roda.')]),
+pauseAll: () => this.add([me('/pause'), bot('agora', 'Fila pausada', 'warn', 'Nada novo será despachado. /resume retoma.')])
+};
+}
+}
+</script>
+</body>
+</html>

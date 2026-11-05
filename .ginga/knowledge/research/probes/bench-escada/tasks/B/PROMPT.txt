@@ -1,0 +1,1 @@
+Os testes estão falhando (python3 -m unittest). Encontre a causa e corrija o código de produção até todos passarem. NÃO altere nenhum test_*.py e NÃO altere rates.py (seus testes e o contrato "percentual" estão corretos). Não reescreva os módulos inteiros: faça só as correções necessárias. Rode "python3 -m unittest" para confirmar. Responda só: feito.

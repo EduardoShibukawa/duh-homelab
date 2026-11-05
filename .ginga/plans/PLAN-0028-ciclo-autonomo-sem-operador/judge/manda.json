@@ -1,0 +1,108 @@
+{
+  "head": "53be7c9a159475d24f46750c58b37b9c9d4c9eb0",
+  "log": "/home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0028-ciclo-autonomo-sem-operador/judge/manda-20261030T233120.log",
+  "judge": {
+    "verdict": "pass",
+    "items": [
+      {
+        "ref": "AC",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/run.ts:339, src/judge.ts:240, src/replan.ts:67 e src/cli.ts:259/277 chamam checkPaidCall antes de cada chamada paga (executor, judge, planner prim\u00e1rio e fallback); tests/cost_cap_wiring.test.ts 9 pass e tests/replan_cli_cost.test.ts 5 pass. Em src/cli.ts o replan() interno roda ap\u00f3s o gasto do planner e pode bloquear um replan j\u00e1 pago.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-02",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/alloc.ts allocTaskIds; tests/alloc.test.ts 3 pass; src/red.ts monta taken com fila, pinga_task de todo o bundle e tasks/T* da worktree criada antes (follow-up T167).",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-03",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/red.ts redPlan copia frozen, gera tasks/T<N>/PLAN.md, roda prove-red, commita test(T<N>): RED e grava status blocked/test_passed_on_base; tests/red.test.ts 3 pass. Res\u00edduo sem commit na worktree ap\u00f3s TASK bloqueada.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-05",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/replan.ts buildReplanContext determin\u00edstico (diff truncado em 20000) e replan() com lint, bloqueando quando o planner ou o lint falha; tests/replan.test.ts 4 pass.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-06",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/cost_cap.ts capCheck e spentUsd (session_v2 + claudeCosts, try/catch para DB inv\u00e1lido); tests/cost_cap.test.ts 4 pass.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-09",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/cli.ts:~320-360 comando red com --repo/--root e sa\u00edda JSON; src/red.ts valida cada tests_frozen e lan\u00e7a o caminho real; tests/red_cli.test.ts 2 pass.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-10",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/cli.ts comando red usa Bun.spawnSync com env: process.env para pinga e git; tests/red_cli.test.ts pass.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-11",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/cli.ts comando replan l\u00ea receipts via pinga queue, judge/*.json, git diff main...plan/NNNN e [roles] planner com fallback opencode; tests/replan_cli.test.ts 1 pass. git/pinga rodam com cwd=root, que pode n\u00e3o ser repo git no uso real.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-12",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/cost_cap.ts loadRoundCapUsd/isPaidModel/checkPaidCall; guarda ligada em src/run.ts:339, src/judge.ts:240 e src/replan.ts:67; tests/cost_cap_wiring.test.ts 9 pass, run.test.ts 15 pass.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-13",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/cli.ts:257-300 since=24h, claudeCosts acumulado via extractTotalCostUsd (src/cost_cap.ts), checagem antes do prim\u00e1rio e do fallback, repasse de model/since/claudeCosts a replan(); tests/replan_cli_cost.test.ts 5 pass.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-14",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/red.ts filtra bundle.tasks por repo, lan\u00e7a srcPath real quando frozen ausente e grava status: blocked; tests/red_repo.test.ts 3 pass.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-15",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/cli.ts passa repo a redPlan; tests/red_cli_repo.test.ts 1 pass com PLAN multi-repo.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-16",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/red.ts varre tasks/T* da worktree e inclui pinga_task de todo o bundle em taken; tests/red_taken.test.ts 3 pass.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-17",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/red.ts cria a worktree (git worktree add) antes de montar taken; teste first-execution em tests/red_taken.test.ts passa. O frontmatter da TASK-17 n\u00e3o tem pinga_task: T167, embora tasks/T167/PLAN.md exista.",
+        "severity": "simples"
+      }
+    ],
+    "summary": "Todas as TASKs repo: manda e o AC de teto de custo est\u00e3o cumpridos no HEAD. Os testes done_when de cada TASK passam. Na su\u00edte completa, 4 testes falham (judge_blind, pipeline) e os mesmos 4 falham na main, ent\u00e3o n\u00e3o h\u00e1 regress\u00e3o. Pontos menores e n\u00e3o reprovadores: o replan() interno pode bloquear ap\u00f3s o planner j\u00e1 ter gasto, git/pinga do replan rodam com cwd=root (n\u00e3o \u00e9 repo git), a TASK-17 n\u00e3o tem pinga_task no frontmatter, e a worktree guarda arquivos sem commit quando uma TASK \u00e9 bloqueada por test_passed_on_base."
+  }
+}

@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Métricas</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F5F1;color:#1C1B18;font-family:'IBM Plex Sans',system-ui,sans-serif}
+.card{background:#FCFCFB;border:1px solid #E2DED4;border-radius:12px}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.muted{color:#52514E}
+.h2{margin:0;font-size:15px;font-weight:600}
+.seg{min-height:44px;padding:0 14px;border:1px solid #CFCBC1;font:inherit;font-size:14px;font-weight:500;cursor:pointer}
+.th{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#52514E;text-align:left;padding:8px 10px;border-bottom:1px solid #E2DED4}
+.td{padding:8px 10px;border-bottom:1px solid #EFEDE7;font-size:13px}
+.swatch{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px}
+.linkbtn{min-height:44px;padding:0 12px;border:0;background:transparent;color:#1D4ED8;font:inherit;font-size:14px;cursor:pointer;text-decoration:underline}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-direction: column">
+<header style="background: #1C1B18; color: #F6F5F1; padding: 14px 24px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: baseline">
+<span style="font-size: 22px; font-weight: 700">Roda</span>
+<span class="mono" style="font-size: 13px; color: #C9C5BA">Métricas</span>
+</header>
+<main style="width: 100%; max-width: 1240px; margin: 0 auto; padding: 32px 24px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center">
+<h1 style="margin: 0; font-size: 28px; font-weight: 700">Métricas</h1>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+<div role="group" aria-label="Período" style="display: flex">
+<sc-for list="{{ periods }}" as="p" hint-placeholder-count="3">
+<button type="button" class="seg" onClick="{{ p.pick }}" style="{{ p.style }}">{{ p.label }}</button>
+</sc-for>
+</div>
+<label for="m-repo" class="muted" style="font-size: 13px">Repo</label>
+<select id="m-repo" style="min-height: 44px; border: 1px solid #CFCBC1; border-radius: 8px; padding: 0 10px; font: inherit; font-size: 14px; background: #FFFFFF"><option>todos</option><option>p-inga</option><option>pi-harness</option><option>gira-g</option></select>
+</div>
+</div>
+
+<section aria-label="Resumo" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px">
+<sc-for list="{{ kpis }}" as="k" hint-placeholder-count="6">
+<div class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 4px">
+<span class="muted" style="font-size: 13px; font-weight: 500">{{ k.label }}</span>
+<span style="font-size: 28px; font-weight: 700; letter-spacing: -0.01em">{{ k.value }}</span>
+<span class="muted" style="font-size: 12px">{{ k.note }}</span>
+</div>
+</sc-for>
+</section>
+
+<section class="card" aria-label="Execuções e falhas por dia" style="padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline">
+<h2 class="h2">Execuções por dia: ok vs falha</h2>
+<div style="display: flex; gap: 16px; align-items: center; font-size: 13px">
+<span><span class="swatch" style="background: #2A78D6"></span> ok</span>
+<span><span class="swatch" style="background: #EB6834"></span> falha</span>
+<button type="button" class="linkbtn" onClick="{{ toggleTable }}">{{ tableLabel }}</button>
+</div>
+</div>
+<div class="muted" style="font-size: 13px; min-height: 20px" aria-live="polite">{{ hoverText }}</div>
+<sc-if value="{{ showChart }}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; gap: 8px">
+<div class="mono muted" style="display: flex; flex-direction: column; justify-content: space-between; height: 180px; font-size: 11px; text-align: right; width: 24px"><span>30</span><span>20</span><span>10</span><span>0</span></div>
+<div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<div style="position: relative; height: 180px; display: flex; align-items: flex-end; gap: 2px; border-bottom: 1px solid #8A857A; background: linear-gradient(#EFEDE7 1px, transparent 1px) 0 0 / 100% 60px">
+<sc-for list="{{ days }}" as="d" hint-placeholder-count="14">
+<button type="button" aria-label="{{ d.aria }}" onMouseEnter="{{ d.hover }}" onFocus="{{ d.hover }}" onMouseLeave="{{ clearHover }}" style="flex: 1 1 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; border: 0; padding: 0 3px; background: transparent; cursor: default">
+<div style="{{ d.failStyle }}"></div>
+<div style="{{ d.okStyle }}"></div>
+</button>
+</sc-for>
+</div>
+<div class="mono muted" style="display: flex; gap: 2px; font-size: 11px">
+<sc-for list="{{ days }}" as="d" hint-placeholder-count="14"><span style="flex: 1 1 0; text-align: center">{{ d.tick }}</span></sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ showTable }}" hint-placeholder-val="{{ false }}">
+<div style="overflow-x: auto"><table style="border-collapse: collapse; width: 100%"><thead><tr><th class="th">Dia</th><th class="th">ok</th><th class="th">falha</th><th class="th">taxa de falha</th></tr></thead><tbody>
+<sc-for list="{{ days }}" as="d" hint-placeholder-count="14"><tr><td class="td mono">{{ d.date }}</td><td class="td mono">{{ d.ok }}</td><td class="td mono">{{ d.fail }}</td><td class="td mono">{{ d.rate }}</td></tr></sc-for>
+</tbody></table></div>
+</sc-if>
+</section>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 12px">
+<section class="card" aria-label="Custo" style="padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: center">
+<h2 class="h2">Custo por {{ costByLabel }}</h2>
+<div role="group" aria-label="Agrupar custo" style="display: flex">
+<sc-for list="{{ costTabs }}" as="c" hint-placeholder-count="3">
+<button type="button" class="seg" onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</button>
+</sc-for>
+</div>
+</div>
+<sc-for list="{{ costRows }}" as="r" hint-placeholder-count="5">
+<div style="display: grid; grid-template-columns: 170px 1fr 70px; gap: 10px; align-items: center; font-size: 13px">
+<span class="mono" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{ r.name }}</span>
+<div style="height: 14px; background: #EFEDE7; border-radius: 0 4px 4px 0"><div style="{{ r.barStyle }}"></div></div>
+<span class="mono" style="text-align: right">{{ r.value }}</span>
+</div>
+</sc-for>
+<div class="muted" style="font-size: 12px">Só custo pago (Zen). Assinaturas aparecem como quota em Modelos.</div>
+</section>
+
+<section class="card" aria-label="Motivos de falha" style="padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<h2 class="h2">Por que falha (tentativas com erro)</h2>
+<sc-for list="{{ reasons }}" as="r" hint-placeholder-count="5">
+<div style="display: grid; grid-template-columns: 170px 1fr 48px; gap: 10px; align-items: center; font-size: 13px">
+<span>{{ r.name }}</span>
+<div style="height: 14px; background: #EFEDE7; border-radius: 0 4px 4px 0"><div style="{{ r.barStyle }}"></div></div>
+<span class="mono" style="text-align: right">{{ r.value }}</span>
+</div>
+</sc-for>
+<div class="muted" style="font-size: 12px">Quota esgotada e infra não contam contra o modelo no FTPR.</div>
+</section>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 12px">
+<section class="card" aria-label="Fluxo" style="padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<h2 class="h2">Fluxo: onde o tempo vai (mediana por PLAN)</h2>
+<sc-for list="{{ flow }}" as="f" hint-placeholder-count="4">
+<div style="display: grid; grid-template-columns: 200px 1fr 64px; gap: 10px; align-items: center; font-size: 13px">
+<span>{{ f.name }}</span>
+<div style="height: 14px; background: #EFEDE7; border-radius: 0 4px 4px 0"><div style="{{ f.barStyle }}"></div></div>
+<span class="mono" style="text-align: right">{{ f.value }}</span>
+</div>
+</sc-for>
+<div class="muted" style="font-size: 12px">"Esperando o dono" é o gargalo a vigiar: ele mede o tempo que o Inbox fica parado.</div>
+</section>
+
+<section class="card" aria-label="TASKs mais caras" style="padding: 20px; display: flex; flex-direction: column; gap: 10px; overflow-x: auto">
+<h2 class="h2">TASKs mais caras</h2>
+<table style="border-collapse: collapse; width: 100%; min-width: 420px"><thead><tr><th class="th">TASK</th><th class="th">Tentativas</th><th class="th">Tier final</th><th class="th">Custo</th></tr></thead><tbody>
+<sc-for list="{{ topTasks }}" as="t" hint-placeholder-count="5"><tr><td class="td mono">{{ t.id }}</td><td class="td mono">{{ t.attempts }}</td><td class="td">{{ t.tier }}</td><td class="td mono">{{ t.cost }}</td></tr></sc-for>
+</tbody></table>
+</section>
+</div>
+<h2 style="margin: 12px 0 0; font-size: 20px; font-weight: 700">Sessões e aprendizado</h2>
+<section aria-label="Resumo de sessões" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px">
+<sc-for list="{{ sessionKpis }}" as="k" hint-placeholder-count="4">
+<div class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 4px">
+<span class="muted" style="font-size: 13px; font-weight: 500">{{ k.label }}</span>
+<span style="font-size: 28px; font-weight: 700; letter-spacing: -0.01em">{{ k.value }}</span>
+<span class="muted" style="font-size: 12px">{{ k.note }}</span>
+</div>
+</sc-for>
+</section>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 12px">
+<section class="card" aria-label="Erros repetidos por semana" style="padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<h2 class="h2">Erros repetidos por semana</h2>
+<div class="muted" style="font-size: 13px">Mesma falha depois de já existir um learning sobre ela. Tem que cair.</div>
+<div style="display: flex; align-items: flex-end; gap: 10px; height: 140px; border-bottom: 1px solid #8A857A">
+<sc-for list="{{ repeated }}" as="r" hint-placeholder-count="6">
+<div style="flex: 1 1 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px">
+<span class="mono" style="font-size: 12px">{{ r.value }}</span>
+<div style="{{ r.style }}"></div>
+</div>
+</sc-for>
+</div>
+<div class="mono muted" style="display: flex; gap: 10px; font-size: 11px">
+<sc-for list="{{ repeated }}" as="r" hint-placeholder-count="6"><span style="flex: 1 1 0; text-align: center">{{ r.week }}</span></sc-for>
+</div>
+</section>
+<section class="card" aria-label="Handoffs por gatilho" style="padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<h2 class="h2">Handoffs por gatilho</h2>
+<sc-for list="{{ triggers }}" as="t" hint-placeholder-count="3">
+<div style="display: grid; grid-template-columns: 170px 1fr 48px; gap: 10px; align-items: center; font-size: 13px">
+<span>{{ t.name }}</span>
+<div style="height: 14px; background: #EFEDE7; border-radius: 0 4px 4px 0"><div style="{{ t.barStyle }}"></div></div>
+<span class="mono" style="text-align: right">{{ t.value }}</span>
+</div>
+</sc-for>
+<div class="muted" style="font-size: 12px">Fronteira natural é a preferida; as outras duas são forçadas por limite.</div>
+</section>
+</div>
+<section class="card" aria-label="A/B compactação nativa vs handoff" style="padding: 20px; display: flex; flex-direction: column; gap: 10px; overflow-x: auto">
+<h2 class="h2">A/B: compactação nativa vs handoff do ginga</h2>
+<table style="border-collapse: collapse; width: 100%; min-width: 560px"><thead><tr><th class="th">Métrica (após o corte)</th><th class="th">Nativa</th><th class="th">Handoff</th><th class="th">Diferença</th></tr></thead><tbody>
+<sc-for list="{{ ab }}" as="a" hint-placeholder-count="4"><tr><td class="td">{{ a.metric }}</td><td class="td mono">{{ a.native }}</td><td class="td mono">{{ a.ginga }}</td><td class="td mono" style="font-weight: 600">{{ a.delta }}</td></tr></sc-for>
+</tbody></table>
+<div class="muted" style="font-size: 12px">Experimento na ontologia de bench, methodology_version próprio · 24 runs por braço.</div>
+</section>
+<p class="muted" style="margin: 0; font-size: 12px">Dados de exemplo. Fonte real: eventos $GINGA_EVENTS + receipts do ledger + state.db (custo e quota).</p>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2200}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { period: '14d', hover: null, table: false, costBy: 'spec' };
+}
+renderVals() {
+const s = this.state;
+const on = 'background: #1C1B18; color: #FFFFFF; border-color: #1C1B18';
+const off = 'background: #FFFFFF; color: #1C1B18';
+const segStyle = (i, n, active) => (i === 0 ? 'border-radius: 8px 0 0 8px; ' : (i === n - 1 ? 'border-radius: 0 8px 8px 0; border-left: 0; ' : 'border-radius: 0; border-left: 0; ')) + (active ? on : off);
+const okAll = [14, 18, 9, 22, 17, 25, 20, 12, 19, 23, 28, 21, 26, 24];
+const failAll = [6, 4, 7, 5, 8, 3, 6, 9, 4, 5, 3, 6, 4, 5];
+const n = s.period === '7d' ? 7 : 14;
+const ok = okAll.slice(14 - n);
+const fail = failAll.slice(14 - n);
+const max = 32;
+const startDay = 27 - n + 1;
+const days = ok.map((o, i) => {
+const f = fail[i];
+const day = startDay + i;
+const date = (day < 1 ? day + 30 : day) + '/' + (day < 1 ? 'set' : 'out');
+const rate = Math.round(100 * f / (o + f)) + '%';
+const h = (v) => (100 * v / max).toFixed(1) + '%';
+return {
+ok: String(o), fail: String(f), date: date, rate: rate, tick: (i % 2 === 0 || n === 7) ? String(day < 1 ? day + 30 : day) : '',
+aria: date + ': ' + o + ' ok, ' + f + ' falhas',
+okStyle: 'height: ' + h(o) + '; background: #2A78D6; border-radius: 0 0 0 0',
+failStyle: 'height: ' + h(f) + '; background: #EB6834; border-radius: 4px 4px 0 0',
+hover: () => this.setState({ hover: date + ' · ' + o + ' ok · ' + f + ' falhas · taxa de falha ' + rate })
+};
+});
+const totOk = ok.reduce((a, b) => a + b, 0);
+const totFail = fail.reduce((a, b) => a + b, 0);
+const costData = {
+spec: [['SPEC-0005 runner', 1.42], ['SPEC-0004 eventos', 0.88], ['SPEC-0001 revamp', 0.61], ['sem SPEC (pequenas)', 0.74], ['SPEC-0007 oauth', 0.45]],
+plan: [['PLAN-0005', 0.92], ['PLAN-0004', 0.88], ['PLAN-0009', 0.50], ['PLAN-0006', 0.40], ['PLAN-0002', 0.0]],
+task: [['P5/TASK-03', 0.62], ['P4/TASK-02', 0.41], ['P5/TASK-02', 0.18], ['P9/TASK-01', 0.15], ['P4/TASK-01', 0.12]]
+};
+const rows = costData[s.costBy];
+const cmax = Math.max.apply(null, rows.map((r) => r[1])) || 1;
+const hbar = (v, m, color) => 'height: 14px; border-radius: 0 4px 4px 0; background: ' + color + '; width: ' + Math.max(v > 0 ? 2 : 0, 100 * v / m).toFixed(1) + '%';
+const reasons = [['done_when falhou', 31], ['quota esgotada', 14], ['timeout', 9], ['judge reprovou', 6], ['infra (spawn, rede)', 4]];
+const flow = [['Esperando o dono', 38, '38 min'], ['Na fila (quota)', 12, '12 min'], ['Executando', 26, '26 min'], ['Verificando + judge', 7, '7 min']];
+return {
+periods: [['7d', '7 dias'], ['14d', '14 dias']].map((p, i) => ({ label: p[1], pick: () => this.setState({ period: p[0], hover: null }), style: segStyle(i, 2, s.period === p[0]) })),
+kpis: [
+{ label: 'Execuções', value: String(totOk + totFail), note: 'tentativas no período' },
+{ label: 'Taxa de falha', value: Math.round(100 * totFail / (totOk + totFail)) + '%', note: 'quota e infra incluídas' },
+{ label: 'FTPR', value: '64%', note: 'passou na 1ª tentativa' },
+{ label: 'Custo pago', value: 'US$ 4,10', note: 'de US$ 10 no mês' },
+{ label: 'Custo por TASK ok', value: 'US$ 0,05', note: 'mediana' },
+{ label: 'Escaladas de tier', value: '11%', note: 'TASKs que subiram' }
+],
+days: days,
+showChart: !s.table, showTable: s.table,
+toggleTable: () => this.setState({ table: !s.table }),
+tableLabel: s.table ? 'Ver gráfico' : 'Ver como tabela',
+hoverText: s.hover || 'Passe o mouse (ou foque) numa barra para ver o dia.',
+clearHover: () => this.setState({ hover: null }),
+costByLabel: { spec: 'SPEC', plan: 'PLAN', task: 'TASK' }[s.costBy],
+costTabs: [['spec', 'SPEC'], ['plan', 'PLAN'], ['task', 'TASK']].map((c, i) => ({ label: c[1], pick: () => this.setState({ costBy: c[0] }), style: segStyle(i, 3, s.costBy === c[0]) })),
+costRows: rows.map((r) => ({ name: r[0], value: 'US$ ' + r[1].toFixed(2).replace('.', ','), barStyle: hbar(r[1], cmax, '#2A78D6') })),
+reasons: reasons.map((r) => ({ name: r[0], value: String(r[1]), barStyle: hbar(r[1], 31, '#2A78D6') })),
+flow: flow.map((f) => ({ name: f[0], value: f[2], barStyle: hbar(f[1], 38, '#2A78D6') })),
+sessionKpis: [
+{ label: 'Handoffs', value: '19', note: 'no período' },
+{ label: 'Economia estimada', value: 'US$ 2,30', note: 'vs continuar com contexto cheio' },
+{ label: 'Redescoberta', value: '1,8k', note: 'tokens médios relendo após o corte' },
+{ label: 'Learnings reutilizados', value: '14', note: 'citados por PLANs depois' }
+],
+repeated: [['s38', 9], ['s39', 7], ['s40', 6], ['s41', 4], ['s42', 3], ['s43', 2]].map((r, i, arr) => ({ week: r[0], value: String(r[1]), style: 'width: 100%; max-width: 40px; border-radius: 4px 4px 0 0; height: ' + (100 * r[1] / 10).toFixed(0) + '%; background: ' + (i === arr.length - 1 ? '#2A78D6' : '#86B6EF') })),
+triggers: [['Fronteira natural', 12], ['Contexto cheio', 5], ['Cache expirando', 2]].map((t) => ({ name: t[0], value: String(t[1]), barStyle: hbar(t[1], 12, '#2A78D6') })),
+ab: [
+{ metric: 'Custo por TASK verificada', native: 'US$ 0,09', ginga: 'US$ 0,05', delta: '−44%' },
+{ metric: 'FTPR', native: '52%', ginga: '61%', delta: '+9 p.p.' },
+{ metric: 'Tokens de redescoberta', native: '7,4k', ginga: '1,8k', delta: '−76%' },
+{ metric: 'Erros repetidos', native: '11', ginga: '3', delta: '−8' }
+],
+topTasks: [
+{ id: 'PLAN-0005/TASK-03', attempts: '3', tier: 'strong (zen/deepseek)', cost: 'US$ 0,62' },
+{ id: 'PLAN-0004/TASK-02', attempts: '2', tier: 'medium', cost: 'US$ 0,41' },
+{ id: 'PLAN-0005/TASK-02', attempts: '2', tier: 'medium', cost: 'US$ 0,18' },
+{ id: 'PLAN-0009/TASK-01', attempts: '1', tier: 'medium', cost: 'US$ 0,15' },
+{ id: 'PLAN-0004/TASK-01', attempts: '1', tier: 'free', cost: 'US$ 0,12' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

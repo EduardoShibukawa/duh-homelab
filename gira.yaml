@@ -1,0 +1,30 @@
+version: 1
+target_system:
+    name: duh-homelab
+    description: Workspace p-inga + pi-harness + gira-g
+repositories:
+    - id: p-inga
+      url: file://./p-inga
+      ref: main
+      sha: 0df152a553357e428449e6636cda3f8c0292e15d
+      path_scope: .
+    - id: pi-harness-src
+      url: file://./pi-harness
+      ref: main
+      sha: 4ccc27aa8fce6734448f19efe661ec3572b5cab4
+      path_scope: src
+    - id: pi-harness-plugin
+      url: file://./pi-harness
+      ref: main
+      sha: 4ccc27aa8fce6734448f19efe661ec3572b5cab4
+      path_scope: claude-plugin
+    - id: pi-harness-pi
+      url: file://./pi-harness
+      ref: main
+      sha: 4ccc27aa8fce6734448f19efe661ec3572b5cab4
+      path_scope: .pi
+    - id: gira-g
+      url: file://./gira-g
+      ref: main
+      sha: 21a82fdc0b50b07ca784c8f48e7c75abd66bb963
+      path_scope: .

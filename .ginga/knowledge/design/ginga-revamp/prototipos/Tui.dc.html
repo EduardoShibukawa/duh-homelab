@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Roda TUI</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.pane{border:1px solid #4A473F;border-radius:4px;display:flex;flex-direction:column;min-width:0;min-height:0}
+.ptitle{padding:4px 10px;font-size:13px;font-weight:700;background:#2A2824;color:#F2C46D}
+.row{display:flex;gap:10px;width:100%;text-align:left;border:0;font:inherit;font-size:13px;padding:6px 10px;cursor:pointer;min-height:32px;align-items:center}
+.key{min-height:44px;padding:0 12px;border:0;border-radius:4px;background:#2A2824;color:#E7E4DC;font:inherit;font-size:13px;cursor:pointer}
+.key:hover{background:#3A3832}
+.k{color:#F2C46D;font-weight:700}
+</style>
+</helmet>
+<div style="width: 1280px; height: 760px; box-sizing: border-box; background: #1C1B18; color: #E7E4DC; font-family: 'IBM Plex Mono', ui-monospace, monospace; padding: 10px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-size: 13px; padding: 0 4px">
+<span><span style="color: #F2C46D; font-weight: 700">roda</span> · duh-homelab · tuios session-0</span>
+<span>ginga serve <span style="color: #6EE7B7">● online</span> · fila {{ queueLabel }} · zen US$1,80/10 · codex 1% · claude 72%</span>
+</div>
+<div style="flex: 1 1 auto; display: grid; grid-template-columns: 380px 1fr 440px; gap: 8px; min-height: 0">
+<section class="pane" aria-label="Inbox">
+<div class="ptitle">Inbox ({{ inboxCount }})</div>
+<sc-for list="{{ inbox }}" as="i" hint-placeholder-count="4">
+<button type="button" class="row" onClick="{{ i.pick }}" style="{{ i.style }}">
+<span style="{{ i.kindStyle }}">{{ i.kind }}</span><span>{{ i.ref }}</span><span style="color: #B9B5AA; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{ i.title }}</span>
+</button>
+</sc-for>
+<sc-if value="{{ inboxEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding: 10px; font-size: 13px; color: #B9B5AA">nada esperando você</div></sc-if>
+<div style="margin-top: auto; padding: 10px; font-size: 12px; color: #B9B5AA; border-top: 1px solid #4A473F; white-space: pre-line">{{ detail }}</div>
+</section>
+<section class="pane" aria-label="Quadro">
+<div class="ptitle">Quadro</div>
+<div style="padding: 6px 10px; font-size: 12px; color: #B9B5AA; display: grid; grid-template-columns: 110px 1fr 130px 120px; gap: 8px"><span>ID</span><span>TÍTULO</span><span>ESTADO</span><span>MODELO</span></div>
+<sc-for list="{{ board }}" as="b" hint-placeholder-count="6">
+<div style="padding: 6px 10px; font-size: 13px; display: grid; grid-template-columns: 110px 1fr 130px 120px; gap: 8px; border-top: 1px solid #2A2824">
+<span style="font-weight: 600">{{ b.id }}</span><span>{{ b.title }}</span><span style="{{ b.stateStyle }}">{{ b.state }}</span><span style="color: #B9B5AA">{{ b.model }}</span>
+</div>
+</sc-for>
+</section>
+<section class="pane" aria-label="Ao vivo">
+<div class="ptitle">Ao vivo · PLAN-0005 TASK-03</div>
+<pre style="margin: 0; padding: 10px; font: inherit; font-size: 12px; line-height: 1.6; white-space: pre-wrap; color: #E7E4DC; overflow: hidden">{{ live }}</pre>
+</section>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<button type="button" class="key" onClick="{{ approve }}"><span class="k">a</span> aprovar/escolher</button>
+<button type="button" class="key"><span class="k">r</span> responder</button>
+<button type="button" class="key" onClick="{{ escalate }}"><span class="k">e</span> escalar</button>
+<button type="button" class="key" onClick="{{ togglePause }}"><span class="k">p</span> {{ pauseLabel }}</button>
+<button type="button" class="key"><span class="k">i</span> novo intent</button>
+<button type="button" class="key"><span class="k">o</span> abrir na Roda Web</button>
+<button type="button" class="key"><span class="k">tab</span> trocar pane</button>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":760}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { sel: 0, done: {}, escalated: false, paused: false };
+}
+renderVals() {
+const s = this.state;
+const defs = [
+{ id: 'b1', kind: 'BLK', ref: 'SPEC-0001', title: 'nome do orquestrador?', detail: 'SPEC-0001 · blocker do Spec Judge\nProposta: Manda-CARU. [a] escolhe a proposta, [r] responde livre.' },
+{ id: 'a1', kind: 'APR', ref: 'PLAN-0006', title: 'cache-ledger · ~US$0,40', detail: 'PLAN-0006 · 4 TASKs · linter ok\n[a] aprova e manda para a fila.' },
+{ id: 'u1', kind: '$  ', ref: 'PLAN-0005', title: 'escalar TASK-03?', detail: 'PLAN-0005 · TASK-03 falhou 2× em medium\n[e] libera Zen pago no strong (~US$0,30).' },
+{ id: 'd1', kind: 'DEC', ref: 'PLAN-0003', title: 'pi-harness-ux: 780 linhas', detail: 'PLAN-0003 · worktree com WIP\n[a] commit WIP e estacionar.' }
+];
+const open = defs.filter((d) => !s.done[d.id]);
+const sel = Math.min(s.sel, Math.max(open.length - 1, 0));
+const kindColor = { BLK: '#F2C46D', APR: '#8AB4FF', '$  ': '#C4B5FD', DEC: '#B9B5AA' };
+const mark = (id) => { const d = Object.assign({}, s.done); d[id] = true; this.setState({ done: d, sel: 0 }); };
+const st = (c) => 'color: ' + c;
+const running = s.escalated;
+return {
+inbox: open.map((d, i) => ({ kind: d.kind, ref: d.ref, title: d.title, kindStyle: 'font-weight: 700; ' + st(kindColor[d.kind]),
+style: i === sel ? 'background: #3A3832; color: #FFFFFF' : 'background: transparent; color: #E7E4DC',
+pick: () => this.setState({ sel: i }) })),
+inboxCount: String(open.length), inboxEmpty: open.length === 0,
+detail: open.length ? open[sel].detail : '',
+approve: () => { if (open.length) { mark(open[sel].id); } },
+escalate: () => { this.setState({ escalated: true }); const d = Object.assign({}, s.done); d.u1 = true; this.setState({ done: d, sel: 0 }); },
+togglePause: () => this.setState({ paused: !s.paused }),
+pauseLabel: s.paused ? 'retomar fila' : 'pausar fila',
+queueLabel: s.paused ? 'PAUSADA' : 'ativa',
+board: [
+{ id: 'SPEC-0001', title: 'G-Ingá revamp', state: s.done.b1 ? 'em revisão' : 'blocker', stateStyle: st(s.done.b1 ? '#8AB4FF' : '#F2C46D'), model: 'agy (judge)' },
+{ id: 'PLAN-0003', title: 'Worktrees paradas', state: 'espera o dono', stateStyle: st('#F2C46D'), model: '—' },
+{ id: 'PLAN-0006', title: 'cache-ledger', state: s.done.a1 ? 'na fila' : 'aprovar', stateStyle: st('#8AB4FF'), model: '—' },
+{ id: 'PLAN-0005', title: 'Runner resiliente', state: s.paused ? 'pausado' : '2/4 executando', stateStyle: st(s.paused ? '#B9B5AA' : '#6EE7B7'), model: running ? 'zen/deepseek' : 'go/qwen3.8' },
+{ id: 'PLAN-0004', title: 'Eventos JSONL', state: 'verificando', stateStyle: st('#8AB4FF'), model: 'agy (judge)' },
+{ id: 'PLAN-0002', title: 'Bundle .ginga', state: 'feito', stateStyle: st('#6EE7B7'), model: 'claude' }
+],
+live: running
+? '$ manda run TASK-03 --runtime opencode --model zen/deepseek-v4-pro\n→ tentativa 3 · tier strong (Zen pago liberado)\n→ lendo PLAN.md, TASK-03-docs.md\n→ editando docs/usage.md (touch ok)\n→ done_when: bun test tests/unit/docs_0031_contract.test.ts\n  ✓ 6 pass\n$ pinga verify plans/PLAN-0005/TASK-03-docs.md\n✓ receipt selado · ledger #418\n→ TASK-04 desbloqueada'
+: '$ pinga verify plans/PLAN-0005/TASK-03-docs.md\n✗ done_when exit 1\n  expected "FULL_PASS" in docs/usage.md\n✗ tentativa 2 de 3 (medium)\n\naguardando: escalar para strong?\n[e] libera · [p] pausa'
+};
+}
+}
+</script>
+</body>
+</html>

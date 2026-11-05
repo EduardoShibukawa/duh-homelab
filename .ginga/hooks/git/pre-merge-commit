@@ -1,0 +1,11 @@
+#!/bin/sh
+# ginga-managed hook: pre-merge-commit
+# Recusa merge para refs/heads/main sem MERGE_GATE=1 (merge é só por .ginga/bin/merge-gate.sh).
+# Encadeia o hook pré-existente de mesmo nome (renomeado para <hook>.ginga-prev) no caminho permitido.
+if [ "$(git rev-parse --abbrev-ref HEAD)" = main ] && [ "$MERGE_GATE" != 1 ]; then
+  echo "BLOQUEADO (ginga pre-merge-commit): merge na main só por .ginga/bin/merge-gate.sh" >&2
+  exit 1
+fi
+prev="$(dirname "$0")/pre-merge-commit.ginga-prev"
+if [ -x "$prev" ]; then exec "$prev" "$@"; fi
+exit 0

@@ -1,0 +1,2 @@
+mv: cannot stat '/home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0009-contexto-sem-gira/ready/p-inga.json': No such file or directory
+/home/shibuka/Projetos/duh-homelab/.ginga/bin/lane.sh: line 29: mi: unbound variable

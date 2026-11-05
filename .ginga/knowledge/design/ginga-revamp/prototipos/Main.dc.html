@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Roda Web</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F5F1;color:#1C1B18;font-family:'IBM Plex Sans',system-ui,sans-serif}
+a{color:#1D4ED8}a:hover{color:#1E3A8A}
+.btn{min-height:44px;padding:0 16px;border-radius:8px;border:1px solid #CFCBC1;background:#FFFFFF;color:#1C1B18;font:inherit;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap}
+.btn:hover{background:#EFEDE7}
+.btn-primary{background:#1C1B18;color:#FFFFFF;border-color:#1C1B18}
+.btn-primary:hover{background:#3A3832}
+.card{background:#FFFFFF;border:1px solid #E2DED4;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:4px 8px;border-radius:6px}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.muted{color:#5F5B52}
+.th{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#5F5B52;text-align:left;padding:10px 12px;border-bottom:1px solid #E2DED4}
+.td{padding:12px;border-bottom:1px solid #EFEDE7;font-size:14px;vertical-align:top}
+.boardcard{display:flex;flex-direction:column;gap:6px;text-align:left;width:100%;padding:12px;border-radius:10px;border:1px solid #E2DED4;background:#FFFFFF;font:inherit;color:#1C1B18;cursor:pointer}
+.boardcard:hover{border-color:#8A857A}
+textarea,select{font:inherit;font-size:14px;color:#1C1B18;border:1px solid #CFCBC1;border-radius:8px;background:#FFFFFF;padding:10px 12px}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-direction: column">
+
+<header style="background: #1C1B18; color: #F6F5F1; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px">
+<div style="display: flex; align-items: baseline; gap: 12px">
+<span style="font-size: 22px; font-weight: 700; letter-spacing: -0.01em">Roda</span>
+<span class="mono" style="font-size: 13px; color: #C9C5BA">G-Ingá · duh-homelab</span>
+</div>
+<nav aria-label="Seções" style="display: flex; flex-wrap: wrap; gap: 4px; flex: 1 1 auto">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+<button type="button" onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
+</sc-for>
+</nav>
+<div style="display: flex; align-items: center; gap: 12px">
+<span class="mono" style="font-size: 12px; color: #C9C5BA">ginga serve · homelab <span style="color: #6EE7B7">● online</span></span>
+<button type="button" class="btn" onClick="{{ toggleComposer }}" style="background: #F6F5F1; border-color: #F6F5F1">+ Intent</button>
+</div>
+</header>
+
+<sc-if value="{{ showComposer }}" hint-placeholder-val="{{ false }}">
+<section aria-label="Novo intent" style="background: #EFEDE7; border-bottom: 1px solid #E2DED4; padding: 20px 24px">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px">
+<label for="intent-text" style="font-size: 14px; font-weight: 600">O que você quer? (pedido cru, vira INTENT)</label>
+<textarea id="intent-text" rows="3" style="width: 100%; box-sizing: border-box">O dashboard deveria mostrar o custo acumulado do mês por provider</textarea>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<label for="intent-repo" style="font-size: 12px; font-weight: 600" class="muted">Repo</label>
+<select id="intent-repo"><option>p-inga</option><option>pi-harness</option><option>gira-g</option><option>duh-homelab</option></select>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<label for="intent-lane" style="font-size: 12px; font-weight: 600" class="muted">Trilha</label>
+<select id="intent-lane"><option>auto (triagem decide)</option><option>feature (com SPEC)</option><option>pequena (direto ao PLAN)</option></select>
+</div>
+<button type="button" class="btn btn-primary" onClick="{{ createIntent }}">Criar INTENT</button>
+<button type="button" class="btn" onClick="{{ toggleComposer }}">Cancelar</button>
+</div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{ intentCreated }}" hint-placeholder-val="{{ false }}">
+<div role="status" style="background: #DBEAFE; color: #1E3A8A; padding: 12px 24px; font-size: 14px">
+<span class="mono" style="font-weight: 600">INTENT-0009</span> criado · triagem: <strong>pequena</strong> (1 arquivo, sem contrato novo) → PLAN-0009 em draft, aguardando o linter.
+</div>
+</sc-if>
+
+<main style="flex: 1 1 auto; width: 100%; max-width: 1240px; margin: 0 auto; padding: 32px 24px 48px; box-sizing: border-box">
+
+<sc-if value="{{ isInbox }}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px">
+<h1 style="margin: 0; font-size: 28px; font-weight: 700">Esperando você</h1>
+<span class="muted" style="font-size: 14px">{{ pendingLabel }}</span>
+</div>
+<sc-for list="{{ pending }}" as="item" hint-placeholder-count="4">
+<article class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+<span class="chip" style="{{ item.chipStyle }}">{{ item.kind }}</span>
+<span class="mono" style="font-size: 14px; font-weight: 600">{{ item.ref }}</span>
+<span class="muted" style="font-size: 13px; margin-left: auto">{{ item.age }} · via {{ item.via }}</span>
+</div>
+<div style="font-size: 17px; font-weight: 600">{{ item.title }}</div>
+<div class="muted" style="font-size: 14px; line-height: 1.5">{{ item.detail }}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{ item.actions }}" as="a" hint-placeholder-count="3">
+<button type="button" class="{{ a.cls }}" onClick="{{ a.run }}">{{ a.label }}</button>
+</sc-for>
+</div>
+<sc-if value="{{ item.replying }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="reply-box" style="font-size: 13px; font-weight: 600">Resposta (vai para a seção Respostas da SPEC e destrava o PLAN)</label>
+<textarea id="reply-box" rows="2"></textarea>
+<div style="display: flex; gap: 8px"><button type="button" class="btn btn-primary" onClick="{{ item.sendReply }}">Enviar resposta</button></div>
+</div>
+</sc-if>
+</article>
+</sc-for>
+<sc-if value="{{ inboxEmpty }}" hint-placeholder-val="{{ false }}">
+<div class="card" style="padding: 32px; text-align: center">
+<div style="font-size: 17px; font-weight: 600">Nada esperando você.</div>
+<div class="muted" style="font-size: 14px; margin-top: 4px">A fila segue sozinha; avisos chegam pelo Discord e Telegram.</div>
+</div>
+</sc-if>
+<sc-if value="{{ hasResolved }}" hint-placeholder-val="{{ false }}">
+<section aria-label="Resolvido agora" style="display: flex; flex-direction: column; gap: 8px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em" class="muted">Resolvido agora</h2>
+<sc-for list="{{ resolved }}" as="r" hint-placeholder-count="1">
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 12px 16px; border-radius: 10px; background: #E7F3EF; color: #134E48; font-size: 14px">
+<span class="mono" style="font-weight: 600">{{ r.ref }}</span><span>{{ r.outcome }}</span><span style="margin-left: auto; font-size: 13px">registrado em log.md · evento emitido</span>
+</div>
+</sc-for>
+</section>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isBoard }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+<h1 style="margin: 0; font-size: 28px; font-weight: 700">Quadro</h1>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+<label for="f-repo" class="muted" style="font-size: 13px">Repo</label>
+<select id="f-repo"><option>todos</option><option>p-inga</option><option>pi-harness</option><option>gira-g</option></select>
+<label for="f-lane" class="muted" style="font-size: 13px">Trilha</label>
+<select id="f-lane"><option>todas</option><option>feature</option><option>pequena</option></select>
+</div>
+</div>
+<div style="overflow-x: auto; padding-bottom: 8px">
+<div style="display: grid; grid-template-columns: repeat(6, minmax(190px, 1fr)); gap: 12px; min-width: 1180px">
+<sc-for list="{{ columns }}" as="col" hint-placeholder-count="6">
+<section style="background: #EFEDE7; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; min-height: 360px">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<h2 style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase">{{ col.name }}</h2>
+<span class="mono muted" style="font-size: 12px">{{ col.count }}</span>
+</div>
+<sc-for list="{{ col.cards }}" as="c" hint-placeholder-count="2">
+<button type="button" class="boardcard" onClick="{{ c.open }}">
+<span class="mono" style="font-size: 12px; font-weight: 600">{{ c.ref }}</span>
+<span style="font-size: 14px; font-weight: 600">{{ c.title }}</span>
+<span style="{{ c.flagStyle }}">{{ c.flag }}</span>
+<span class="muted mono" style="font-size: 12px">{{ c.meta }}</span>
+</button>
+</sc-for>
+</section>
+</sc-for>
+</div>
+</div>
+<p class="muted" style="margin: 0; font-size: 13px">Clique num card de PLAN para abrir o detalhe. Cards em SPEC e INTENT abrem o artefato (fora deste protótipo).</p>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPlan }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span class="mono muted" style="font-size: 13px">PLAN-0005 · repo pi-harness · trilha feature · <a href="#spec">SPEC-0005</a></span>
+<h1 style="margin: 0; font-size: 28px; font-weight: 700">Runner resiliente</h1>
+<span style="{{ planStatusStyle }}">{{ planStatus }}</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<button type="button" class="btn" onClick="{{ togglePause }}">{{ pauseLabel }}</button>
+<button type="button" class="btn">Cancelar PLAN</button>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+<div class="card" style="padding: 16px"><div class="muted" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em">TASKs</div><div style="font-size: 24px; font-weight: 700; margin-top: 4px">2 / 4</div></div>
+<div class="card" style="padding: 16px"><div class="muted" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em">Custo</div><div style="font-size: 24px; font-weight: 700; margin-top: 4px">US$ 0,92 <span class="muted" style="font-size: 14px; font-weight: 500">/ 1,50</span></div><div style="height: 6px; background: #EFEDE7; border-radius: 3px; margin-top: 8px"><div style="width: 61%; height: 6px; background: #B45309; border-radius: 3px"></div></div></div>
+<div class="card" style="padding: 16px"><div class="muted" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em">Tokens</div><div style="font-size: 24px; font-weight: 700; margin-top: 4px">184k</div></div>
+<div class="card" style="padding: 16px"><div class="muted" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em">Judge</div><div style="font-size: 24px; font-weight: 700; margin-top: 4px">agy · google</div></div>
+</div>
+<section class="card" aria-label="TASKs" style="overflow-x: auto">
+<table style="width: 100%; border-collapse: collapse; min-width: 760px">
+<thead><tr><th class="th">TASK</th><th class="th">Depende de</th><th class="th">Estado</th><th class="th">Tentativas</th><th class="th">Custo</th><th class="th">Ações</th></tr></thead>
+<tbody>
+<sc-for list="{{ tasks }}" as="t" hint-placeholder-count="4">
+<tr>
+<td class="td"><div class="mono" style="font-weight: 600">{{ t.id }}</div><div class="muted" style="font-size: 13px">{{ t.title }}</div></td>
+<td class="td mono muted" style="font-size: 13px">{{ t.deps }}</td>
+<td class="td"><span style="{{ t.stateStyle }}">{{ t.state }}</span></td>
+<td class="td mono" style="font-size: 13px; white-space: pre-line">{{ t.attempts }}</td>
+<td class="td mono" style="font-size: 13px">{{ t.cost }}</td>
+<td class="td"><sc-if value="{{ t.canAct }}" hint-placeholder-val="{{ false }}"><div style="display: flex; gap: 8px; flex-wrap: wrap"><button type="button" class="btn" onClick="{{ retry }}">Retry</button><button type="button" class="btn btn-primary" onClick="{{ escalate }}">Escalar ▲</button></div></sc-if></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</section>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px">
+<section class="card" aria-label="Ao vivo" style="padding: 16px; display: flex; flex-direction: column; gap: 8px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Ao vivo · {{ liveTitle }}</h2>
+<pre class="mono" style="margin: 0; background: #1C1B18; color: #E7E4DC; border-radius: 8px; padding: 12px; font-size: 12px; line-height: 1.6; white-space: pre-wrap; overflow-x: auto">{{ liveLog }}</pre>
+</section>
+<section class="card" aria-label="Log do PLAN" style="padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">log.md</h2>
+<sc-for list="{{ planLog }}" as="l" hint-placeholder-count="4">
+<div style="display: flex; gap: 12px; font-size: 14px"><span class="mono muted" style="font-size: 13px; flex: 0 0 44px">{{ l.t }}</span><span>{{ l.text }}</span></div>
+</sc-for>
+</section>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isModels }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<h1 style="margin: 0; font-size: 28px; font-weight: 700">Modelos e quota</h1>
+<section class="card" aria-label="Providers" style="overflow-x: auto">
+<table style="width: 100%; border-collapse: collapse; min-width: 820px">
+<thead><tr><th class="th">Provider</th><th class="th">Runtimes</th><th class="th">Janela</th><th class="th" style="width: 220px">Uso</th><th class="th">Reseta</th><th class="th">Fonte</th></tr></thead>
+<tbody>
+<sc-for list="{{ providers }}" as="p" hint-placeholder-count="6">
+<tr>
+<td class="td"><div style="font-weight: 600">{{ p.name }}</div><div class="muted" style="font-size: 13px">{{ p.role }}</div></td>
+<td class="td mono" style="font-size: 13px">{{ p.runtimes }}</td>
+<td class="td" style="font-size: 13px">{{ p.window }}</td>
+<td class="td"><div style="display: flex; align-items: center; gap: 8px"><div style="flex: 1 1 auto; height: 8px; background: #EFEDE7; border-radius: 4px"><div style="{{ p.barStyle }}"></div></div><span class="mono" style="font-size: 13px; min-width: 64px">{{ p.used }}</span></div></td>
+<td class="td mono" style="font-size: 13px">{{ p.reset }}</td>
+<td class="td muted" style="font-size: 13px">{{ p.source }}</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</section>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px">
+<section class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 10px" aria-label="Budget do Zen">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Budget do Zen (pago)</h2>
+<div style="font-size: 24px; font-weight: 700">US$ 1,80 <span class="muted" style="font-size: 14px; font-weight: 500">de 10,00 no mês</span></div>
+<div style="height: 8px; background: #EFEDE7; border-radius: 4px"><div style="width: 18%; height: 8px; background: #1D4ED8; border-radius: 4px"></div></div>
+<div class="muted" style="font-size: 13px">Teto por TASK US$ 0,25 · por PLAN US$ 1,50 · aviso aos 80%</div>
+</section>
+<section class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 10px" aria-label="FTPR por modelo">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">FTPR por modelo (maestro, 30 dias)</h2>
+<sc-for list="{{ ftpr }}" as="f" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 12px; font-size: 13px"><span class="mono" style="flex: 0 0 210px">{{ f.model }}</span><div style="flex: 1 1 auto; height: 8px; background: #EFEDE7; border-radius: 4px"><div style="{{ f.barStyle }}"></div></div><span class="mono" style="min-width: 40px; text-align: right">{{ f.pct }}</span></div>
+</sc-for>
+</section>
+</div>
+</div>
+</sc-if>
+
+</main>
+<footer class="muted" style="padding: 16px 24px; font-size: 12px; border-top: 1px solid #E2DED4">Protótipo · dados de exemplo misturados com o estado real do .ginga (PLAN-0002, PLAN-0003, SPEC-0001).</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { tab: 'inbox', showComposer: false, intentCreated: false, resolved: [], replying: null, task3: 'failed', paused: false };
+}
+resolve(item, outcome) {
+this.setState({ resolved: this.state.resolved.concat([{ id: item.id, ref: item.ref, outcome: outcome }]), replying: null });
+}
+renderVals() {
+const s = this.state;
+const go = (tab) => () => this.setState({ tab: tab });
+const tabDefs = [['inbox', 'Inbox'], ['board', 'Quadro'], ['plan', 'PLAN-0005'], ['models', 'Modelos']];
+const base = 'min-height: 44px; padding: 0 14px; border-radius: 8px; border: 0; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; ';
+const inboxDefs = [
+{ id: 'b1', kind: 'Blocker', ref: 'SPEC-0001', age: 'há 12 min', via: 'Spec Judge', chipStyle: 'background: #FEF3C7; color: #78350F',
+title: 'Qual o nome do orquestrador?', detail: 'O Spec Judge não aprova sem isso. Proposta em DECISION-0001. O dono escolheu Manda-CARU (Coordination of Agent Runtime Units).',
+actions: [['Manda-CARU', true, 'Respondido: Manda-CARU'], ['Mand-Ingá', false, 'Respondido: Mand-Ingá'], ['Responder…', false, null]] },
+{ id: 'a1', kind: 'Aprovar', ref: 'PLAN-0006', age: 'há 40 min', via: 'Planner', chipStyle: 'background: #DBEAFE; color: #1E3A8A',
+title: 'cache-ledger · 4 TASKs · estimativa US$ 0,40', detail: 'Linter ok: DAG sem ciclo, touch disjunto entre TASKs paralelas, tests_frozen em todas. Tiers: free ×3, strong ×1.',
+actions: [['Aprovar', true, 'Aprovado · entra na fila'], ['Ver plano', false, 'nav'], ['Rejeitar…', false, 'Rejeitado · volta ao Planner']] },
+{ id: 'u1', kind: 'Budget', ref: 'PLAN-0005', age: 'há 1 h', via: 'manda', chipStyle: 'background: #EDE9FE; color: #4C1D95',
+title: 'TASK-03: strong do Go sem quota; próxima opção é Zen pago', detail: 'O PLAN está em US$ 0,92 de 1,50. Usar zen/deepseek-v4-pro deve custar cerca de US$ 0,30; passa do teto do PLAN, por isso pede OK.',
+actions: [['Liberar escalada', true, 'Zen pago liberado · TASK-03 em zen/deepseek-v4-pro'], ['Pausar PLAN', false, 'PLAN-0005 pausado'], ['Ver tentativas', false, 'nav']] },
+{ id: 'd1', kind: 'Decisão', ref: 'PLAN-0003', age: 'ontem', via: 'Planner', chipStyle: 'background: #E7E4DC; color: #3A3832',
+title: 'Worktree pi-harness-ux: ~780 linhas não commitadas', detail: 'É HUD e TUI driver. A HUD vai para o ginga, então a proposta é commit WIP na branch e estacionar.',
+actions: [['Commit WIP e estacionar', true, 'WIP commitado · worktree estacionada'], ['Descartar', false, 'Marcado para descarte (confirmação na CLI)']] }
+];
+const done = {};
+s.resolved.forEach((r) => { done[r.id] = true; });
+const pending = inboxDefs.filter((it) => !done[it.id]).map((it) => ({
+id: it.id, kind: it.kind, ref: it.ref, age: it.age, via: it.via, chipStyle: it.chipStyle, title: it.title, detail: it.detail,
+replying: s.replying === it.id,
+sendReply: () => this.resolve(it, 'Resposta livre registrada · PLAN destravado'),
+actions: it.actions.map((a) => ({
+label: a[0], cls: a[1] ? 'btn btn-primary' : 'btn',
+run: () => {
+if (a[2] === null) { this.setState({ replying: it.id }); return; }
+if (a[2] === 'nav') { this.setState({ tab: it.ref === 'PLAN-0006' ? 'board' : 'plan' }); return; }
+this.resolve(it, a[2]);
+}
+}))
+}));
+const card = (ref, title, flag, kind, meta, opens) => ({
+ref: ref, title: title, flag: flag, meta: meta,
+flagStyle: 'align-self: flex-start; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 6px; ' + ({ blocker: 'background: #FEF3C7; color: #78350F', approve: 'background: #DBEAFE; color: #1E3A8A', run: 'background: #1C1B18; color: #FFFFFF', ok: 'background: #E7F3EF; color: #134E48', idle: 'background: #EFEDE7; color: #3A3832' })[kind],
+open: opens ? go('plan') : () => {}
+});
+const columns = [
+{ name: 'Intent', cards: [card('INTENT-0004', 'Skill deepen', 'backlog', 'idle', 'workspace', false), card('INTENT-0009', 'Status de run p/ Hermes', 'triagem', 'idle', 'p-inga · exemplo', false)] },
+{ name: 'Spec', cards: [card('SPEC-0001', 'G-Ingá revamp', 'blocker', 'blocker', 'nome do orquestrador', false), card('SPEC-0007', 'Auth OAuth', 'draft', 'idle', 'exemplo', false)] },
+{ name: 'Plan', cards: [card('PLAN-0003', 'Worktrees paradas', 'espera o dono', 'blocker', '5 decisões', false), card('PLAN-0006', 'cache-ledger', 'aprovar', 'approve', '4 TASKs · ~US$0,40', false)] },
+{ name: 'Executando', cards: [card('PLAN-0005', 'Runner resiliente', '2/4 · rodando', 'run', 'go/qwen3.8-flash', true)] },
+{ name: 'Verificando', cards: [card('PLAN-0004', 'Eventos JSONL', 'judge', 'approve', 'agy · google', false)] },
+{ name: 'Feito', cards: [card('PLAN-0002', 'Bundle .ginga', 'ok', 'ok', '27/out', false)] }
+].map((c) => ({ name: c.name, cards: c.cards, count: String(c.cards.length) }));
+const st = (bg, fg) => 'display: inline-block; font-size: 13px; font-weight: 600; padding: 2px 8px; border-radius: 6px; background: ' + bg + '; color: ' + fg;
+const t3 = { failed: ['falhou no verify', st('#FEF3C7', '#78350F'), '1 go/qwen3.8-flash ✗\n2 go/qwen3.8-flash ✗', true],
+retry: ['rodando', st('#1C1B18', '#FFFFFF'), '1 go/qwen3.8-flash ✗\n2 go/qwen3.8-flash ✗\n3 go/qwen3.8-flash …', false],
+escalated: ['rodando · strong', st('#1C1B18', '#FFFFFF'), '1 go/qwen3.8-flash ✗\n2 go/qwen3.8-flash ✗\n3 zen/deepseek-v4-pro …', false] }[s.task3];
+const tasks = [
+{ id: 'TASK-01', title: 'Runner continua após falha', deps: '—', state: 'receipt ok', stateStyle: st('#E7F3EF', '#134E48'), attempts: '1 zen/glm-5.3-flash-free ✓', cost: 'US$ 0,00', canAct: false },
+{ id: 'TASK-02', title: 'Retry com backoff', deps: 'TASK-01', state: 'receipt ok', stateStyle: st('#E7F3EF', '#134E48'), attempts: '1 zen/nemotron-free ✗ quota\n2 go/qwen3.8-flash ✓', cost: 'US$ 0,00', canAct: false },
+{ id: 'TASK-03', title: 'Docs do pipeline', deps: 'TASK-02', state: t3[0], stateStyle: t3[1], attempts: t3[2], cost: 'US$ 0,92', canAct: t3[3] },
+{ id: 'TASK-04', title: 'Bench do runner', deps: 'TASK-03', state: 'bloqueada', stateStyle: st('#EFEDE7', '#3A3832'), attempts: '—', cost: '—', canAct: false }
+];
+const running = s.task3 !== 'failed';
+const bar = (pct, color) => 'width: ' + pct + '%; height: 8px; border-radius: 4px; background: ' + color;
+return {
+tabs: tabDefs.map((t) => ({ label: t[0] === 'inbox' ? 'Inbox · ' + pending.length : t[1], pick: go(t[0]),
+style: base + (s.tab === t[0] ? 'background: #F6F5F1; color: #1C1B18' : 'background: transparent; color: #E7E4DC') })),
+toggleComposer: () => this.setState({ showComposer: !s.showComposer, intentCreated: false }),
+createIntent: () => this.setState({ showComposer: false, intentCreated: true }),
+showComposer: s.showComposer, intentCreated: s.intentCreated,
+isInbox: s.tab === 'inbox', isBoard: s.tab === 'board', isPlan: s.tab === 'plan', isModels: s.tab === 'models',
+pending: pending, inboxEmpty: pending.length === 0, pendingLabel: pending.length + ' pendências · as mais antigas primeiro',
+resolved: s.resolved, hasResolved: s.resolved.length > 0,
+columns: columns,
+tasks: tasks,
+retry: () => this.setState({ task3: 'retry' }),
+escalate: () => this.setState({ task3: 'escalated' }),
+togglePause: () => this.setState({ paused: !s.paused }),
+pauseLabel: s.paused ? 'Retomar PLAN' : 'Pausar PLAN',
+planStatus: s.paused ? 'pausado pelo dono' : (running ? 'executando · TASK-03' : 'executando · TASK-03 aguarda decisão'),
+planStatusStyle: s.paused ? st('#EFEDE7', '#3A3832') : st('#1C1B18', '#FFFFFF'),
+liveTitle: running ? 'TASK-03 tentativa 3' : 'TASK-03 tentativa 2 (encerrada)',
+liveLog: running
+? '$ manda run TASK-03 --runtime ' + (s.task3 === 'escalated' ? 'opencode --model zen/deepseek-v4-pro' : 'opencode --model go/qwen3.8-flash') + '\n→ lendo PLAN.md, TASK-03-docs.md\n→ editando docs/architecture.md (touch ok)\n→ rodando done_when: bun test tests/unit/docs_0031_contract.test.ts\n…'
+: '$ pinga verify plans/PLAN-0005/TASK-03-docs.md\n✗ done_when exit 1\n  expected "FULL_PASS" in docs/usage.md\n✗ tentativa 2 de 3 · próxima: escalar?',
+planLog: [
+{ t: '14:02', text: 'TASK-03 tentativa 2 falhou: done_when exit 1' },
+{ t: '13:40', text: 'Planner reescreveu TASK-03 (touch reduzido para 2 arquivos)' },
+{ t: '13:12', text: 'TASK-02 ok na tentativa 2 (zen free esgotou quota)' },
+{ t: '12:55', text: 'TASK-01 ok · receipt selado no ledger' }
+],
+providers: [
+{ name: 'claude-pro', role: 'Spec Researcher · Planner', runtimes: 'claude', window: '5 h / 7 dias', used: '72%', barStyle: bar(72, '#B45309'), reset: '18:00', source: 'statusline rate_limits' },
+{ name: 'chatgpt-go', role: 'Spec Judge · Verifier Judge', runtimes: 'codex', window: '30 dias', used: '1%', barStyle: bar(1, '#1D4ED8'), reset: '26/nov', source: '~/.codex rollout rate_limits' },
+{ name: 'gemini-pro', role: 'Verifier Judge', runtimes: 'agy', window: '?', used: 'manual', barStyle: bar(0, '#1D4ED8'), reset: '?', source: 'barra de status do agy' },
+{ name: 'opencode-go', role: 'Executor cheap/medium', runtimes: 'opencode, pi', window: '?', used: 'sem leitura', barStyle: bar(0, '#1D4ED8'), reset: '?', source: 'opencode stats (só consumo)' },
+{ name: 'opencode-zen', role: 'Executor free · pago no limite', runtimes: 'opencode, pi', window: 'mês', used: 'US$ 1,80', barStyle: bar(18, '#1D4ED8'), reset: '1/nov', source: 'state.db' },
+{ name: 'local-llama', role: 'TASKs minúsculas · offline', runtimes: 'pi', window: '∞', used: '—', barStyle: bar(0, '#1D4ED8'), reset: '—', source: 'curl :8089' }
+],
+ftpr: [
+{ model: 'go/qwen3.8-flash', pct: '71%', barStyle: bar(71, '#1C1B18') },
+{ model: 'go/kimi-k3.1-pro', pct: '68%', barStyle: bar(68, '#1C1B18') },
+{ model: 'zen/glm-5.3-flash-free', pct: '58%', barStyle: bar(58, '#1C1B18') },
+{ model: 'zen/nemotron-3.5-lightning-free', pct: '12%', barStyle: bar(12, '#1C1B18') }
+]
+};
+}
+}
+</script>
+</body>
+</html>

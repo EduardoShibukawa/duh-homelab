@@ -1,0 +1,5 @@
+# duh-homelab — hooks git versionados (corte dos hooks manuais de 2026-10-28, PLAN-0022 TASK-04).
+# Merge na main só por .ginga/bin/merge-gate.sh (exporta MERGE_GATE=1). Fontes: .ginga/hooks/git/.
+[git]
+repos = ["ginga", "manda", "p-inga"]
+hooks = ["pre-merge-commit", "pre-commit", "reference-transaction"]

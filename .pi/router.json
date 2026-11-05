@@ -1,0 +1,69 @@
+{
+  "version": "2.0",
+  "roles": {
+    "planner": [
+      {
+        "provider": "opencode-go",
+        "model": "qwen3.8-coder",
+        "tier": "flash",
+        "quotaWeight": 1
+      },
+      {
+        "provider": "google",
+        "model": "gemini-2.5-flash",
+        "tier": "strong",
+        "quotaWeight": 2
+      }
+    ],
+    "decomposer": [
+      {
+        "provider": "opencode-go",
+        "model": "qwen3.8-flash",
+        "tier": "flash",
+        "quotaWeight": 1
+      }
+    ],
+    "worker": {
+      "free": [
+        {
+          "provider": "opencode-go",
+          "model": "minimax-m3.1-flash-free",
+          "tier": "free",
+          "quotaWeight": 0
+        }
+      ],
+      "medium": [
+        {
+          "provider": "opencode-go",
+          "model": "qwen3.8-flash",
+          "tier": "medium",
+          "quotaWeight": 1
+        }
+      ],
+      "strong": [
+        {
+          "provider": "google",
+          "model": "gemini-2.5-flash",
+          "tier": "strong",
+          "quotaWeight": 2
+        },
+        {
+          "provider": "anthropic",
+          "model": "claude-3-7-sonnet",
+          "tier": "strong",
+          "quotaWeight": 5
+        }
+      ]
+    }
+  },
+  "localAnchor": {
+    "provider": "local-llama",
+    "model": "ornith-9b-local",
+    "baseUrl": "http://127.0.0.1:8089/v1",
+    "infiniteQuota": true
+  },
+  "emergencyFallback": {
+    "provider": "opencode-go",
+    "model": "qwen3.8-flash"
+  }
+}

@@ -1,0 +1,4 @@
+- TASK: PLAN-0013/T81 (p-inga, worktree p-inga-plan-0013, branch plan/0013)
+- receipt: T81 pass seq 722 (pinga verify)
+- bun test: tests/learn_migrado.test.ts 1 pass 0 fail (7 expect)
+- arquivos: src/lessons_migrado.ts, src/cli.ts (ramo learn propose/promote), tasks/T81/PLAN.md

@@ -1,0 +1,9 @@
+- TASK-06 (pi:nvidia/minimaxai/minimax-m3.1-flash): o fixture v1 usa IDs de 25 caracteres, rejeitados pelo validador global de ULID; o importador valida o envelope do bench localmente.
+- TASK-09 (pi:nvidia/minimaxai/minimax-m3.1-flash): O SQLite temporário exigia um caminho dinâmico por fixture para manter a paridade CLI×run direto sem acessar o opencode.db real.
+- TASK-10 (pi:nvidia/stepfun-ai/step-5-preview): o gate de cobertura valida a substring literal `  quota: {` no fonte do teste (não só a paridade com o registro), então o caso tem de existir textualmente em `tests/cli_verbs.test.ts`; a paridade CLI×run se mantém sozinha porque ambos os lados leem o mesmo `$HOME`/state.db e `emitEvent` é no-op sem `$GINGA_EVENTS`.
+- TASK-01 (pi:nvidia/minimaxai/minimax-m3.1-flash): o contrato de T356 proíbe alterar o registry, então `metrics` foi exposto somente em `src/verbs/read.ts`.
+- TASK-12 (pi:nvidia/minimaxai/minimax-m3.1-flash): a suíte completa passou (789 testes), mas `bunx tsc` exige `bun-types`, ausente deste checkout.
+- TASK-13 (pi:nvidia/minimaxai/minimax-m3.1-flash): a contaminação prévia do .pyc fora do touch era a causa do bloqueio anterior.
+- TASK-15 (pi:nvidia/minimaxai/minimax-m3.1-flash): o judge Qwen confundiu o diff com prefixos c/w; com prefixos a/b, aprovou.
+- TASK-16 (pi:nvidia/minimaxai/minimax-m3.1-flash): a UI real precisava renderizar via innerHTML puro para funcionar também no stub sem DOM.
+- TASK-18 (pi:nvidia/minimaxai/minimax-m3.1-flash): o fixture ISO mascarava o epoch numérico usado nos rollouts reais do Codex.

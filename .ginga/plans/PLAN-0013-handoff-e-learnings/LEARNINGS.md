@@ -1,0 +1,5 @@
+- TASK-02 (opencode/glm-5.3-flash-free): o cli.ts (fora do touch) só imprime `errors`, então o aviso de LEARNINGS.md teve de sair como efeito colateral em stderr lá dentro do `lintBundle`, e `ExportResult = LintResult & {exported}` (okf.ts, também fora do touch) restringiu tranquilamente o formato do novo campo — nenhum desses arquivos precisou ser tocado.`
+- TASK-18 (pi:nvidia/minimaxai/minimax-m3.1-flash): o parser genérico preservava o hífen de `--from-session`, impedindo o casamento com `from_session`.
+- TASK-19 (pi:nvidia/minimaxai/minimax-m3.1-flash): `VERBS` também funciona como contrato de cobertura; por isso `handoff hook` foi resolvido internamente via `getVerb`, sem integrá-lo à enumeração pública.
+- TASK-24 (pi:nvidia/minimaxai/minimax-m3.1-flash): o frontmatter já era parseado, mas o título era descartado; o verbo também truncava os resultados e tratava a lista separada por vírgula como um único caminho.
+- TASK-28 (pi:nvidia/minimaxai/minimax-m3.1-flash): o --open emitia o evento em dois caminhos separados, ambos com trigger/depth fixos.

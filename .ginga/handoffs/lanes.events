@@ -1,0 +1,1388 @@
+[15:49] pipeline antigo terminou: [15:49] Pipeline auto-20261028-1428-r2: PLAN-0010-tick-serve-notifier ginga: gate 2;
+[15:49] [ginga] rodada 1/6 começando: 1 com achado do judge, 3 no backlog
+[15:49] [p-inga] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[15:49] [manda] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[15:49] 3 lanes lançadas (ginga, p-inga, manda)
+[16:05] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo opencode/glm-5.3-flash-free
+[16:05] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo opencode/glm-5.3-flash-free
+[16:05] [manda] rodada 1: nenhum ready
+[16:06] [ginga] rodada 1: PLAN-0010-tick-serve-notifier: gate 2; 
+[16:06] [manda] rodada 2/6 começando: 0 com achado do judge, 2 no backlog
+[16:06] [ginga] rodada 2/6 começando: 1 com achado do judge, 3 no backlog
+[16:13] [manda] rodada 2: nenhum ready
+[16:13] [manda] rodada 3/6 começando: 0 com achado do judge, 1 no backlog
+[20:27] lanes relançadas via systemd-run (as anteriores morreram com o fim da sessão do Claude por volta de 16:20)
+[20:27] [ginga] rodada 1/6 começando: 1 com achado do judge, 3 no backlog
+[20:27] [p-inga] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[20:27] [manda] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[20:43] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo opencode/glm-5.3-flash-free
+[20:43] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo opencode/glm-5.3-flash-free
+[20:43] [manda] rodada 1: nenhum ready
+[20:43] [manda] rodada 2/6 começando: 0 com achado do judge, 1 no backlog
+[20:44] [ginga] rodada 1: PLAN-0010-tick-serve-notifier: gate 12; 
+[20:44] [ginga] rodada 2/6 começando: 1 com achado do judge, 3 no backlog
+[20:55] [manda] rodada 2: PLAN-0022-merge-gate-no-pacote: gate 0; 
+[20:55] [manda] lane: nada pendente; encerrada
+[20:56] [ginga] rodada 2: PLAN-0010-tick-serve-notifier: gate 0; PLAN-0020-cost-usd-validation: gate 0; 
+[20:56] [ginga] rodada 3/6 começando: 0 com achado do judge, 1 no backlog
+[20:59] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[20:59] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[21:03] [manda] rodada 1: PLAN-0022-merge-gate-no-pacote: gate 0; 
+[21:03] [manda] rodada 2/6 começando: 0 com achado do judge, 3 no backlog
+[21:04] [ginga] rodada 3: nenhum ready
+[21:04] [ginga] rodada 4/6 começando: 0 com achado do judge, 3 no backlog
+[21:07] [manda] rodada 2: PLAN-0022-merge-gate-no-pacote: gate 11; 
+[21:07] [manda] rodada 3/6 começando: 1 com achado do judge, 2 no backlog
+[21:07] [p-inga] rodada 1: PLAN-0010-tick-serve-notifier: gate 11; PLAN-0021-holdout-exit97-test: gate 0; 
+[21:07] [p-inga] rodada 2/6 começando: 1 com achado do judge, 0 no backlog
+[21:08] [p-inga] rodada 2: PLAN-0010-tick-serve-notifier: gate 11; 
+[21:09] [p-inga] rodada 2 sem progresso (nada mudou). Lane parada.
+[21:10] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[21:10] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[21:12] [manda] rodada 3: PLAN-0022-merge-gate-no-pacote: gate 0; 
+[21:12] [manda] rodada 4/6 começando: 0 com achado do judge, 1 no backlog
+[21:13] [p-inga] rodada 1: PLAN-0010-tick-serve-notifier: gate 0; 
+[21:13] [p-inga] lane: nada pendente; encerrada
+[21:15] [ginga] rodada 4: PLAN-0010-tick-serve-notifier: gate 0; PLAN-0022-merge-gate-no-pacote: gate 0; 
+[21:15] [ginga] rodada 5/6 começando: 0 com achado do judge, 1 no backlog
+[21:17] [manda] rodada 4: PLAN-0022-merge-gate-no-pacote: gate 13; 
+[21:17] [manda] rodada 5/6 começando: 1 com achado do judge, 0 no backlog
+[21:22] [manda] rodada 5: PLAN-0022-merge-gate-no-pacote: gate 0; 
+[21:22] [manda] lane: nada pendente; encerrada
+[21:23] [ginga] rodada 5: PLAN-0024-doctor-hooks-drift: gate 0; 
+[21:23] [ginga] rodada 6/6 começando: 0 com achado do judge, 3 no backlog
+[21:31] [ginga] rodada 6: PLAN-0023-vigia-e-supervisor: gate 0; 
+[21:31] [ginga] lane: 6 rodadas concluídas
+[21:40] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[21:40] [ginga] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[21:40] [vigia] lane manda estava parada com 1 pendência(s): relançada
+[21:40] [manda] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[21:44] [ginga] rodada 1: nenhum ready
+[21:44] [ginga] rodada 2/6 começando: 0 com achado do judge, 1 no backlog
+[21:44] [manda] rodada 1: PLAN-0022-merge-gate-no-pacote: gate 0; 
+[21:45] [manda] lane: nada pendente; encerrada
+[21:50] [ginga] rodada 2: nenhum ready
+[21:50] [ginga] rodada 3/6 começando: 0 com achado do judge, 1 no backlog
+[21:54] [ginga] rodada 3: PLAN-0023-vigia-e-supervisor: gate 0; 
+[21:54] [ginga] rodada 4/6 começando: 0 com achado do judge, 1 no backlog
+[22:00] [ginga] rodada 4: PLAN-0023-vigia-e-supervisor: gate 0; 
+[22:01] [ginga] rodada 5/6 começando: 0 com achado do judge, 2 no backlog
+[22:11] [ginga] rodada 5: PLAN-0023-vigia-e-supervisor: gate 11; 
+[22:11] [ginga] rodada 6/6 começando: 1 com achado do judge, 0 no backlog
+[22:16] [ginga] rodada 6: PLAN-0023-vigia-e-supervisor: gate 0; 
+[22:17] [ginga] lane: 6 rodadas concluídas
+[22:20] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[22:20] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[22:25] [ginga] rodada 1: PLAN-0023-vigia-e-supervisor: gate 0; 
+[22:25] [ginga] rodada 2/6 começando: 0 com achado do judge, 1 no backlog
+[22:31] [ginga] rodada 2: PLAN-0023-vigia-e-supervisor: gate 0; 
+[22:31] [ginga] lane: nada pendente; encerrada
+[22:40] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[22:40] [ginga] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[22:40] [vigia] lane manda estava parada com 1 pendência(s): relançada
+[22:40] [manda] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[22:44] [ginga] rodada 1: PLAN-0023-vigia-e-supervisor: gate 13; 
+[22:44] [ginga] rodada 2/6 começando: 1 com achado do judge, 0 no backlog
+[22:47] [manda] rodada 1: PLAN-0023-vigia-e-supervisor: gate 2; 
+[22:47] [manda] rodada 2/6 começando: 1 com achado do judge, 0 no backlog
+[22:50] [vigia] lane p-inga estava parada com 2 pendência(s): relançada
+[22:50] [p-inga] rodada 1/6 começando: 2 com achado do judge, 0 no backlog
+[22:50] [manda] CRÍTICO: a main de manda mudou durante o operador (fora do gate). Lane parada.
+[22:52] [p-inga] rodada 1: nenhum ready
+[22:52] [p-inga] lane: nada pendente; encerrada
+[22:53] [ginga] rodada 2: PLAN-0010-tick-serve-notifier: gate 13; PLAN-0020-cost-usd-validation: gate 0; PLAN-0023-vigia-e-supervisor: gate 0; 
+[22:53] [ginga] rodada 3/6 começando: 1 com achado do judge, 2 no backlog
+[23:00] [vigia] lane manda estava parada com 2 pendência(s): relançada
+[23:00] [manda] rodada 1/6 começando: 1 com achado do judge, 1 no backlog
+[23:10] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo opencode/glm-5.3-flash-free
+[23:11] [ginga] rodada 3: PLAN-0010-tick-serve-notifier: gate 0; 
+[23:11] [ginga] rodada 4/6 começando: 0 com achado do judge, 2 no backlog
+[23:12] [ginga] rodada 4: nenhum ready
+[23:12] [ginga] rodada 4 sem progresso (nada mudou). Lane parada.
+[23:16] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo opencode/glm-5.3-flash-free
+[23:16] [manda] rodada 1: PLAN-0023-vigia-e-supervisor: gate 0; 
+[23:16] [manda] rodada 2/6 começando: 0 com achado do judge, 1 no backlog
+[23:18] [manda] rodada 2: nenhum ready
+[23:18] [manda] rodada 3/6 começando: 0 com achado do judge, 2 no backlog
+[23:19] [manda] rodada 3: nenhum ready
+[23:19] [manda] rodada 4/6 começando: 0 com achado do judge, 3 no backlog
+[23:20] [manda] rodada 4: nenhum ready
+[23:20] [manda] rodada 4 sem progresso (nada mudou). Lane parada.
+[23:40] [manda] rodada 1/4 começando: 0 com achado do judge, 5 no backlog
+[23:40] [ginga] rodada 1/4 começando: 0 com achado do judge, 4 no backlog
+[23:43] [manda] rodada 1/4 começando: 0 com achado do judge, 5 no backlog
+[23:43] [ginga] rodada 1/4 começando: 0 com achado do judge, 4 no backlog
+[23:44] [ginga] rodada 1/4 começando: 0 com achado do judge, 4 no backlog
+[23:44] [manda] rodada 1/4 começando: 0 com achado do judge, 5 no backlog
+[00:01] [manda] todos os modelos sem cota: lane pausada; o vigia tenta de novo em 1 h
+[00:17] [ginga] todos os modelos sem cota: lane pausada; o vigia tenta de novo em 1 h
+[00:18] [manda] rodada 1/4 começando: 2 com achado do judge, 3 no backlog
+[00:18] [ginga] rodada 1/4 começando: 1 com achado do judge, 2 no backlog
+[00:26] [manda] rodada 1: PLAN-0022-merge-gate-no-pacote: gate 0; PLAN-0023-vigia-e-supervisor: gate 0; 
+[00:26] [manda] rodada 2/4 começando: 0 com achado do judge, 1 no backlog
+[00:30] [ginga] rodada 1: PLAN-0025-hooks-llm-e-stale-ready: gate 0; PLAN-0026-install-bin-link: gate 11; PLAN-0027-limpeza-worktrees: gate 0; 
+[00:30] [ginga] rodada 2/4 começando: 1 com achado do judge, 0 no backlog
+[00:35] [ginga] rodada 2: PLAN-0026-install-bin-link: gate 0; 
+[00:35] [ginga] lane: nada pendente; encerrada
+[00:36] [manda] rodada 2: PLAN-0022-merge-gate-no-pacote: gate 0; 
+[00:36] [manda] lane: nada pendente; encerrada
+[00:36] [ginga] rodada 1/3 começando: 0 com achado do judge, 1 no backlog
+[00:52] [ginga] rodada 1: PLAN-0023-vigia-e-supervisor: gate 0; 
+[00:53] [ginga] lane: nada pendente; encerrada
+- 00:53 Claude: sessão de corte TASK-06 lançada (claude -p Sonnet, prompts/corte-task06.md)
+[00:54] [ginga] rodada 1/3 começando: 0 com achado do judge, 1 no backlog
+[01:08] [ginga] rodada 1: PLAN-0023-vigia-e-supervisor: gate 0; 
+[01:08] [ginga] lane: nada pendente; encerrada
+[01:09] [ginga] rodada 1/3 começando: 0 com achado do judge, 1 no backlog
+[01:18] [ginga] rodada 1: PLAN-0023-vigia-e-supervisor: gate 0; 
+[01:18] [ginga] lane: nada pendente; encerrada
+[01:20] ✅ TUDO PRONTO: backlogs vazios, nada aguardando gate, lanes paradas. mains: manda 502e951; p-inga 25a9110; ginga 39b2a1a;  Report: .ginga/handoffs/REPORT-2026-10-29.md + REPORT-2026-10-29.d/ (judge-e-gate.md, decisoes.md)
+[01:20] [corte] sessão de corte TASK-06 lançada (claude -p Sonnet)
+[01:30] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[01:30] [ginga] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[01:30] [vigia] lane manda estava parada com 1 pendência(s): relançada
+[01:30] [manda] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[01:43] [manda] rodada 1: PLAN-0023-vigia-e-supervisor: gate 0; 
+[01:43] [manda] lane: nada pendente; encerrada
+[01:50] [vigia] lane manda estava parada com 1 pendência(s): relançada
+[01:50] [manda] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[01:58] [ginga] rodada 1: PLAN-0023-vigia-e-supervisor: gate 0; 
+[01:58] [ginga] lane: nada pendente; encerrada
+[01:59] [manda] rodada 1: PLAN-0023-vigia-e-supervisor: gate 0; 
+[01:59] [manda] lane: nada pendente; encerrada
+[07:44] [gira-g] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[07:44] [ginga] rodada 1/6 começando: 0 com achado do judge, 6 no backlog
+[07:44] [p-inga] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[07:44] [manda] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[07:45] [ginga] sem cota em opencode/glm-5.3-flash-free: rodada repetida com opencode-go/deepseek-v4.1-flash
+[07:45] [manda] sem cota em opencode/glm-5.3-flash-free: rodada repetida com opencode-go/deepseek-v4.1-flash
+[07:45] [p-inga] sem cota em opencode/glm-5.3-flash-free: rodada repetida com opencode-go/deepseek-v4.1-flash
+[07:45] [gira-g] sem cota em opencode/glm-5.3-flash-free: rodada repetida com opencode-go/deepseek-v4.1-flash
+[07:45] [p-inga] rodada 2/6 começando: 0 com achado do judge, 3 no backlog
+[07:45] [ginga] rodada 2/6 começando: 0 com achado do judge, 6 no backlog
+[07:45] [gira-g] rodada 2/6 começando: 0 com achado do judge, 2 no backlog
+[07:45] [manda] rodada 2/6 começando: 0 com achado do judge, 3 no backlog
+[07:46] [ginga] sem cota em opencode-go/deepseek-v4.1-flash: rodada repetida com opencode-go/qwen3.8-flash
+[07:46] [p-inga] sem cota em opencode-go/deepseek-v4.1-flash: rodada repetida com opencode-go/qwen3.8-flash
+[07:46] [gira-g] sem cota em opencode-go/deepseek-v4.1-flash: rodada repetida com opencode-go/qwen3.8-flash
+[07:46] [manda] sem cota em opencode-go/deepseek-v4.1-flash: rodada repetida com opencode-go/qwen3.8-flash
+[07:46] [ginga] rodada 3/6 começando: 0 com achado do judge, 6 no backlog
+[07:46] [gira-g] rodada 3/6 começando: 0 com achado do judge, 2 no backlog
+[07:46] [p-inga] rodada 3/6 começando: 0 com achado do judge, 3 no backlog
+[07:46] [manda] rodada 3/6 começando: 0 com achado do judge, 3 no backlog
+[07:47] [ginga] todos os modelos sem cota: lane pausada; o vigia tenta de novo em 1 h
+[07:47] [gira-g] todos os modelos sem cota: lane pausada; o vigia tenta de novo em 1 h
+[07:47] [p-inga] todos os modelos sem cota: lane pausada; o vigia tenta de novo em 1 h
+[07:47] [manda] todos os modelos sem cota: lane pausada; o vigia tenta de novo em 1 h
+[07:48] [gira-g] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[07:48] [p-inga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[07:48] [manda] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[07:48] [ginga] rodada 1/6 começando: 0 com achado do judge, 6 no backlog
+[07:49] [ginga] sem cota em opencode/glm-5.3-flash-free: rodada repetida com opencode-go/deepseek-v4.1-flash
+[07:49] [p-inga] sem cota em opencode/glm-5.3-flash-free: rodada repetida com opencode-go/deepseek-v4.1-flash
+[07:49] [gira-g] sem cota em opencode/glm-5.3-flash-free: rodada repetida com opencode-go/deepseek-v4.1-flash
+[07:49] [manda] sem cota em opencode/glm-5.3-flash-free: rodada repetida com opencode-go/deepseek-v4.1-flash
+[07:49] [p-inga] rodada 2/6 começando: 0 com achado do judge, 3 no backlog
+[07:49] [ginga] rodada 2/6 começando: 0 com achado do judge, 6 no backlog
+[07:49] [gira-g] rodada 2/6 começando: 0 com achado do judge, 2 no backlog
+[07:49] [manda] rodada 2/6 começando: 0 com achado do judge, 3 no backlog
+[07:50] [p-inga] sem cota em opencode-go/deepseek-v4.1-flash: rodada repetida com opencode-go/qwen3.8-flash
+[07:50] [ginga] sem cota em opencode-go/deepseek-v4.1-flash: rodada repetida com opencode-go/qwen3.8-flash
+[07:50] [gira-g] sem cota em opencode-go/deepseek-v4.1-flash: rodada repetida com opencode-go/qwen3.8-flash
+[07:50] [manda] sem cota em opencode-go/deepseek-v4.1-flash: rodada repetida com opencode-go/qwen3.8-flash
+[07:50] [p-inga] rodada 3/6 começando: 0 com achado do judge, 3 no backlog
+[07:50] [ginga] rodada 3/6 começando: 0 com achado do judge, 6 no backlog
+[07:50] [gira-g] rodada 3/6 começando: 0 com achado do judge, 2 no backlog
+[07:50] [manda] rodada 3/6 começando: 0 com achado do judge, 3 no backlog
+[07:51] [ginga] sem cota em opencode-go/qwen3.8-flash: rodada repetida com opencode-go/beam-free
+[07:51] [p-inga] sem cota em opencode-go/qwen3.8-flash: rodada repetida com opencode-go/beam-free
+[07:51] [gira-g] sem cota em opencode-go/qwen3.8-flash: rodada repetida com opencode-go/beam-free
+[07:51] [manda] sem cota em opencode-go/qwen3.8-flash: rodada repetida com opencode-go/beam-free
+[07:51] [ginga] rodada 4/6 começando: 0 com achado do judge, 6 no backlog
+[07:51] [p-inga] rodada 4/6 começando: 0 com achado do judge, 3 no backlog
+[07:51] [gira-g] rodada 4/6 começando: 0 com achado do judge, 2 no backlog
+[07:51] [manda] rodada 4/6 começando: 0 com achado do judge, 3 no backlog
+[08:07] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo opencode/glm-5.3-flash-free
+[08:07] [gira-g] infra_stuck: operador sem progresso por 900s, morto; próximo modelo opencode/glm-5.3-flash-free
+[08:07] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo opencode/glm-5.3-flash-free
+[08:07] [ginga] rodada 4: nenhum ready
+[08:07] [gira-g] rodada 4: nenhum ready
+[08:07] [manda] rodada 4: nenhum ready
+[08:07] [ginga] rodada 5/6 começando: 0 com achado do judge, 6 no backlog
+[08:07] [gira-g] rodada 5/6 começando: 0 com achado do judge, 2 no backlog
+[08:07] [manda] rodada 5/6 começando: 0 com achado do judge, 3 no backlog
+[08:08] [gira-g] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[08:08] [p-inga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[08:08] [manda] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[08:19] [p-inga] rodada 1: nenhum ready
+[08:19] [p-inga] rodada 2/6 começando: 0 com achado do judge, 3 no backlog
+[08:22] [gira-g] rodada 1: nenhum ready
+[08:22] [gira-g] rodada 2/6 começando: 0 com achado do judge, 2 no backlog
+[08:31] [manda] rodada 1: nenhum ready
+[08:31] [manda] rodada 2/6 começando: 0 com achado do judge, 3 no backlog
+[08:42] [manda] rodada 2: PLAN-0009-contexto-sem-gira: gate 12; 
+[08:42] [manda] rodada 3/6 começando: 1 com achado do judge, 2 no backlog
+[08:50] [vigia] lane ginga estava parada com 6 pendência(s): relançada
+[08:50] [ginga] rodada 1/6 começando: 0 com achado do judge, 6 no backlog
+[08:50] [vigia] lane p-inga estava parada com 3 pendência(s): relançada
+[08:50] [p-inga] rodada 1/6 começando: 1 com achado do judge, 2 no backlog
+[08:50] [vigia] lane manda estava parada com 3 pendência(s): relançada
+[08:50] [manda] rodada 1/6 começando: 1 com achado do judge, 2 no backlog
+[08:52] [gira-g] rodada 2: PLAN-0009-contexto-sem-gira: gate 0; 
+[08:52] [gira-g] lane: nada pendente; encerrada
+[08:56] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: gate 0; 
+[08:56] [p-inga] rodada 2/6 começando: 0 com achado do judge, 2 no backlog
+[08:59] [manda] rodada 1: PLAN-0009-contexto-sem-gira: gate 0; 
+[08:59] [manda] lane: nada pendente; encerrada
+[08:59] [manda] CRÍTICO: a main de manda mudou durante o operador (fora do gate). Lane parada.
+[09:11] [p-inga] CRÍTICO: a main de p-inga mudou durante o operador (fora do gate). Lane parada.
+[09:13] [ginga] rodada 1: nenhum ready
+[09:13] [ginga] rodada 2/6 começando: 0 com achado do judge, 4 no backlog
+[09:17] [p-inga] rodada 2: PLAN-0006-install-sai-do-pinga: gate 0; PLAN-0009-contexto-sem-gira: judge falhou; 
+[09:17] [p-inga] rodada 3/6 começando: 1 com achado do judge, 0 no backlog
+[09:23] [p-inga] rodada 3: PLAN-0009-contexto-sem-gira: judge falhou; 
+[09:23] [p-inga] rodada 4/6 começando: 1 com achado do judge, 0 no backlog
+[09:24] [p-inga] rodada 4: PLAN-0009-contexto-sem-gira: judge falhou; 
+[09:25] [p-inga] rodada 4 sem progresso (nada mudou). Lane parada.
+[09:30] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[09:30] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[09:31] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[09:31] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[09:40] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[09:40] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[09:41] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[09:41] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[09:50] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[09:50] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[09:51] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[09:51] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[10:00] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[10:00] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[10:01] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[10:01] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[10:05] [ginga] rodada 2: nenhum ready
+[10:05] [ginga] rodada 3/6 começando: 0 com achado do judge, 3 no backlog
+[10:10] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[10:10] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[10:11] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[10:11] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[10:20] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[10:20] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[10:21] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[10:21] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[10:21] [ginga] rodada 3: nenhum ready
+[10:21] [ginga] rodada 4/6 começando: 0 com achado do judge, 3 no backlog
+[10:22] [ginga] rodada 4: nenhum ready
+[10:22] [ginga] rodada 4 sem progresso (nada mudou). Lane parada.
+[10:30] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[10:30] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[10:30] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[10:30] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[10:31] [ginga] rodada 1: nenhum ready
+[10:31] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[10:31] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[10:31] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[10:40] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[10:40] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[10:40] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[10:40] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[10:41] [ginga] rodada 1: nenhum ready
+[10:41] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[10:41] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[10:41] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[10:50] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[10:50] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[10:50] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[10:50] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[10:51] [ginga] rodada 1: nenhum ready
+[10:51] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[10:51] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[10:51] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[11:00] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[11:00] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[11:00] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[11:00] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[11:01] [ginga] rodada 1: nenhum ready
+[11:01] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[11:01] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[11:01] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[11:10] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[11:10] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[11:10] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[11:10] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[11:11] [ginga] rodada 1: nenhum ready
+[11:11] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[11:11] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[11:11] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[11:20] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[11:20] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[11:20] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[11:20] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[11:21] [ginga] rodada 1: nenhum ready
+[11:21] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[11:21] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[11:21] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[11:30] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[11:30] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[11:30] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[11:30] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[11:31] [ginga] rodada 1: nenhum ready
+[11:31] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[11:31] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[11:31] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[11:40] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[11:40] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[11:40] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[11:40] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[11:41] [ginga] rodada 1: nenhum ready
+[11:41] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[11:41] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[11:41] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[11:50] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[11:50] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[11:50] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[11:50] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[11:51] [ginga] rodada 1: nenhum ready
+[11:51] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[11:51] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[11:51] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[12:00] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[12:00] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[12:00] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[12:00] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[12:01] [ginga] rodada 1: nenhum ready
+[12:01] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[12:01] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[12:01] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[12:10] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[12:10] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[12:10] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[12:10] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[12:11] [ginga] rodada 1: nenhum ready
+[12:11] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[12:11] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[12:11] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[12:20] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[12:20] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[12:20] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[12:20] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[12:21] [ginga] rodada 1: nenhum ready
+[12:21] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[12:21] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[12:21] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[12:30] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[12:30] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[12:30] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[12:30] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[12:31] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[12:31] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[12:32] [ginga] rodada 1: nenhum ready
+[12:32] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[12:40] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[12:40] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[12:40] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[12:40] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[12:41] [ginga] rodada 1: nenhum ready
+[12:41] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[12:41] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[12:41] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[12:50] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[12:50] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[12:50] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[12:50] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[12:51] [ginga] rodada 1: nenhum ready
+[12:51] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[12:51] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[12:51] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[13:00] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[13:00] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[13:00] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[13:00] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[13:01] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[13:01] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[13:02] [ginga] rodada 1: nenhum ready
+[13:02] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[13:10] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[13:10] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[13:10] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[13:10] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[13:11] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: judge falhou; 
+[13:11] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[13:12] [ginga] rodada 1: nenhum ready
+[13:12] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[13:18] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[13:18] [ginga] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[13:18] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[13:18] [p-inga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[13:31] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: gate 0; 
+[13:31] [p-inga] lane: nada pendente; encerrada
+[13:47] [ginga] rodada 1: nenhum ready
+[13:48] [ginga] rodada 2/6 começando: 0 com achado do judge, 3 no backlog
+[13:58] [ginga] rodada 2: PLAN-0011-verbos-api-auth: gate 0; 
+[13:58] [ginga] rodada 3/6 começando: 0 com achado do judge, 1 no backlog
+[14:38] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo opencode/qwen3.8-flash
+[14:38] [ginga] rodada 3: nenhum ready
+[14:38] [ginga] rodada 4/6 começando: 0 com achado do judge, 1 no backlog
+[15:11] [ginga] rodada 4: nenhum ready
+[15:11] [ginga] rodada 5/6 começando: 0 com achado do judge, 1 no backlog
+[16:20] [vigia] ATENÇÃO: lanes ativas, mas sem evento há 68 min
+[16:43] [ginga] rodada 5: PLAN-0015-init-e-homelab: gate 0; 
+[16:43] [ginga] lane: nada pendente; encerrada
+[17:10] [vigia] lane ginga estava parada com 6 pendência(s): relançada
+[17:10] [ginga] rodada 1/6 começando: 0 com achado do judge, 6 no backlog
+[17:10] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[17:10] [p-inga] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[17:10] [vigia] lane manda estava parada com 1 pendência(s): relançada
+[17:10] [manda] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[17:11] [ginga] todos os modelos sem cota: lane pausada; o vigia tenta de novo em 1 h
+[17:11] [p-inga] todos os modelos sem cota: lane pausada; o vigia tenta de novo em 1 h
+[17:11] [manda] todos os modelos sem cota: lane pausada; o vigia tenta de novo em 1 h
+[18:20] [vigia] lane ginga estava parada com 8 pendência(s): relançada
+[18:20] [ginga] rodada 1/6 começando: 0 com achado do judge, 8 no backlog
+[18:20] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[18:20] [p-inga] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[18:20] [vigia] lane manda estava parada com 3 pendência(s): relançada
+[18:20] [manda] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[18:23] [vigia] lane ginga estava parada com 8 pendência(s): relançada
+[18:23] [ginga] rodada 1/6 começando: 0 com achado do judge, 8 no backlog
+[18:23] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[18:23] [p-inga] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[18:23] [vigia] lane manda estava parada com 3 pendência(s): relançada
+[18:23] [manda] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[18:25] [ginga] rodada 1: nenhum ready
+[18:25] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[18:25] [manda] rodada 1: nenhum ready
+[18:25] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[18:29] [vigia] lane ginga estava parada com 8 pendência(s): relançada
+[18:29] [ginga] rodada 1/6 começando: 0 com achado do judge, 8 no backlog
+[18:29] [vigia] lane manda estava parada com 3 pendência(s): relançada
+[18:29] [manda] rodada 1/6 começando: 0 com achado do judge, 3 no backlog
+[18:32] [manda] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 1/2 no mesmo modelo em 45s
+[18:32] [p-inga] rodada 1: nenhum ready
+[18:32] [p-inga] rodada 1 sem progresso (nada mudou). Lane parada.
+[18:40] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[18:40] [p-inga] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[18:40] [manda] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 2/2 no mesmo modelo em 45s
+[18:45] [p-inga] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 1/2 no mesmo modelo em 45s
+[18:45] [ginga] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 1/2 no mesmo modelo em 45s
+[18:48] [manda] rodada 1: nenhum ready
+[18:48] [manda] rodada 2/6 começando: 0 com achado do judge, 3 no backlog
+[18:50] [p-inga] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 2/2 no mesmo modelo em 45s
+[18:50] [manda] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 1/2 no mesmo modelo em 45s
+[18:58] [manda] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 2/2 no mesmo modelo em 45s
+[18:58] [ginga] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 2/2 no mesmo modelo em 45s
+[19:05] [manda] rodada 2: nenhum ready
+[19:05] [manda] rodada 3/6 começando: 0 com achado do judge, 3 no backlog
+[19:10] [ginga] rodada 1: nenhum ready
+[19:10] [ginga] rodada 2/6 começando: 0 com achado do judge, 8 no backlog
+[19:11] [ginga] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 1/2 no mesmo modelo em 45s
+[19:15] [ginga] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 2/2 no mesmo modelo em 45s
+[19:15] [p-inga] rodada 1: nenhum ready
+[19:15] [p-inga] rodada 2/6 começando: 0 com achado do judge, 1 no backlog
+[19:15] [manda] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 1/2 no mesmo modelo em 45s
+[19:17] [ginga] rodada 2: nenhum ready
+[19:17] [ginga] rodada 2 sem progresso (nada mudou). Lane parada.
+[19:18] [p-inga] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 1/2 no mesmo modelo em 45s
+[19:20] [vigia] lane ginga estava parada com 8 pendência(s): relançada
+[19:20] [ginga] rodada 1/6 começando: 0 com achado do judge, 8 no backlog
+[19:21] [p-inga] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 2/2 no mesmo modelo em 45s
+[19:28] [manda] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 2/2 no mesmo modelo em 45s
+[19:29] [ginga] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 1/3 no mesmo modelo em 60s
+[19:29] [p-inga] rodada 2: nenhum ready
+[19:29] [p-inga] rodada 2 sem progresso (nada mudou). Lane parada.
+[19:30] [vigia] lane p-inga estava parada com 1 pendência(s): relançada
+[19:30] [p-inga] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[19:31] [ginga] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 2/3 no mesmo modelo em 60s
+[19:31] [manda] rodada 3: nenhum ready
+[19:31] [manda] rodada 4/6 começando: 0 com achado do judge, 3 no backlog
+[19:45] [ginga] rodada 1: nenhum ready
+[19:45] [ginga] rodada 2/6 começando: 0 com achado do judge, 7 no backlog
+[19:52] [p-inga] rodada 1: nenhum ready
+[19:52] [p-inga] rodada 2/6 começando: 0 com achado do judge, 1 no backlog
+[20:02] [ginga] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 1/3 no mesmo modelo em 60s
+[20:05] [ginga] rodada 2: nenhum ready
+[20:05] [ginga] rodada 3/6 começando: 0 com achado do judge, 7 no backlog
+[20:09] [p-inga] rodada 2: PLAN-0013-handoff-e-learnings: gate 0; 
+[20:09] [p-inga] lane: nada pendente; encerrada
+[20:12] [ginga] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 1/3 no mesmo modelo em 60s
+[20:15] [ginga] rodada 3: nenhum ready
+[20:15] [ginga] rodada 3 sem progresso (nada mudou). Lane parada.
+[20:20] [vigia] lane ginga estava parada com 7 pendência(s): relançada
+[20:20] [ginga] rodada 1/6 começando: 0 com achado do judge, 7 no backlog
+[20:21] [ginga] rodada 1: nenhum ready
+[20:21] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[20:30] [vigia] lane ginga estava parada com 7 pendência(s): relançada
+[20:30] [ginga] rodada 1/6 começando: 0 com achado do judge, 7 no backlog
+[20:44] [manda] 429/rate limit em pi:nvidia/minimax-m3.1-flash: nova tentativa 1/2 no mesmo modelo em 45s
+[20:44] [ginga] rodada 1: PLAN-0012-roda-web: judge falhou; 
+[20:44] [ginga] rodada 2/6 começando: 1 com achado do judge, 7 no backlog
+[20:47] [manda] rodada 4: PLAN-0028-ciclo-autonomo-sem-operador: gate 12; 
+[20:47] [manda] rodada 5/6 começando: 1 com achado do judge, 2 no backlog
+[21:19] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo opencode/glm-5.3-flash-free
+[21:20] [manda] rodada 5: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[21:20] [manda] rodada 6/6 começando: 1 com achado do judge, 2 no backlog
+[21:21] [manda] todos os modelos sem cota: lane pausada; o vigia tenta de novo em 1 h
+[22:00] [vigia] lane p-inga estava parada com 2 pendência(s): relançada
+[22:00] [p-inga] rodada 1/6 começando: 2 com achado do judge, 0 no backlog
+[22:00] [vigia] lane manda estava parada com 3 pendência(s): relançada
+[22:00] [manda] rodada 1/6 começando: 1 com achado do judge, 2 no backlog
+[22:12] [vigia] lane ginga estava parada com 7 pendência(s): relançada
+[22:12] [ginga] rodada 1/6 começando: 0 com achado do judge, 7 no backlog
+[22:30] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[22:30] [vigia] lane manda estava parada com 3 pendência(s): relançada
+[22:30] [manda] rodada 1/6 começando: 1 com achado do judge, 2 no backlog
+[22:43] [p-inga] rodada 1: PLAN-0009-contexto-sem-gira: gate 0; PLAN-0013-handoff-e-learnings: gate 0; 
+[22:43] [p-inga] lane: nada pendente; encerrada
+[23:00] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[23:10] [vigia] lane manda estava parada com 6 pendência(s): relançada
+[23:10] [manda] rodada 1/6 começando: 1 com achado do judge, 5 no backlog
+[23:33] [ginga] rodada 1: nenhum ready
+[23:33] [ginga] rodada 2/6 começando: 0 com achado do judge, 8 no backlog
+[00:03] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[00:10] [vigia] lane ginga estava parada com 8 pendência(s): relançada
+[00:10] [ginga] rodada 1/6 começando: 0 com achado do judge, 8 no backlog
+[00:40] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[00:50] [vigia] lane ginga estava parada com 8 pendência(s): relançada
+[00:50] [ginga] rodada 1/6 começando: 0 com achado do judge, 8 no backlog
+[01:09] [manda] rodada 1: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; PLAN-0032-guarda-de-escopo-no-pi: gate 11; 
+[01:10] [manda] rodada 2/6 começando: 2 com achado do judge, 4 no backlog
+[01:30] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/meta/muse-glimmer-30b
+[01:30] [ginga] rodada 1: nenhum ready
+[01:30] [ginga] rodada 2/6 começando: 0 com achado do judge, 8 no backlog
+[01:50] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/meta/muse-glimmer-30b
+[01:50] [manda] rodada 2: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; PLAN-0032-guarda-de-escopo-no-pi: gate 11; 
+[01:50] [manda] rodada 3/6 começando: 2 com achado do judge, 4 no backlog
+[02:07] [ginga] rodada 2: PLAN-0013-handoff-e-learnings: gate 11; 
+[02:07] [ginga] rodada 3/6 começando: 1 com achado do judge, 7 no backlog
+[02:37] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[02:40] [vigia] lane ginga estava parada com 8 pendência(s): relançada
+[02:40] [ginga] rodada 1/6 começando: 1 com achado do judge, 7 no backlog
+[02:49] [manda] rodada 3: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; PLAN-0032-guarda-de-escopo-no-pi: gate 11; 
+[02:49] [manda] rodada 4/6 começando: 2 com achado do judge, 5 no backlog
+[03:19] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[03:20] [vigia] lane manda estava parada com 7 pendência(s): relançada
+[03:20] [manda] rodada 1/6 começando: 2 com achado do judge, 5 no backlog
+[03:50] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[04:00] [vigia] lane manda estava parada com 7 pendência(s): relançada
+[04:00] [manda] rodada 1/6 começando: 2 com achado do judge, 5 no backlog
+[04:30] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[04:40] [vigia] lane manda estava parada com 7 pendência(s): relançada
+[04:40] [manda] rodada 1/6 começando: 2 com achado do judge, 5 no backlog
+[04:49] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[04:49] [ginga] rodada 2/6 começando: 1 com achado do judge, 7 no backlog
+[05:19] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[05:20] [vigia] lane ginga estava parada com 8 pendência(s): relançada
+[05:20] [ginga] rodada 1/6 começando: 1 com achado do judge, 7 no backlog
+[05:44] [manda] rodada 1: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; PLAN-0032-guarda-de-escopo-no-pi: gate 0; 
+[05:44] [manda] rodada 2/6 começando: 1 com achado do judge, 4 no backlog
+[06:14] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[06:20] [vigia] lane manda estava parada com 5 pendência(s): relançada
+[06:20] [manda] rodada 1/6 começando: 1 com achado do judge, 4 no backlog
+[06:50] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[07:00] [vigia] lane manda estava parada com 5 pendência(s): relançada
+[07:00] [manda] rodada 1/6 começando: 1 com achado do judge, 4 no backlog
+[07:03] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/meta/muse-glimmer-30b
+[07:06] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[07:06] [ginga] rodada 2/6 começando: 1 com achado do judge, 7 no backlog
+[07:34] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/meta/muse-glimmer-30b
+[07:35] [manda] rodada 1: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[07:35] [manda] rodada 2/6 começando: 1 com achado do judge, 4 no backlog
+[08:05] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[08:10] [vigia] lane manda estava parada com 5 pendência(s): relançada
+[08:10] [manda] rodada 1/6 começando: 1 com achado do judge, 4 no backlog
+[08:40] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[08:50] [vigia] lane manda estava parada com 5 pendência(s): relançada
+[08:50] [manda] rodada 1/6 começando: 1 com achado do judge, 4 no backlog
+[09:02] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b
+[09:03] [ginga] rodada 2: PLAN-0013-handoff-e-learnings: gate 11; 
+[09:03] [ginga] rodada 3/6 começando: 1 com achado do judge, 7 no backlog
+[09:19] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/meta/muse-glimmer-30b
+[09:19] [manda] rodada 1: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[09:19] [manda] rodada 2/6 começando: 1 com achado do judge, 4 no backlog
+[09:33] [ginga] rodada 3: PLAN-0013-handoff-e-learnings: gate 11; 
+[09:33] [ginga] rodada 4/6 começando: 1 com achado do judge, 6 no backlog
+[09:54] [manda] rodada 2: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[09:54] [manda] rodada 3/6 começando: 1 com achado do judge, 4 no backlog
+[10:11] [ginga] rodada 4: PLAN-0013-handoff-e-learnings: gate 2; 
+[10:11] [ginga] rodada 4 sem progresso (nada mudou). Lane parada.
+[10:20] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[10:20] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[10:26] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b
+[10:26] [manda] rodada 3: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[10:26] [manda] rodada 4/6 começando: 1 com achado do judge, 4 no backlog
+[10:45] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/meta/muse-glimmer-30b
+[10:45] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[10:45] [ginga] rodada 2/6 começando: 1 com achado do judge, 7 no backlog
+[10:55] [manda] rodada 4: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[10:55] [manda] rodada 4 sem progresso (nada mudou). Lane parada.
+[11:00] [vigia] lane manda estava parada com 5 pendência(s): relançada
+[11:00] [manda] rodada 1/6 começando: 1 com achado do judge, 4 no backlog
+[11:30] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[11:32] [ginga] rodada 2: PLAN-0013-handoff-e-learnings: gate 11; 
+[11:32] [ginga] rodada 3/6 começando: 1 com achado do judge, 8 no backlog
+[11:40] [vigia] lane manda estava parada com 5 pendência(s): relançada
+[11:40] [manda] rodada 1/6 começando: 1 com achado do judge, 4 no backlog
+[11:59] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b
+[11:59] [ginga] rodada 3: PLAN-0013-handoff-e-learnings: gate 11; 
+[11:59] [ginga] rodada 4/6 começando: 1 com achado do judge, 8 no backlog
+[12:29] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[12:30] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[12:30] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[12:32] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/meta/muse-glimmer-30b
+[12:32] [manda] rodada 1: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[12:32] [manda] rodada 2/6 começando: 1 com achado do judge, 4 no backlog
+[12:49] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/meta/muse-glimmer-30b
+[12:49] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[12:49] [ginga] rodada 2/6 começando: 1 com achado do judge, 8 no backlog
+[13:13] [manda] rodada 2: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[13:14] [manda] rodada 3/6 começando: 1 com achado do judge, 4 no backlog
+[13:27] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b
+[13:27] [ginga] rodada 2: PLAN-0013-handoff-e-learnings: gate 11; 
+[13:27] [ginga] rodada 3/6 começando: 1 com achado do judge, 8 no backlog
+[13:42] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b
+[13:42] [manda] rodada 3: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[13:42] [manda] rodada 4/6 começando: 1 com achado do judge, 4 no backlog
+[13:58] [ginga] rodada 3: PLAN-0013-handoff-e-learnings: gate 11; 
+[13:58] [ginga] rodada 3 sem progresso (nada mudou). Lane parada.
+[14:00] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[14:00] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[14:06] [manda] rodada 4: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[14:06] [manda] rodada 4 sem progresso (nada mudou). Lane parada.
+[14:10] [vigia] lane manda estava parada com 5 pendência(s): relançada
+[14:10] [manda] rodada 1/6 começando: 1 com achado do judge, 4 no backlog
+[14:23] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/meta/muse-glimmer-30b
+[14:23] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[14:23] [ginga] rodada 2/6 começando: 1 com achado do judge, 8 no backlog
+[14:53] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[15:00] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[15:00] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[15:24] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/meta/muse-glimmer-30b
+[15:26] [manda] rodada 1: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[15:26] [manda] rodada 2/6 começando: 1 com achado do judge, 4 no backlog
+[15:40] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/meta/muse-glimmer-30b
+[15:40] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[15:40] [ginga] rodada 2/6 começando: 1 com achado do judge, 8 no backlog
+[16:10] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[16:12] [manda] rodada 2: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[16:12] [manda] rodada 2 sem progresso (nada mudou). Lane parada.
+[16:20] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[16:20] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[16:20] [vigia] lane manda estava parada com 5 pendência(s): relançada
+[16:20] [manda] rodada 1/6 começando: 1 com achado do judge, 4 no backlog
+[16:24] [ginga] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 1/3 no mesmo modelo em 60s
+[16:26] [ginga] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 2/3 no mesmo modelo em 60s
+[16:29] [ginga] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 3/3 no mesmo modelo em 60s
+[16:32] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[16:32] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[16:33] [manda] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 1/3 no mesmo modelo em 60s
+[16:36] [manda] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 2/3 no mesmo modelo em 60s
+[16:39] [manda] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 3/3 no mesmo modelo em 60s
+[16:40] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[16:40] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[16:41] [manda] rodada 1: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[16:41] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[16:44] [ginga] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 1/3 no mesmo modelo em 60s
+[16:46] [ginga] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 2/3 no mesmo modelo em 60s
+[16:48] [ginga] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 3/3 no mesmo modelo em 60s
+[16:50] [vigia] lane manda estava parada com 5 pendência(s): relançada
+[16:50] [manda] rodada 1/6 começando: 1 com achado do judge, 4 no backlog
+[16:50] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[16:50] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[16:51] [manda] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 1/3 no mesmo modelo em 60s
+[16:53] [manda] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 2/3 no mesmo modelo em 60s
+[16:56] [manda] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 3/3 no mesmo modelo em 60s
+[16:59] [manda] rodada 1: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[16:59] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[17:00] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[17:00] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[17:00] [vigia] lane manda estava parada com 5 pendência(s): relançada
+[17:00] [manda] rodada 1/6 começando: 1 com achado do judge, 4 no backlog
+[17:02] [ginga] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 1/3 no mesmo modelo em 60s
+[17:06] [ginga] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 2/3 no mesmo modelo em 60s
+[17:08] [ginga] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 3/3 no mesmo modelo em 60s
+[17:10] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[17:10] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[17:11] [manda] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 1/3 no mesmo modelo em 60s
+[17:13] [manda] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 2/3 no mesmo modelo em 60s
+[17:15] [manda] 429/rate limit em pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b: nova tentativa 3/3 no mesmo modelo em 60s
+[17:17] [manda] rodada 1: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[17:17] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[17:20] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[17:20] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[17:20] [vigia] lane manda estava parada com 5 pendência(s): relançada
+[17:20] [manda] rodada 1/6 começando: 1 com achado do judge, 4 no backlog
+[17:23] [ginga] 429/rate limit em pi:nvidia/meta/muse-glimmer-30b: nova tentativa 1/3 no mesmo modelo em 60s
+[17:26] [ginga] 429/rate limit em pi:nvidia/meta/muse-glimmer-30b: nova tentativa 2/3 no mesmo modelo em 60s
+[17:29] [ginga] 429/rate limit em pi:nvidia/meta/muse-glimmer-30b: nova tentativa 3/3 no mesmo modelo em 60s
+[17:32] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[17:32] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[17:35] [manda] 429/rate limit em pi:nvidia/meta/muse-glimmer-30b: nova tentativa 1/3 no mesmo modelo em 60s
+[17:39] [manda] 429/rate limit em pi:nvidia/meta/muse-glimmer-30b: nova tentativa 2/3 no mesmo modelo em 60s
+[17:40] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[17:40] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[17:45] [manda] 429/rate limit em pi:nvidia/meta/muse-glimmer-30b: nova tentativa 3/3 no mesmo modelo em 60s
+[17:50] [manda] rodada 1: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[17:50] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[18:00] [vigia] lane manda estava parada com 5 pendência(s): relançada
+[18:00] [manda] rodada 1/6 começando: 1 com achado do judge, 4 no backlog
+[18:07] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:openrouter/openrouter/free
+[18:07] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[18:07] [ginga] rodada 2/6 começando: 1 com achado do judge, 8 no backlog
+[18:24] [manda] rodada 1: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[18:24] [manda] rodada 2/6 começando: 1 com achado do judge, 4 no backlog
+[18:28] [ginga] rodada 2: PLAN-0013-handoff-e-learnings: gate 11; 
+[18:28] [ginga] rodada 2 sem progresso (nada mudou). Lane parada.
+[18:30] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[18:30] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[18:56] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[18:58] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[19:00] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[19:00] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[19:03] [manda] rodada 2: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[19:03] [manda] rodada 3/6 começando: 1 com achado do judge, 4 no backlog
+[19:06] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[19:08] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[19:10] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[19:10] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[19:12] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[19:25] [manda] rodada 3: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[19:25] [manda] rodada 4/6 começando: 1 com achado do judge, 4 no backlog
+[19:55] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[19:57] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[19:57] [ginga] rodada 2/6 começando: 1 com achado do judge, 8 no backlog
+[20:00] [vigia] lane manda estava parada com 5 pendência(s): relançada
+[20:00] [manda] rodada 1/6 começando: 1 com achado do judge, 4 no backlog
+[20:30] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[20:38] [ginga] rodada 2: PLAN-0013-handoff-e-learnings: gate 11; 
+[20:38] [ginga] rodada 3/6 começando: 1 com achado do judge, 8 no backlog
+[20:40] [vigia] lane manda estava parada com 5 pendência(s): relançada
+[20:40] [manda] rodada 1/6 começando: 1 com achado do judge, 4 no backlog
+[21:01] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[21:06] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[21:10] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[21:12] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[21:20] [vigia] lane manda estava parada com 5 pendência(s): relançada
+[21:20] [manda] rodada 1/6 começando: 1 com achado do judge, 4 no backlog
+[21:40] [ginga] rodada 3: PLAN-0013-handoff-e-learnings: gate 11; 
+[21:40] [ginga] rodada 4/6 começando: 1 com achado do judge, 8 no backlog
+[22:00] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[22:10] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[22:13] [manda] rodada 1: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[22:13] [manda] rodada 2/6 começando: 1 com achado do judge, 4 no backlog
+[22:20] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[22:20] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[22:32] [manda] rodada 2: PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[22:32] [manda] rodada 3/6 começando: 1 com achado do judge, 4 no backlog
+[22:37] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[22:55] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:openrouter/cohere/north-mini-code:free
+[22:55] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[22:55] [ginga] rodada 2/6 começando: 1 com achado do judge, 8 no backlog
+[22:56] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[23:07] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[23:25] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[23:30] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[23:30] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[23:33] [manda] rodada 3: PLAN-0028-ciclo-autonomo-sem-operador: gate 2; 
+[23:33] [manda] rodada 4/6 começando: 1 com achado do judge, 4 no backlog
+[23:46] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:openrouter/cohere/north-mini-code:free
+[23:46] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[23:46] [ginga] rodada 2/6 começando: 1 com achado do judge, 8 no backlog
+[00:08] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:openrouter/cohere/north-mini-code:free
+[00:08] [manda] rodada 4: PLAN-0028-ciclo-autonomo-sem-operador: gate 2; 
+[00:08] [manda] rodada 5/6 começando: 1 com achado do judge, 4 no backlog
+[00:10] [ginga] rodada 2: PLAN-0013-handoff-e-learnings: gate 11; 
+[00:10] [ginga] rodada 2 sem progresso (nada mudou). Lane parada.
+[00:15] [manda] rodada 5: PLAN-0028-ciclo-autonomo-sem-operador: gate 2; PLAN-0032-guarda-de-escopo-no-pi: gate 2; 
+[00:15] [manda] rodada 6/6 começando: 2 com achado do judge, 4 no backlog
+[00:18] [manda] 429/rate limit em pi:openrouter/cohere/north-mini-code:free: nova tentativa 1/3 no mesmo modelo em 60s
+[00:20] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[00:20] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[00:20] [manda] rodada 6: PLAN-0028-ciclo-autonomo-sem-operador: gate 2; PLAN-0032-guarda-de-escopo-no-pi: gate 2; 
+[00:20] [manda] rodada 6 sem progresso (nada mudou). Lane parada.
+[00:21] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[00:30] [vigia] lane manda estava parada com 6 pendência(s): relançada
+[00:30] [manda] rodada 1/6 começando: 2 com achado do judge, 4 no backlog
+[00:40] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:openrouter/cohere/north-mini-code:free
+[00:40] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[00:40] [ginga] rodada 2/6 começando: 1 com achado do judge, 8 no backlog
+[01:10] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[01:20] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[01:20] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[01:32] [manda] rodada 1: PLAN-0028-ciclo-autonomo-sem-operador: gate 0; PLAN-0032-guarda-de-escopo-no-pi: gate 0; 
+[01:32] [manda] rodada 2/6 começando: 0 com achado do judge, 4 no backlog
+[01:55] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:openrouter/cohere/north-mini-code:free
+[01:55] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[01:55] [ginga] rodada 2/6 começando: 1 com achado do judge, 8 no backlog
+[02:25] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[02:30] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[02:30] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[02:31] [manda] rodada 2: nenhum ready
+[02:31] [manda] rodada 3/6 começando: 0 com achado do judge, 4 no backlog
+[02:32] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[02:32] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[02:40] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[02:40] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[02:50] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[02:53] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[03:01] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[03:06] [manda] rodada 3: nenhum ready
+[03:06] [manda] rodada 4/6 começando: 0 com achado do judge, 4 no backlog
+[03:21] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:openrouter/cohere/north-mini-code:free
+[03:21] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[03:21] [ginga] rodada 2/6 começando: 1 com achado do judge, 8 no backlog
+[03:51] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[04:00] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[04:00] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[04:07] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[04:30] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[04:40] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[04:40] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[04:40] [manda] rodada 4: nenhum ready
+[04:40] [manda] rodada 5/6 começando: 0 com achado do judge, 4 no backlog
+[04:55] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:openrouter/cohere/north-mini-code:free
+[04:55] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[04:55] [ginga] rodada 2/6 começando: 1 com achado do judge, 8 no backlog
+[05:02] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[05:19] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[05:23] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[05:25] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[05:25] [manda] rodada 5: nenhum ready
+[05:25] [manda] rodada 6/6 começando: 0 com achado do judge, 4 no backlog
+[05:26] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[05:28] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[05:30] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[05:30] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[05:30] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[05:32] [manda] rodada 6: nenhum ready
+[05:32] [manda] rodada 6 sem progresso (nada mudou). Lane parada.
+[05:33] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[05:35] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[05:37] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[05:39] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[05:40] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[05:40] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[05:40] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[05:40] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[05:40] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[05:41] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[05:43] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[05:45] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[05:47] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[05:47] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[05:48] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[05:50] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[05:50] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[05:50] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[05:52] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[05:54] [manda] rodada 1: nenhum ready
+[05:54] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[05:55] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[05:57] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[05:59] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[06:00] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[06:00] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[06:01] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[06:01] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[06:02] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[06:04] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[06:06] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[06:08] [manda] rodada 1: nenhum ready
+[06:08] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[06:10] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[06:10] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[06:10] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[06:10] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[06:11] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[06:13] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[06:15] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[06:17] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[06:17] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[06:18] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[06:20] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[06:20] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[06:20] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[06:22] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[06:24] [manda] rodada 1: nenhum ready
+[06:24] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[06:25] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[06:27] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[06:29] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[06:30] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[06:30] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[06:31] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[06:31] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[06:32] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[06:34] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[06:36] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[06:38] [manda] rodada 1: nenhum ready
+[06:38] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[06:40] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[06:40] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[06:40] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[06:40] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[06:41] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[06:43] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[06:45] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[06:47] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[06:47] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[06:48] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[06:50] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[06:50] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[06:50] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[06:52] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[06:54] [manda] rodada 1: nenhum ready
+[06:54] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[06:55] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[06:57] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[06:59] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[07:00] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[07:00] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[07:01] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[07:01] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[07:02] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[07:04] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[07:06] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[07:08] [manda] rodada 1: nenhum ready
+[07:08] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[07:10] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[07:10] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[07:10] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[07:10] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[07:11] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[07:13] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[07:15] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[07:17] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[07:17] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[07:18] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[07:20] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[07:20] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[07:20] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[07:22] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[07:24] [manda] rodada 1: nenhum ready
+[07:24] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[07:25] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[07:27] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[07:29] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[07:30] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[07:30] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[07:31] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[07:31] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[07:32] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[07:34] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[07:36] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[07:38] [manda] rodada 1: nenhum ready
+[07:38] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[07:40] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[07:40] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[07:40] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[07:40] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[07:41] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[07:43] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[07:45] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[07:47] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[07:47] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[07:48] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[07:50] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[07:50] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[07:50] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[07:52] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[07:54] [manda] rodada 1: nenhum ready
+[07:54] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[07:55] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[07:57] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[07:59] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[08:00] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[08:00] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[08:01] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[08:01] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[08:02] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[08:04] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[08:06] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[08:08] [manda] rodada 1: nenhum ready
+[08:08] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[08:10] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[08:10] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[08:10] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[08:10] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[08:11] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[08:13] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[08:15] [ginga] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 3/3 no mesmo modelo em 60s
+[08:17] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[08:17] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[08:18] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 1/3 no mesmo modelo em 60s
+[08:20] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[08:20] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[08:20] [manda] 429/rate limit em pi:openrouter/poolside/laguna-s-2.1:free: nova tentativa 2/3 no mesmo modelo em 60s
+[08:21] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[08:21] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[08:21] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[08:21] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[08:28] [manda] rodada 1/1 começando: 0 com achado do judge, 4 no backlog
+[08:30] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[08:30] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[08:30] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[08:30] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[08:36] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[08:36] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[08:36] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[08:36] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[08:44] [manda] rodada 1/1 começando: 0 com achado do judge, 4 no backlog
+[08:44] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[08:44] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[08:44] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[08:44] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[08:45] [manda] rodada 1/1 começando: 0 com achado do judge, 4 no backlog
+[08:47] [manda] rodada 1/1 começando: 0 com achado do judge, 4 no backlog
+[08:48] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[08:48] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[08:48] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[08:48] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[09:18] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[09:20] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[09:20] [manda] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[09:47] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[09:47] [ginga] rodada 2/6 começando: 1 com achado do judge, 8 no backlog
+[10:17] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[10:20] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[10:20] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[10:37] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/minimaxai/minimax-m3.1-flash
+[10:37] [manda] rodada 1: nenhum ready
+[10:37] [manda] rodada 2/6 começando: 0 com achado do judge, 4 no backlog
+[10:54] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/minimaxai/minimax-m3.1-flash
+[10:54] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[10:54] [ginga] rodada 2/6 começando: 1 com achado do judge, 8 no backlog
+[11:24] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[11:30] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[11:30] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[12:00] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[12:10] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[12:10] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[12:17] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/meta/muse-glimmer-30b
+[12:17] [manda] rodada 2: nenhum ready
+[12:17] [manda] rodada 3/6 começando: 0 com achado do judge, 4 no backlog
+[12:34] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/minimaxai/minimax-m3.1-flash
+[12:35] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[12:35] [ginga] rodada 2/6 começando: 1 com achado do judge, 8 no backlog
+[13:04] [manda] rodada 3: PLAN-0029-rota-de-falhas-e-disjuntor: gate 11; 
+[13:04] [manda] rodada 4/6 começando: 1 com achado do judge, 3 no backlog
+[13:34] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[13:40] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[13:40] [manda] rodada 1/6 começando: 1 com achado do judge, 3 no backlog
+[14:10] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[14:20] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[14:20] [manda] rodada 1/6 começando: 1 com achado do judge, 3 no backlog
+[14:30] [ginga] rodada 2: PLAN-0013-handoff-e-learnings: gate 11; 
+[14:30] [ginga] rodada 3/6 começando: 1 com achado do judge, 8 no backlog
+[14:45] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/minimaxai/minimax-m3.1-flash
+[14:45] [manda] rodada 1: PLAN-0029-rota-de-falhas-e-disjuntor: gate 11; 
+[14:45] [manda] rodada 2/6 começando: 1 com achado do judge, 3 no backlog
+[15:01] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/meta/muse-glimmer-30b
+[15:01] [ginga] rodada 3: PLAN-0013-handoff-e-learnings: gate 11; 
+[15:01] [ginga] rodada 4/6 começando: 1 com achado do judge, 8 no backlog
+[15:31] [ginga] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[15:40] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[15:40] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[15:44] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/meta/muse-glimmer-30b
+[15:45] [manda] rodada 2: PLAN-0029-rota-de-falhas-e-disjuntor: gate 11; 
+[15:45] [manda] rodada 3/6 começando: 1 com achado do judge, 3 no backlog
+[16:01] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/minimaxai/minimax-m3.1-flash
+[16:01] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[16:01] [ginga] rodada 2/6 começando: 1 com achado do judge, 8 no backlog
+[16:21] [manda] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:openrouter/xingchen-agi/xing4.0-29b-a4b:free
+[16:21] [manda] rodada 3: PLAN-0029-rota-de-falhas-e-disjuntor: gate 11; 
+[16:21] [manda] rodada 4/6 começando: 1 com achado do judge, 3 no backlog
+[16:38] [ginga] infra_stuck: operador sem progresso por 900s, morto; próximo modelo pi:nvidia/meta/muse-glimmer-30b
+[16:38] [ginga] rodada 2: PLAN-0013-handoff-e-learnings: gate 11; 
+[16:38] [ginga] rodada 3/6 começando: 1 com achado do judge, 8 no backlog
+[16:40] [manda] 429/rate limit em pi:openrouter/xingchen-agi/xing4.0-29b-a4b:free: nova tentativa 1/3 no mesmo modelo em 60s
+[16:42] [manda] 429/rate limit em pi:openrouter/xingchen-agi/xing4.0-29b-a4b:free: nova tentativa 2/3 no mesmo modelo em 60s
+[16:45] [manda] 429/rate limit em pi:openrouter/xingchen-agi/xing4.0-29b-a4b:free: nova tentativa 3/3 no mesmo modelo em 60s
+[16:47] [manda] rodada 4: PLAN-0029-rota-de-falhas-e-disjuntor: gate 11; 
+[16:47] [manda] rodada 4 sem progresso (nada mudou). Lane parada.
+[16:50] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[16:50] [manda] rodada 1/6 começando: 1 com achado do judge, 3 no backlog
+[17:20] [manda] operador ocupado há 30 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[17:30] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[17:30] [manda] rodada 1/6 começando: 1 com achado do judge, 3 no backlog
+[17:34] [ginga] rodada 3: PLAN-0013-handoff-e-learnings: gate 11; 
+[17:34] [ginga] rodada 4/6 começando: 1 com achado do judge, 8 no backlog
+[17:45] [vigia] lane ginga estava parada com 9 pendência(s): relançada
+[17:45] [ginga] rodada 1/6 começando: 1 com achado do judge, 8 no backlog
+[17:45] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[17:45] [manda] rodada 1/6 começando: 1 com achado do judge, 3 no backlog
+[18:45] [manda] operador ocupado há 60 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[18:50] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[18:50] [manda] rodada 1/6 começando: 1 com achado do judge, 3 no backlog
+[19:00] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[19:00] [ginga] rodada 2/6 começando: 1 com achado do judge, 7 no backlog
+[20:00] [ginga] operador ocupado há 60 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[20:00] [vigia] lane ginga estava parada com 8 pendência(s): relançada
+[20:00] [ginga] rodada 1/6 começando: 1 com achado do judge, 7 no backlog
+[20:20] [manda] rodada 1: PLAN-0029-rota-de-falhas-e-disjuntor: gate 11; 
+[20:20] [manda] rodada 2/6 começando: 1 com achado do judge, 3 no backlog
+[21:07] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 11; 
+[21:07] [ginga] rodada 2/6 começando: 1 com achado do judge, 7 no backlog
+[21:40] [manda] rodada 2: PLAN-0029-rota-de-falhas-e-disjuntor: gate 2; 
+[21:40] [manda] rodada 3/6 começando: 1 com achado do judge, 3 no backlog
+[22:38] [ginga] rodada 2: PLAN-0013-handoff-e-learnings: gate 11; 
+[22:38] [ginga] rodada 3/6 começando: 1 com achado do judge, 7 no backlog
+[22:48] [manda] rodada 3: PLAN-0029-rota-de-falhas-e-disjuntor: gate 11; 
+[22:48] [manda] rodada 4/6 começando: 1 com achado do judge, 3 no backlog
+[23:13] [ginga] rodada 3: PLAN-0013-handoff-e-learnings: gate 11; 
+[23:13] [ginga] rodada 4/6 começando: 1 com achado do judge, 7 no backlog
+[23:20] [manda] rodada 4: PLAN-0029-rota-de-falhas-e-disjuntor: gate 11; 
+[23:20] [manda] rodada 4 sem progresso (nada mudou). Lane parada.
+[23:30] [vigia] lane manda estava parada com 4 pendência(s): relançada
+[23:30] [manda] rodada 1/6 começando: 1 com achado do judge, 3 no backlog
+[00:21] [ginga] rodada 4: PLAN-0013-handoff-e-learnings: gate 11; 
+[00:21] [ginga] rodada 5/6 começando: 1 com achado do judge, 7 no backlog
+[01:11] [manda] rodada 1: PLAN-0029-rota-de-falhas-e-disjuntor: gate 2; 
+[01:11] [manda] rodada 2/6 começando: 1 com achado do judge, 3 no backlog
+[01:51] [ginga] rodada 5: PLAN-0013-handoff-e-learnings: gate 11; 
+[01:51] [ginga] rodada 6/6 começando: 1 com achado do judge, 7 no backlog
+[01:55] [manda] rodada 2: PLAN-0029-rota-de-falhas-e-disjuntor: gate 0; 
+[01:55] [manda] rodada 3/6 começando: 0 com achado do judge, 3 no backlog
+[02:05] [ginga] rodada 6: PLAN-0013-handoff-e-learnings: gate 0; 
+[02:05] [ginga] lane: 6 rodadas concluídas
+[02:10] [vigia] lane ginga estava parada com 7 pendência(s): relançada
+[02:10] [ginga] rodada 1/6 começando: 0 com achado do judge, 7 no backlog
+[02:55] [manda] rodada 3: PLAN-0013-handoff-e-learnings: gate 0; 
+[02:55] [manda] rodada 4/6 começando: 0 com achado do judge, 2 no backlog
+[03:55] [manda] operador ocupado há 60 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[04:00] [vigia] lane manda estava parada com 2 pendência(s): relançada
+[04:00] [manda] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[04:15] [ginga] rodada 1: PLAN-0013-handoff-e-learnings: gate 0; PLAN-0028-ciclo-autonomo-sem-operador: gate 11; 
+[04:16] [ginga] rodada 2/6 começando: 1 com achado do judge, 6 no backlog
+[04:19] [manda] rodada 1: nenhum ready
+[04:19] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[04:20] [vigia] lane manda estava parada com 2 pendência(s): relançada
+[04:20] [manda] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[05:20] [manda] operador ocupado há 60 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[05:30] [vigia] lane manda estava parada com 2 pendência(s): relançada
+[05:30] [manda] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[05:45] [ginga] rodada 2: PLAN-0028-ciclo-autonomo-sem-operador: gate 0; 
+[05:45] [ginga] rodada 3/6 começando: 0 com achado do judge, 5 no backlog
+[05:51] [manda] rodada 1: nenhum ready
+[05:51] [manda] rodada 1 sem progresso (nada mudou). Lane parada.
+[06:00] [vigia] lane manda estava parada com 2 pendência(s): relançada
+[06:00] [manda] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[07:00] [manda] operador ocupado há 60 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[07:10] [vigia] lane manda estava parada com 2 pendência(s): relançada
+[07:10] [manda] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[07:12] [ginga] rodada 3: PLAN-0033-guard-de-segredos: gate 0; 
+[07:12] [ginga] rodada 4/6 começando: 0 com achado do judge, 4 no backlog
+[08:12] [ginga] operador ocupado há 60 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[08:20] [vigia] lane ginga estava parada com 4 pendência(s): relançada
+[08:20] [ginga] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[09:10] [manda] rodada 1: nenhum ready
+[09:10] [manda] rodada 2/6 começando: 0 com achado do judge, 2 no backlog
+[10:10] [manda] operador ocupado há 60 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[10:20] [vigia] lane manda estava parada com 2 pendência(s): relançada
+[10:20] [manda] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[11:10] [ginga] rodada 1: nenhum ready
+[11:10] [ginga] rodada 2/6 começando: 0 com achado do judge, 4 no backlog
+[12:10] [ginga] operador ocupado há 60 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[12:20] [vigia] lane ginga estava parada com 4 pendência(s): relançada
+[12:20] [ginga] rodada 1/6 começando: 0 com achado do judge, 4 no backlog
+[13:10] [manda] rodada 1: nenhum ready
+[13:10] [manda] rodada 2/6 começando: 0 com achado do judge, 2 no backlog
+[14:10] [manda] operador ocupado há 60 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[14:20] [vigia] lane manda estava parada com 2 pendência(s): relançada
+[14:20] [manda] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[15:10] [ginga] rodada 1: nenhum ready
+[15:10] [ginga] rodada 2/6 começando: 0 com achado do judge, 4 no backlog
+[15:35] [manda] rodada 1: PLAN-0033-guard-de-segredos: gate 2; 
+[15:35] [manda] rodada 2/6 começando: 1 com achado do judge, 1 no backlog
+[16:35] [manda] operador ocupado há 60 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[16:40] [vigia] lane manda estava parada com 2 pendência(s): relançada
+[16:40] [manda] rodada 1/6 começando: 1 com achado do judge, 1 no backlog
+[17:32] [ginga] rodada 2: PLAN-0012-roda-web: gate 11; 
+[17:32] [ginga] rodada 3/6 começando: 1 com achado do judge, 2 no backlog
+[18:33] [ginga] operador ocupado há 60 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[18:40] [vigia] lane ginga estava parada com 3 pendência(s): relançada
+[18:40] [ginga] rodada 1/6 começando: 1 com achado do judge, 2 no backlog
+[19:10] [manda] rodada 1: PLAN-0033-guard-de-segredos: gate 2; 
+[19:10] [manda] rodada 2/6 começando: 1 com achado do judge, 1 no backlog
+[20:10] [manda] operador ocupado há 60 min por outra lane: esta lane para (Nvidia free tem RPM baixo)
+[20:20] [vigia] lane manda estava parada com 2 pendência(s): relançada
+[20:20] [manda] rodada 1/6 começando: 1 com achado do judge, 1 no backlog
+[21:14] [ginga] rodada 1: PLAN-0012-roda-web: judge falhou; 
+[21:14] [ginga] rodada 2/6 começando: 1 com achado do judge, 2 no backlog
+[21:22] [manda] rodada 1: PLAN-0033-guard-de-segredos: gate 0; 
+[21:22] [manda] rodada 2/6 começando: 0 com achado do judge, 1 no backlog
+[22:17] [ginga] rodada 2: PLAN-0012-roda-web: gate 11; 
+[22:17] [ginga] rodada 3/6 começando: 1 com achado do judge, 2 no backlog
+[22:59] [manda] rodada 2: PLAN-0034-pi-liga-guarda-de-escopo: gate 0; 
+[22:59] [manda] lane: nada pendente; encerrada
+[00:00] [vigia] ATENÇÃO: lanes ativas, mas sem evento há 60 min
+[00:59] [ginga] rodada 3: PLAN-0012-roda-web: gate 11; 
+[00:59] [ginga] rodada 4/6 começando: 1 com achado do judge, 2 no backlog
+[01:37] [ginga] rodada 4: PLAN-0012-roda-web: gate 0; 
+[01:37] [ginga] rodada 5/6 começando: 0 com achado do judge, 2 no backlog
+[01:56] [ginga] rodada 5: nenhum ready
+[01:56] [ginga] rodada 5 sem progresso (nada mudou). Lane parada.
+[02:00] [vigia] lane ginga estava parada com 2 pendência(s): relançada
+[02:00] [ginga] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[02:19] [ginga] rodada 1: nenhum ready
+[02:19] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[02:20] [vigia] lane ginga estava parada com 2 pendência(s): relançada
+[02:20] [ginga] rodada 1/6 começando: 0 com achado do judge, 2 no backlog
+[03:30] [vigia] ATENÇÃO: lanes ativas, mas sem evento há 69 min
+[04:20] [ginga] rodada 1: nenhum ready
+[04:20] [ginga] rodada 2/6 começando: 0 com achado do judge, 2 no backlog
+[05:30] [vigia] ATENÇÃO: lanes ativas, mas sem evento há 69 min
+[05:48] [ginga] infra_stuck: operador sem progresso por 2700s, morto; próximo modelo pi:nvidia/minimaxai/minimax-m3.1-flash
+[05:48] [ginga] rodada 2: nenhum ready
+[05:48] [ginga] rodada 3/6 começando: 0 com achado do judge, 2 no backlog
+[06:50] [vigia] ATENÇÃO: lanes ativas, mas sem evento há 61 min
+[07:42] [ginga] rodada 3: PLAN-0016-validar-code-mode: gate 11; 
+[07:42] [ginga] rodada 4/6 começando: 1 com achado do judge, 1 no backlog
+[08:50] [vigia] ATENÇÃO: lanes ativas, mas sem evento há 67 min
+[09:42] [ginga] rodada 4: PLAN-0016-validar-code-mode: gate 0; 
+[09:42] [ginga] rodada 5/6 começando: 0 com achado do judge, 1 no backlog
+[10:50] [vigia] ATENÇÃO: lanes ativas, mas sem evento há 68 min
+[11:11] [ginga] rodada 5: nenhum ready
+[11:11] [ginga] rodada 6/6 começando: 0 com achado do judge, 1 no backlog
+[11:49] [ginga] rodada 6: nenhum ready
+[11:49] [ginga] lane: 6 rodadas concluídas
+[11:50] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[11:50] [ginga] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[12:54] [ginga] infra_stuck: operador sem progresso por 2700s, morto; próximo modelo pi:nvidia/minimaxai/minimax-m3.1-flash
+[12:54] [ginga] rodada 1: nenhum ready
+[12:54] [ginga] rodada 2/6 começando: 0 com achado do judge, 1 no backlog
+[13:44] [ginga] rodada 2: nenhum ready
+[13:44] [ginga] rodada 3/6 começando: 0 com achado do judge, 1 no backlog
+[13:48] [ginga] rodada 3: nenhum ready
+[13:48] [ginga] rodada 3 sem progresso (nada mudou). Lane parada.
+[13:50] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[13:50] [ginga] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[14:45] [ginga] infra_stuck: operador sem progresso por 2700s, morto; próximo modelo pi:nvidia/minimaxai/minimax-m3.1-flash
+[14:45] [ginga] rodada 1: nenhum ready
+[14:45] [ginga] rodada 2/6 começando: 0 com achado do judge, 1 no backlog
+[15:27] [ginga] rodada 2: nenhum ready
+[15:27] [ginga] rodada 3/6 começando: 0 com achado do judge, 1 no backlog
+[15:31] [ginga] rodada 3: nenhum ready
+[15:31] [ginga] rodada 3 sem progresso (nada mudou). Lane parada.
+[15:40] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[15:40] [ginga] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[16:30] [ginga] infra_stuck: operador sem progresso por 2700s, morto; próximo modelo pi:nvidia/minimaxai/minimax-m3.1-flash
+[16:30] [ginga] rodada 1: nenhum ready
+[16:30] [ginga] rodada 2/6 começando: 0 com achado do judge, 1 no backlog
+[16:35] [ginga] rodada 2: nenhum ready
+[16:35] [ginga] rodada 2 sem progresso (nada mudou). Lane parada.
+[16:40] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[16:40] [ginga] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[17:43] [ginga] infra_stuck: operador sem progresso por 2700s, morto; próximo modelo pi:nvidia/minimaxai/minimax-m3.1-flash
+[17:43] [ginga] rodada 1: nenhum ready
+[17:43] [ginga] rodada 2/6 começando: 0 com achado do judge, 1 no backlog
+[18:47] [ginga] rodada 2: nenhum ready
+[18:47] [ginga] rodada 3/6 começando: 0 com achado do judge, 1 no backlog
+[18:50] [ginga] rodada 3: nenhum ready
+[18:50] [ginga] rodada 3 sem progresso (nada mudou). Lane parada.
+[19:00] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[19:00] [ginga] rodada 1/6 começando: 0 com achado do judge, 1 no backlog
+[20:10] [vigia] ATENÇÃO: lanes ativas, mas sem evento há 69 min
+[21:00] [ginga] rodada 1: nenhum ready
+[21:00] [ginga] rodada 2/6 começando: 0 com achado do judge, 1 no backlog
+[22:10] [vigia] ATENÇÃO: lanes ativas, mas sem evento há 69 min
+[22:26] [ginga] infra_stuck: operador sem progresso por 2700s, morto; próximo modelo pi:nvidia/minimaxai/minimax-m3.1-flash
+[22:26] [ginga] rodada 2: nenhum ready
+[22:26] [ginga] rodada 3/6 começando: 0 com achado do judge, 1 no backlog
+[23:05] [ginga] rodada 3: nenhum ready
+[23:05] [ginga] rodada 4/6 começando: 0 com achado do judge, 1 no backlog
+[00:10] [vigia] ATENÇÃO: lanes ativas, mas sem evento há 64 min
+[00:31] [ginga] rodada 4: PLAN-0014-metricas-e-quota: judge falhou; 
+[00:31] [ginga] rodada 5/6 começando: 1 com achado do judge, 0 no backlog
+[00:40] [ginga] rodada 5: PLAN-0014-metricas-e-quota: judge falhou; 
+[00:40] [ginga] rodada 5 sem progresso (nada mudou). Lane parada.
+[00:50] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[00:50] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[02:00] [vigia] ATENÇÃO: lanes ativas, mas sem evento há 69 min
+[02:51] [ginga] rodada 1: PLAN-0014-metricas-e-quota: judge falhou; 
+[02:51] [ginga] rodada 2/6 começando: 1 com achado do judge, 0 no backlog
+[03:59] [ginga] rodada 2: PLAN-0014-metricas-e-quota: judge falhou; 
+[03:59] [ginga] rodada 3/6 começando: 1 com achado do judge, 0 no backlog
+[04:06] [ginga] rodada 3: PLAN-0014-metricas-e-quota: gate 11; 
+[04:06] [ginga] rodada 3 sem progresso (nada mudou). Lane parada.
+[04:10] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[04:10] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[04:51] [ginga] rodada 1: PLAN-0014-metricas-e-quota: judge falhou; 
+[04:51] [ginga] rodada 2/6 começando: 1 com achado do judge, 0 no backlog
+[04:59] [ginga] rodada 2: PLAN-0014-metricas-e-quota: judge falhou; 
+[04:59] [ginga] rodada 2 sem progresso (nada mudou). Lane parada.
+[05:00] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[05:00] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[05:10] [ginga] rodada 1: PLAN-0014-metricas-e-quota: judge falhou; 
+[05:10] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[05:20] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[05:20] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[05:25] [ginga] rodada 1: PLAN-0014-metricas-e-quota: judge falhou; 
+[05:25] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[05:30] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[05:30] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[05:36] [ginga] rodada 1: PLAN-0014-metricas-e-quota: gate 11; 
+[05:36] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[05:40] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[05:40] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[06:50] [vigia] ATENÇÃO: lanes ativas, mas sem evento há 69 min
+[07:41] [ginga] rodada 1: PLAN-0014-metricas-e-quota: judge falhou; 
+[07:41] [ginga] rodada 2/6 começando: 1 com achado do judge, 0 no backlog
+[08:13] [ginga] rodada 2: PLAN-0014-metricas-e-quota: judge falhou; 
+[08:13] [ginga] rodada 3/6 começando: 1 com achado do judge, 0 no backlog
+[09:01] [ginga] rodada 3: PLAN-0014-metricas-e-quota: judge falhou; 
+[09:01] [ginga] rodada 3 sem progresso (nada mudou). Lane parada.
+[09:10] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[09:10] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[09:35] [ginga] rodada 1: PLAN-0014-metricas-e-quota: judge falhou; 
+[09:35] [ginga] rodada 2/6 começando: 1 com achado do judge, 0 no backlog
+[09:55] [ginga] rodada 2: PLAN-0014-metricas-e-quota: judge falhou; 
+[09:55] [ginga] rodada 2 sem progresso (nada mudou). Lane parada.
+[10:00] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[10:00] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[10:20] [ginga] rodada 1: PLAN-0014-metricas-e-quota: judge falhou; 
+[10:20] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[10:20] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[10:20] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[10:42] [ginga] rodada 1: PLAN-0014-metricas-e-quota: judge falhou; 
+[10:42] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[10:50] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[10:50] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[11:09] [ginga] rodada 1: PLAN-0014-metricas-e-quota: judge falhou; 
+[11:09] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[11:10] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[11:10] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[11:24] [ginga] rodada 1: PLAN-0014-metricas-e-quota: judge falhou; 
+[11:24] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[11:30] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[11:30] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[12:02] [ginga] rodada 1: PLAN-0014-metricas-e-quota: judge falhou; 
+[12:02] [ginga] rodada 2/6 começando: 1 com achado do judge, 0 no backlog
+[13:53] [vigia] ATENÇÃO: lanes ativas, mas sem evento há 111 min
+[14:35] [ginga] rodada 2: PLAN-0014-metricas-e-quota: judge falhou; 
+[14:35] [ginga] rodada 2 sem progresso (nada mudou). Lane parada.
+[14:40] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[14:40] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[14:45] [ginga] rodada 1: PLAN-0014-metricas-e-quota: gate 0; 
+[14:45] [ginga] lane: nada pendente; encerrada
+[14:50] ✅ TUDO PRONTO: backlogs vazios, nada aguardando gate, lanes paradas. mains: manda bc7bd30; p-inga 94b4cb2; ginga 2c5f516;  Report: .ginga/handoffs/REPORT-2026-11-03.md + REPORT-2026-11-03.d/ (judge-e-gate.md, decisoes.md)
+[20:10] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[20:10] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[20:14] [ginga] CRÍTICO: a main de ginga mudou durante o operador (fora do gate). Lane parada.
+[20:20] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[20:20] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[20:24] [ginga] rodada 1: PLAN-0035-bytecode-fora-do-git: judge falhou; 
+[20:24] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[20:30] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[20:30] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[20:33] [ginga] rodada 1: PLAN-0035-bytecode-fora-do-git: judge falhou; 
+[20:33] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[20:40] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[20:40] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[20:44] [ginga] rodada 1: PLAN-0035-bytecode-fora-do-git: judge falhou; 
+[20:44] [ginga] rodada 1 sem progresso (nada mudou). Lane parada.
+[20:50] [vigia] lane ginga estava parada com 1 pendência(s): relançada
+[20:50] [ginga] rodada 1/6 começando: 1 com achado do judge, 0 no backlog
+[21:03] [ginga] rodada 1: nenhum ready
+[21:03] [ginga] lane: nada pendente; encerrada
+[00:00] ✅ TUDO PRONTO: backlogs vazios, nada aguardando gate, lanes paradas. mains: manda bc7bd30; p-inga 94b4cb2; ginga 44c62cc;  Report: .ginga/handoffs/REPORT-2026-11-04.md + REPORT-2026-11-04.d/ (judge-e-gate.md, decisoes.md)
+[13:16] ✅ TUDO PRONTO: backlogs vazios, nada aguardando gate, lanes paradas. mains: manda bc7bd30; p-inga 94b4cb2; ginga 44c62cc;  Report: .ginga/handoffs/REPORT-2026-11-05.md + REPORT-2026-11-05.d/ (judge-e-gate.md, decisoes.md)

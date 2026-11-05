@@ -1,0 +1,8 @@
+{
+  "branch": "plan/0027",
+  "by": {
+    "pid": 2769605,
+    "cmd": "/home/shibuka/.local/share/mise/installs/bun/1.4.4/bin/bun /home/shibuka/Projetos/duh-homelab/ginga-plan-0025/bin/ginga.ts ready write --root . --plan PLAN-0027-limpeza-worktrees --repo ginga --branch plan/0027"
+  },
+  "at": "2026-10-29T03:27:29.569Z"
+}

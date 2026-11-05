@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Discord — thread por PLAN</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#232428;color:#E8E8EA;font-family:'IBM Plex Sans',system-ui,sans-serif}
+a{color:#8AB4FF}a:hover{color:#B9D0FF}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.dim{color:#B5B7BD}
+.dbtn{min-height:44px;padding:0 16px;border-radius:6px;border:0;font:inherit;font-size:14px;font-weight:500;cursor:pointer;background:#4E5058;color:#FFFFFF}
+.dbtn:hover{background:#6D6F78}
+.dbtn-primary{background:#3E5BD8}
+.dbtn-primary:hover{background:#3149B5}
+.threadbtn{display:flex;flex-direction:column;gap:2px;text-align:left;width:100%;min-height:44px;padding:8px 10px;border-radius:6px;border:0;font:inherit;cursor:pointer}
+.embed{background:#2B2D31;border:1px solid #3F4147;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;max-width:560px}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-wrap: wrap">
+
+<aside aria-label="Canais" style="flex: 1 1 260px; max-width: 100%; background: #2B2D31; padding: 16px 12px; display: flex; flex-direction: column; gap: 6px; box-sizing: border-box">
+<div style="font-size: 15px; font-weight: 700; padding: 0 8px 10px">homelab <span class="dim" style="font-weight: 400; font-size: 12px">(mock do Discord)</span></div>
+<div class="dim" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; padding: 6px 8px"># ginga</div>
+<sc-for list="{{ threads }}" as="t" hint-placeholder-count="3">
+<button type="button" class="threadbtn" onClick="{{ t.pick }}" style="{{ t.style }}">
+<span style="font-size: 14px; font-weight: 600">{{ t.name }}</span>
+<span style="font-size: 12px; color: #B5B7BD">{{ t.sub }}</span>
+</button>
+</sc-for>
+<div class="dim" style="font-size: 12px; padding: 16px 8px 0; line-height: 1.5">Uma thread por PLAN (ou por SPEC antes do PLAN). O canal raiz recebe só o digest diário.</div>
+</aside>
+
+<main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; background: #313338">
+<header style="padding: 14px 20px; border-bottom: 1px solid #26272B; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline">
+<h1 style="margin: 0; font-size: 16px; font-weight: 700">{{ current.name }}</h1>
+<span class="dim" style="font-size: 13px">{{ current.sub }}</span>
+</header>
+
+<div style="flex: 1 1 auto; padding: 20px; display: flex; flex-direction: column; gap: 18px">
+<sc-for list="{{ messages }}" as="m" hint-placeholder-count="3">
+<div style="display: flex; gap: 12px">
+<div aria-hidden="true" style="{{ m.avatarStyle }}">{{ m.initial }}</div>
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1 1 auto">
+<div style="display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap">
+<span style="font-weight: 600; font-size: 15px">{{ m.author }}</span>
+<sc-if value="{{ m.isBot }}" hint-placeholder-val="{{ true }}"><span style="font-size: 11px; font-weight: 700; background: #3E5BD8; color: #FFFFFF; padding: 1px 5px; border-radius: 4px">APP</span></sc-if>
+<span class="dim" style="font-size: 12px">{{ m.time }}</span>
+</div>
+<sc-if value="{{ m.hasText }}" hint-placeholder-val="{{ true }}"><div style="font-size: 15px; line-height: 1.5">{{ m.text }}</div></sc-if>
+<sc-if value="{{ m.hasEmbed }}" hint-placeholder-val="{{ false }}">
+<div class="embed">
+<span style="{{ m.tagStyle }}">{{ m.tag }}</span>
+<div style="font-size: 15px; font-weight: 600">{{ m.title }}</div>
+<div class="dim" style="font-size: 14px; line-height: 1.5; white-space: pre-line">{{ m.body }}</div>
+<sc-if value="{{ m.hasButtons }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px">
+<sc-for list="{{ m.buttons }}" as="b" hint-placeholder-count="3">
+<button type="button" class="{{ b.cls }}" onClick="{{ b.run }}">{{ b.label }}</button>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+
+<sc-if value="{{ showSlash }}" hint-placeholder-val="{{ false }}">
+<div role="listbox" aria-label="Comandos do ginga" style="margin: 0 20px; background: #2B2D31; border: 1px solid #3F4147; border-radius: 8px; padding: 8px; display: flex; flex-direction: column; gap: 2px">
+<sc-for list="{{ commands }}" as="c" hint-placeholder-count="5">
+<button type="button" class="threadbtn" onClick="{{ c.run }}" style="background: transparent; color: #E8E8EA">
+<span class="mono" style="font-size: 14px; font-weight: 600">{{ c.cmd }}</span>
+<span style="font-size: 12px; color: #B5B7BD">{{ c.desc }}</span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+
+<form style="padding: 16px 20px 20px; display: flex; gap: 8px" onSubmit="{{ submit }}">
+<button type="button" class="dbtn" aria-label="Mostrar comandos do ginga" onClick="{{ toggleSlash }}">/</button>
+<label for="composer" style="position: absolute; left: -9999px">Mensagem na thread</label>
+<input id="composer" placeholder="Responder na thread (vira ginga answer) ou / para comandos" style="flex: 1 1 auto; min-width: 0; min-height: 44px; border-radius: 8px; border: 0; background: #383A40; color: #E8E8EA; padding: 0 14px; font: inherit; font-size: 15px">
+<button type="submit" class="dbtn dbtn-primary">Enviar</button>
+</form>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":960}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { thread: 'spec1', extra: { spec1: [], plan5: [], digest: [] }, showSlash: false, used: {} };
+}
+push(thread, msgs, usedKey) {
+const extra = Object.assign({}, this.state.extra);
+extra[thread] = extra[thread].concat(msgs);
+const used = Object.assign({}, this.state.used);
+if (usedKey) { used[usedKey] = true; }
+this.setState({ extra: extra, used: used, showSlash: false });
+}
+renderVals() {
+const s = this.state;
+const bot = (time, tag, tagKind, title, body, buttons, text) => ({ author: 'ginga', isBot: true, initial: 'G', time: time, text: text || '', tag: tag, tagKind: tagKind, title: title, body: body, buttons: buttons || [] });
+const me = (time, text) => ({ author: 'shibuka', isBot: false, initial: 'S', time: time, text: text });
+const now = 'agora';
+const base = {
+spec1: [
+bot('14:10', 'Blocker · SPEC-0001', 'blocker', 'Qual o nome do orquestrador?', 'O Spec Judge (agy) não aprova a SPEC sem isso.\nProposta do dono: Manda-CARU, o mandacaru que manda.\nResponda num botão ou escreva aqui na thread.',
+[['Manda-CARU', true, 'name'], ['Mand-Ingá', false, 'name'], ['Abrir na Roda', false, 'link']])
+],
+plan5: [
+bot('12:41', 'Aprovado · PLAN-0005', 'ok', 'Runner resiliente entrou na fila', '4 TASKs · estimativa US$ 0,80 · teto US$ 1,50\nJudge: agy (google), família diferente do executor.', []),
+bot('13:12', 'Progresso', 'idle', 'TASK-01 e TASK-02 com receipt', 'TASK-02 precisou de 2 tentativas: zen/nemotron-free esgotou a quota e o go/qwen3.8-flash passou.', []),
+bot('14:02', 'Decisão · PLAN-0005', 'blocker', 'TASK-03 falhou 2× em medium', 'done_when: bun test tests/unit/docs_0031_contract.test.ts → exit 1\nO strong do Go está sem quota. Zen pago (deepseek-v4-pro) custa cerca de US$ 0,30 e passa do teto do PLAN.',
+[['Liberar escalada', true, 'esc'], ['Pausar PLAN', false, 'pause'], ['Ver tentativas', false, 'link']])
+],
+digest: [
+bot('09:00', 'Digest diário', 'idle', '27/out · duh-homelab', '1 PLAN concluído (PLAN-0002)\n1 PLAN executando (PLAN-0005, 2/4)\n2 itens esperando você (SPEC-0001, PLAN-0006)\nZen pago: US$ 1,80 de 10,00 · codex 1% · claude 72%', [['Abrir Inbox na Roda', true, 'link']])
+]
+};
+const tagStyles = { blocker: 'background: #F0B232; color: #1E1F22', ok: 'background: #57C38A; color: #0F2A1C', idle: 'background: #4E5058; color: #FFFFFF', info: 'background: #8AB4FF; color: #0E1E3A' };
+const actions = {
+name: (label) => this.push('spec1', [me(now, label), bot(now, 'Registrado', 'ok', 'Resposta gravada em SPEC-0001', 'ginga answer SPEC-0001 "' + label + '" · via discord · shibuka\nO Spec Judge vai reavaliar; aviso aqui quando aprovar.', [])], 'spec1btn'),
+esc: () => this.push('plan5', [bot(now, 'Escalada liberada', 'info', 'TASK-03 tentativa 3 em zen/deepseek-v4-pro', 'Custo do PLAN até agora: US$ 0,92 / 1,50. Sigo nesta thread.', [])], 'plan5btn'),
+pause: () => this.push('plan5', [bot(now, 'Pausado', 'idle', 'PLAN-0005 pausado por shibuka', 'Nada novo é despachado. /ginga resume PLAN-0005 retoma.', [])], 'plan5btn'),
+link: () => {}
+};
+const threadDefs = [
+['spec1', 'SPEC-0001 · G-Ingá revamp', '1 blocker esperando você'],
+['plan5', 'PLAN-0005 · Runner resiliente', 'executando · 2/4'],
+['digest', 'Digest', 'diário, 09:00']
+];
+const current = threadDefs.filter((t) => t[0] === s.thread)[0];
+const usedKey = s.thread + 'btn';
+const messages = base[s.thread].concat(s.extra[s.thread]).map((m, i) => ({
+author: m.author, isBot: m.isBot, initial: m.initial, time: m.time,
+avatarStyle: 'flex: 0 0 40px; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; ' + (m.isBot ? 'background: #F6F5F1; color: #1C1B18' : 'background: #3E5BD8; color: #FFFFFF'),
+hasText: !!m.text, text: m.text,
+hasEmbed: !!m.tag, tag: m.tag, title: m.title, body: m.body,
+tagStyle: 'align-self: flex-start; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px; ' + (tagStyles[m.tagKind] || tagStyles.idle),
+hasButtons: (m.buttons || []).length > 0 && !(s.used[usedKey] && i === base[s.thread].length - 1 && s.thread !== 'digest'),
+buttons: (m.buttons || []).map((b) => ({ label: b[0], cls: b[1] ? 'dbtn dbtn-primary' : 'dbtn', run: () => actions[b[2]](b[0]) }))
+}));
+const cmd = (c, d, run) => ({ cmd: c, desc: d, run: run });
+return {
+threads: threadDefs.map((t) => ({ name: t[1], sub: t[2], pick: () => this.setState({ thread: t[0], showSlash: false }),
+style: s.thread === t[0] ? 'background: #404249; color: #FFFFFF' : 'background: transparent; color: #DBDEE1' })),
+current: { name: current[1], sub: current[2] },
+messages: messages,
+showSlash: s.showSlash,
+toggleSlash: () => this.setState({ showSlash: !s.showSlash }),
+commands: [
+cmd('/ginga status', 'Quadro resumido: o que roda, o que espera você', () => this.push(s.thread, [me(now, '/ginga status'), bot(now, 'Status', 'idle', 'duh-homelab', 'Executando: PLAN-0005 (2/4)\nEsperando você: SPEC-0001, PLAN-0006\nFila: 1 PLAN aprovado aguardando quota', [])])),
+cmd('/ginga inbox', 'Lista as pendências com botões', () => {}),
+cmd('/ginga intent <texto>', 'Cria um INTENT a partir daqui', () => this.push(s.thread, [me(now, '/ginga intent mostrar custo do mês por provider'), bot(now, 'INTENT-0009', 'info', 'Criado · triagem: pequena', 'PLAN-0009 em draft. Aviso aqui quando o linter aprovar.', [])])),
+cmd('/ginga approve <id>', 'Aprova SPEC ou PLAN', () => {}),
+cmd('/ginga pause [PLAN]', 'Pausa a fila inteira ou um PLAN', () => {})
+],
+submit: (e) => { if (e && e.preventDefault) { e.preventDefault(); } }
+};
+}
+}
+</script>
+</body>
+</html>

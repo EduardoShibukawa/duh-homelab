@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Ledger e Bench</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F5F1;color:#1C1B18;font-family:'IBM Plex Sans',system-ui,sans-serif}
+a{color:#1D4ED8}a:hover{color:#1E3A8A}
+.card{background:#FFFFFF;border:1px solid #E2DED4;border-radius:12px}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.muted{color:#5F5B52}
+.th{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#5F5B52;text-align:left;padding:10px 12px;border-bottom:1px solid #E2DED4}
+.td{padding:10px 12px;border-bottom:1px solid #EFEDE7;font-size:14px}
+.seg{min-height:44px;padding:0 16px;border:1px solid #CFCBC1;font:inherit;font-size:14px;font-weight:500;cursor:pointer}
+.h2{margin:0;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#5F5B52}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-direction: column">
+<header style="background: #1C1B18; color: #F6F5F1; padding: 14px 24px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: baseline">
+<span style="font-size: 22px; font-weight: 700">Roda</span>
+<span class="mono" style="font-size: 13px; color: #C9C5BA">Ledger e Bench</span>
+</header>
+<main style="width: 100%; max-width: 1240px; margin: 0 auto; padding: 32px 24px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center">
+<h1 style="margin: 0; font-size: 28px; font-weight: 700">{{ heading }}</h1>
+<div role="group" aria-label="Visão" style="display: flex">
+<button type="button" class="seg" onClick="{{ showLedger }}" style="{{ ledgerTabStyle }}">Ledger</button>
+<button type="button" class="seg" onClick="{{ showBench }}" style="{{ benchTabStyle }}">Bench</button>
+</div>
+</div>
+
+<sc-if value="{{ isLedger }}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px">
+<div class="card" style="padding: 16px"><div class="h2">Cadeia</div><div style="font-size: 22px; font-weight: 700; margin-top: 4px; color: #134E48">íntegra</div><div class="mono muted" style="font-size: 12px; margin-top: 4px">pinga ledger verify · 418 blocos</div></div>
+<div class="card" style="padding: 16px"><div class="h2">Receipts ok (7 dias)</div><div style="font-size: 22px; font-weight: 700; margin-top: 4px">37 / 44</div></div>
+<div class="card" style="padding: 16px"><div class="h2">FTPR geral</div><div style="font-size: 22px; font-weight: 700; margin-top: 4px">64%</div></div>
+<div class="card" style="padding: 16px"><div class="h2">Prove-red sem RED</div><div style="font-size: 22px; font-weight: 700; margin-top: 4px">0</div></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+<button type="button" class="seg" onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</button>
+</sc-for>
+</div>
+<section class="card" style="overflow-x: auto" aria-label="Receipts">
+<table style="width: 100%; border-collapse: collapse; min-width: 900px">
+<thead><tr><th class="th">#</th><th class="th">Quando</th><th class="th">Repo</th><th class="th">TASK</th><th class="th">Tipo</th><th class="th">Status</th><th class="th">Modelo</th><th class="th">Hash</th></tr></thead>
+<tbody>
+<sc-for list="{{ receipts }}" as="r" hint-placeholder-count="8">
+<tr>
+<td class="td mono">{{ r.n }}</td><td class="td mono muted" style="font-size: 13px">{{ r.when }}</td><td class="td">{{ r.repo }}</td><td class="td mono" style="font-size: 13px">{{ r.task }}</td><td class="td" style="font-size: 13px">{{ r.kind }}</td>
+<td class="td"><span style="{{ r.statusStyle }}">{{ r.status }}</span></td><td class="td mono" style="font-size: 13px">{{ r.model }}</td><td class="td mono muted" style="font-size: 12px">{{ r.hash }}</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isBench }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<p class="muted" style="margin: 0; font-size: 14px">SPECs com <span class="mono">bench:</span> no frontmatter rodam o bench no Verifier Judge. Uma regressão contra o baseline reprova o PLAN.</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 12px">
+<sc-for list="{{ metrics }}" as="m" hint-placeholder-count="4">
+<section class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; gap: 8px; align-items: baseline">
+<h2 style="margin: 0; font-size: 15px; font-weight: 600">{{ m.name }}</h2>
+<span style="{{ m.deltaStyle }}">{{ m.delta }}</span>
+</div>
+<div class="mono muted" style="font-size: 12px">{{ m.spec }} · bench: {{ m.kind }} · baseline {{ m.baseline }}</div>
+<div style="display: flex; align-items: flex-end; gap: 6px; height: 120px; border-bottom: 1px solid #E2DED4">
+<sc-for list="{{ m.bars }}" as="b" hint-placeholder-count="8">
+<div style="{{ b.style }}" title="{{ b.label }}"></div>
+</sc-for>
+</div>
+<div class="muted" style="font-size: 12px">últimos 8 runs · a barra mais escura é o último</div>
+</section>
+</sc-for>
+</div>
+</div>
+</sc-if>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { view: 'ledger', filter: 'todos' };
+}
+renderVals() {
+const s = this.state;
+const segOn = 'background: #1C1B18; color: #FFFFFF; border-color: #1C1B18';
+const segOff = 'background: #FFFFFF; color: #1C1B18';
+const st = (bg, fg) => 'display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 6px; background: ' + bg + '; color: ' + fg;
+const all = [
+{ n: '418', when: '27/out 14:30', repo: 'pi-harness', task: 'PLAN-0005/TASK-03', kind: 'verify', status: 'ok', model: 'zen/deepseek-v4-pro', hash: '9f3a…c21e' },
+{ n: '417', when: '27/out 14:02', repo: 'pi-harness', task: 'PLAN-0005/TASK-03', kind: 'verify', status: 'fail', model: 'go/qwen3.8-flash', hash: '71be…08d4' },
+{ n: '416', when: '27/out 13:12', repo: 'pi-harness', task: 'PLAN-0005/TASK-02', kind: 'verify', status: 'ok', model: 'go/qwen3.8-flash', hash: 'a0c4…77f1' },
+{ n: '415', when: '27/out 12:55', repo: 'pi-harness', task: 'PLAN-0005/TASK-01', kind: 'verify', status: 'ok', model: 'zen/glm-5.3-flash-free', hash: '3e19…b6a0' },
+{ n: '414', when: '27/out 12:40', repo: 'pi-harness', task: 'PLAN-0005/TASK-01', kind: 'prove-red', status: 'red ok', model: '—', hash: 'c7d2…1f93' },
+{ n: '413', when: '27/out 11:20', repo: 'p-inga', task: 'T61', kind: 'verify', status: 'ok', model: 'claude', hash: '6e89…35a1' },
+{ n: '412', when: '27/out 10:58', repo: 'p-inga', task: 'PLAN-0004 judge', kind: 'judge', status: 'pass', model: 'agy/gemini', hash: '04ab…e7c0' },
+{ n: '411', when: '26/out 23:40', repo: 'gira-g', task: 'T02', kind: 'verify', status: 'ok', model: 'codex', hash: 'e97d…5a12' }
+];
+const styleFor = (x) => x === 'fail' ? st('#FEF3C7', '#78350F') : (x === 'red ok' ? st('#EFEDE7', '#3A3832') : st('#E7F3EF', '#134E48'));
+const shown = all.filter((r) => s.filter === 'todos' || (s.filter === 'falhas' && r.status === 'fail') || r.repo === s.filter);
+const mk = (vals, color) => vals.map((v, i) => ({ label: String(v), style: 'flex: 1 1 0; border-radius: 3px 3px 0 0; height: ' + v + '%; background: ' + (i === vals.length - 1 ? color : '#CFCBC1') }));
+return {
+heading: s.view === 'ledger' ? 'Ledger' : 'Bench',
+isLedger: s.view === 'ledger', isBench: s.view === 'bench',
+showLedger: () => this.setState({ view: 'ledger' }), showBench: () => this.setState({ view: 'bench' }),
+ledgerTabStyle: 'border-radius: 8px 0 0 8px; ' + (s.view === 'ledger' ? segOn : segOff),
+benchTabStyle: 'border-radius: 0 8px 8px 0; border-left: 0; ' + (s.view === 'bench' ? segOn : segOff),
+filters: ['todos', 'falhas', 'p-inga', 'pi-harness'].map((f) => ({ label: f, pick: () => this.setState({ filter: f }), style: 'border-radius: 8px; ' + (s.filter === f ? segOn : segOff) })),
+receipts: shown.map((r) => Object.assign({}, r, { statusStyle: styleFor(r.status) })),
+metrics: [
+{ name: 'Latência do pinga verify', spec: 'SPEC-0005', kind: 'perf', baseline: '1,8 s', delta: '−6% melhor', deltaStyle: st('#E7F3EF', '#134E48'), bars: mk([70, 72, 68, 71, 66, 65, 67, 63], '#1C1B18') },
+{ name: 'Cobertura de docs (gira)', spec: 'SPEC-0004', kind: 'docs', baseline: '82%', delta: '+3 p.p.', deltaStyle: st('#E7F3EF', '#134E48'), bars: mk([60, 62, 64, 63, 66, 68, 70, 71], '#1C1B18') },
+{ name: 'Links quebrados no docsite', spec: 'SPEC-0004', kind: 'docs', baseline: '0', delta: 'regressão: 2', deltaStyle: st('#FEF3C7', '#78350F'), bars: mk([5, 5, 5, 5, 5, 5, 5, 30], '#B45309') },
+{ name: 'Snapshot da TUI (diff de frames)', spec: 'SPEC-0043', kind: 'ux', baseline: '0 diffs', delta: 'igual', deltaStyle: st('#EFEDE7', '#3A3832'), bars: mk([10, 10, 10, 10, 10, 10, 10, 10], '#1C1B18') }
+]
+};
+}
+}
+</script>
+</body>
+</html>

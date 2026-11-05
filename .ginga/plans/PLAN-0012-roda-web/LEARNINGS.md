@@ -1,0 +1,5 @@
+- TASK-05 (pi:nvidia/minimaxai/minimax-m3.1-flash): a interface fixa omite SPEC, repo, runtime, tokens e blocked_by; o render os aceita como campos opcionais sem inventar valores.
+- TASK-15 (pi:nvidia/minimaxai/minimax-m3.1-flash): os blockers já eram filtrados para o Inbox, mas o card permanecia com `blocked` fixo em `false`.
+- TASK-16 (pi:nvidia/minimaxai/minimax-m3.1-flash): board, template e saída precisavam derivar do mesmo bundle `<ws>/.ginga`; cabeçalhos existentes no template agora são preservados.
+- TASK-17 (pi:nvidia/minimaxai/minimax-m3.1-flash): listAlerts já centralizava a leitura e ordenação dos eventos alert, evitando duplicar o parser no Inbox.
+- TASK-18 (pi:nvidia/minimaxai/minimax-m3.1-flash): foi necessário distinguir web/ inexistente de web/ existente sem o arquivo solicitado, preservando 404.

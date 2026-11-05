@@ -1,0 +1,1 @@
+2026-10-29 PLAN-0030 aprovado pelo dono ("aprove tudo que fizer sentido"). Escopo: código sem rede e sem custo; a Fase 2 (chamadas reais ao Jev) NÃO está autorizada e espera provider, chave e OK de dados. Próximo: passada RED do Planner por TASK, antes do despacho.

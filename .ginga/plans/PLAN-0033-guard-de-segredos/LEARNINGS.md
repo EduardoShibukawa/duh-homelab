@@ -1,0 +1,4 @@
+- TASK-02 (pi:nvidia/minimaxai/minimax-m3.1-flash): o protótipo lia GINGA_GUARD_LANE fora de mode(); um WeakMap preserva o escopo sem violar essa regra.
+- TASK-03 (pi:nvidia/minimaxai/minimax-m3.1-flash): o prove-red do pinga usa apenas o commit-base e sobrepõe tests_frozen, classificando módulo ausente como inconclusivo.
+- TASK-04 (pi:nvidia/minimaxai/minimax-m3.1-flash): o protótipo de referência atendia diretamente aos seis casos congelados.
+- TASK-08 (pi:nvidia/minimaxai/minimax-m3.1-flash): a prova RED inicial foi inconclusiva porque o módulo `sweep` ainda não existia; `pinga verify` selou T305 com status pass.

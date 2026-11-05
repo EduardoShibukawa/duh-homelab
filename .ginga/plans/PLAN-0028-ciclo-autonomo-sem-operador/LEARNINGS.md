@@ -1,0 +1,1 @@
+- TASK-12 (opencode-go/iceman-contributor-free): não mexer nos testes congelados força a usar injeção de parâmetros e fallbacks, o que mantém o módulo flexível sem quebrar contratos existentes

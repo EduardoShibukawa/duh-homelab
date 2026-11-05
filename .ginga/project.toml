@@ -1,0 +1,16 @@
+# project.toml do workspace duh-homelab (2026-10-29).
+# O tick do `ginga serve` NÃO despacha daqui: a raiz tem 60 TASKs legadas em tasks/ que o pinga vê como open.
+# O despacho é feito pelas lanes (.ginga/bin/lane.sh), supervisionadas pelo `ginga serve` (PLAN-0023).
+[commands]
+queue = "cat /home/shibuka/Projetos/duh-homelab/.ginga/empty-queue.json"
+
+[supervisor]
+idle_cooldown_ms = 600000
+max_restarts = 3
+
+[supervisor.lanes]
+gira-g = "/home/shibuka/Projetos/duh-homelab/.ginga/bin/lane.sh gira-g 6"
+manda = "/home/shibuka/Projetos/duh-homelab/.ginga/bin/lane.sh manda 6"
+p-inga = "/home/shibuka/Projetos/duh-homelab/.ginga/bin/lane.sh p-inga 6"
+# pausada até o PLAN-0009 fechar (2026-10-29, eficiência do budget)
+# ginga = "/home/shibuka/Projetos/duh-homelab/.ginga/bin/lane.sh ginga 6"

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Onboarding ginga init</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F5F1;color:#1C1B18;font-family:'IBM Plex Sans',system-ui,sans-serif}
+.btn{min-height:44px;padding:0 18px;border-radius:8px;border:1px solid #CFCBC1;background:#FFFFFF;color:#1C1B18;font:inherit;font-size:14px;font-weight:500;cursor:pointer}
+.btn:hover{background:#EFEDE7}
+.btn-primary{background:#1C1B18;color:#FFFFFF;border-color:#1C1B18}
+.btn-primary:hover{background:#3A3832}
+.card{background:#FFFFFF;border:1px solid #E2DED4;border-radius:12px}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.muted{color:#5F5B52}
+.line{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid #EFEDE7;font-size:15px}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-direction: column">
+<header style="background: #1C1B18; color: #F6F5F1; padding: 14px 24px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: baseline">
+<span style="font-size: 22px; font-weight: 700">Roda</span>
+<span class="mono" style="font-size: 13px; color: #C9C5BA">ginga init · ~/Projetos/spring-petclinic-modern</span>
+</header>
+<main style="width: 100%; max-width: 960px; margin: 0 auto; padding: 32px 24px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px">
+<ol aria-label="Passos" style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{ steps }}" as="st" hint-placeholder-count="5">
+<li style="{{ st.style }}"><span class="mono">{{ st.n }}</span> {{ st.label }}</li>
+</sc-for>
+</ol>
+
+<section class="card" style="padding: 24px; display: flex; flex-direction: column; gap: 8px">
+<sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+<h1 style="margin: 0 0 4px; font-size: 24px">Projeto detectado</h1>
+<p class="muted" style="margin: 0 0 8px; font-size: 14px">Tudo lido do repositório. Ajuste se algo estiver errado.</p>
+<div class="line"><span style="flex: 0 0 160px" class="muted">Stack</span><span class="mono">maven (pom.xml) · Java 21</span></div>
+<div class="line"><label for="cmd-test" class="muted" style="flex: 0 0 160px">Comando de teste</label><input id="cmd-test" class="mono" value="mvn test-compile surefire:test" style="flex: 1 1 auto; min-width: 0; min-height: 40px; border: 1px solid #CFCBC1; border-radius: 8px; padding: 0 10px; font-size: 14px"></div>
+<div class="line"><label for="cmd-build" class="muted" style="flex: 0 0 160px">Build</label><input id="cmd-build" class="mono" value="mvn -q package" style="flex: 1 1 auto; min-width: 0; min-height: 40px; border: 1px solid #CFCBC1; border-radius: 8px; padding: 0 10px; font-size: 14px"></div>
+<div class="line"><span style="flex: 0 0 160px" class="muted">Bench</span><span class="muted">nenhum script encontrado · opcional</span></div>
+</sc-if>
+
+<sc-if value="{{ s1 }}" hint-placeholder-val="{{ false }}">
+<h1 style="margin: 0 0 4px; font-size: 24px">Contexto do código</h1>
+<p class="muted" style="margin: 0 0 8px; font-size: 14px">Opcional. Sem provider, o fallback é rg + git.</p>
+<sc-for list="{{ ctx }}" as="c" hint-placeholder-count="3">
+<label class="line" style="cursor: pointer"><input type="radio" name="ctx" checked="{{ c.checked }}" onChange="{{ c.pick }}" style="width: 20px; height: 20px"><span style="flex: 0 0 140px; font-weight: 600">{{ c.name }}</span><span class="muted" style="font-size: 14px">{{ c.desc }}</span></label>
+</sc-for>
+</sc-if>
+
+<sc-if value="{{ s2 }}" hint-placeholder-val="{{ false }}">
+<h1 style="margin: 0 0 4px; font-size: 24px">Runtimes encontrados</h1>
+<p class="muted" style="margin: 0 0 8px; font-size: 14px">Lidos do PATH e das credenciais. Os papéis seguem o models/ROUTING.md; dá para trocar depois.</p>
+<sc-for list="{{ runtimes }}" as="r" hint-placeholder-count="5">
+<div class="line"><span style="{{ r.dotStyle }}" aria-hidden="true"></span><span class="mono" style="flex: 0 0 110px; font-weight: 600">{{ r.name }}</span><span style="flex: 0 0 170px" class="muted">{{ r.plan }}</span><span style="font-size: 14px">{{ r.role }}</span></div>
+</sc-for>
+</sc-if>
+
+<sc-if value="{{ s3 }}" hint-placeholder-val="{{ false }}">
+<h1 style="margin: 0 0 4px; font-size: 24px">Notificações</h1>
+<p class="muted" style="margin: 0 0 8px; font-size: 14px">Hermes encontrado com gateway ativo. Escolha onde avisar.</p>
+<sc-for list="{{ channels }}" as="c" hint-placeholder-count="3">
+<label class="line" style="cursor: pointer"><input type="checkbox" checked="{{ c.on }}" onChange="{{ c.toggle }}" style="width: 20px; height: 20px"><span style="flex: 0 0 140px; font-weight: 600">{{ c.name }}</span><span class="mono muted" style="font-size: 13px">{{ c.target }}</span></label>
+</sc-for>
+<div class="muted" style="font-size: 13px; margin-top: 8px">Regras padrão: blocker e budget avisam no celular; o resto fica na Roda. Ajuste em .ginga/project.toml.</div>
+</sc-if>
+
+<sc-if value="{{ s4 }}" hint-placeholder-val="{{ false }}">
+<h1 style="margin: 0 0 4px; font-size: 24px">Revisar e criar</h1>
+<p class="muted" style="margin: 0 0 8px; font-size: 14px">Será criado .ginga/ com index.md, log.md e project.toml. Nada mais no repo é alterado.</p>
+<pre class="mono" style="margin: 0; background: #1C1B18; color: #E7E4DC; border-radius: 8px; padding: 16px; font-size: 13px; line-height: 1.6; white-space: pre-wrap">{{ toml }}</pre>
+</sc-if>
+
+<sc-if value="{{ s5 }}" hint-placeholder-val="{{ false }}">
+<h1 style="margin: 0 0 4px; font-size: 24px">Pronto</h1>
+<p style="margin: 0; font-size: 15px; line-height: 1.6">.ginga/ criado em spring-petclinic-modern. Próximo passo: mande o primeiro pedido, por aqui (+ Intent), pelo Discord (/ginga intent) ou pela CLI (ginga intent new "…").</p>
+</sc-if>
+</section>
+
+<div style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+<button type="button" class="btn" onClick="{{ back }}" disabled="{{ atStart }}">Voltar</button>
+<button type="button" class="btn btn-primary" onClick="{{ next }}">{{ nextLabel }}</button>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { step: 0, ctx: 'gira', ch: { discord: true, telegram: true, push: false } };
+}
+renderVals() {
+const s = this.state;
+const labels = ['Projeto', 'Contexto', 'Runtimes', 'Notificações', 'Revisar'];
+const ctxDefs = [['gira', 'AST, impacto e docs vivas · detectado no PATH'], ['graphify', 'grafo de conhecimento · não instalado'], ['rg + git', 'fallback embutido, sem dependência']];
+const chDefs = [['discord', 'Discord', 'hermes → discord:#ginga (thread por PLAN)'], ['telegram', 'Telegram', 'hermes → telegram (decisões rápidas)'], ['push', 'Push', 'tuios → celular pareado']];
+const dot = (c) => 'flex: 0 0 10px; width: 10px; height: 10px; border-radius: 50%; background: ' + c;
+const on = Object.keys(s.ch).filter((k) => s.ch[k]);
+const toml = '[commands]\ntest  = "mvn test-compile surefire:test"\nbuild = "mvn -q package"\n\n[context]\nprovider = "' + s.ctx + '"\n\n[runtimes]\nplanner  = "claude"\nexecutor = "opencode:go"\njudge    = "agy"\n\n[notify]\nadapter  = "hermes"\nchannels = [' + on.map((c) => '"' + c + '"').join(', ') + ']';
+return {
+steps: labels.map((l, i) => ({ n: String(i + 1), label: l,
+style: 'font-size: 14px; font-weight: 600; padding: 8px 12px; border-radius: 8px; ' + (i === s.step ? 'background: #1C1B18; color: #FFFFFF' : (i < s.step || s.step === 5 ? 'background: #E7F3EF; color: #134E48' : 'background: #EFEDE7; color: #5F5B52')) })),
+s0: s.step === 0, s1: s.step === 1, s2: s.step === 2, s3: s.step === 3, s4: s.step === 4, s5: s.step === 5,
+ctx: ctxDefs.map((c) => ({ name: c[0], desc: c[1], checked: s.ctx === c[0], pick: () => this.setState({ ctx: c[0] }) })),
+runtimes: [
+{ name: 'claude', plan: 'Claude Pro', role: 'Spec Researcher · Planner', dotStyle: dot('#0F766E') },
+{ name: 'codex', plan: 'ChatGPT Go', role: 'Spec Judge · Verifier Judge', dotStyle: dot('#0F766E') },
+{ name: 'agy', plan: 'Gemini Pro', role: 'Verifier Judge', dotStyle: dot('#0F766E') },
+{ name: 'opencode', plan: 'Go + Zen', role: 'Executores free/medium', dotStyle: dot('#0F766E') },
+{ name: 'pi', plan: 'Go + Zen + local', role: 'Executor e host', dotStyle: dot('#0F766E') }
+],
+channels: chDefs.map((c) => ({ name: c[1], target: c[2], on: !!s.ch[c[0]], toggle: () => { const ch = Object.assign({}, s.ch); ch[c[0]] = !ch[c[0]]; this.setState({ ch: ch }); } })),
+toml: toml,
+atStart: s.step === 0 || s.step === 5,
+back: () => this.setState({ step: Math.max(0, s.step - 1) }),
+next: () => this.setState({ step: s.step >= 5 ? 0 : s.step + 1 }),
+nextLabel: s.step === 4 ? 'Criar .ginga/' : (s.step === 5 ? 'Recomeçar demo' : 'Continuar')
+};
+}
+}
+</script>
+</body>
+</html>

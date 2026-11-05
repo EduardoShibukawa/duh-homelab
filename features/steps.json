@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "bindings": [
+    {
+      "matches": [
+        "que o ambiente hermético do mise está configurado",
+        "que o ambiente de execução está pronto"
+      ],
+      "action": {
+        "type": "cli",
+        "command": "echo 'ok'",
+        "capture": "output"
+      }
+    }
+  ]
+}

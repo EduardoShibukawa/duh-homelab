@@ -1,0 +1,59 @@
+{
+  "head": "22b68e67006e867746f023241ee0fb05f92f04e1",
+  "log": "/tmp/scratchpad/judge/0008-manda.log",
+  "judge": {
+    "verdict": "fail",
+    "items": [
+      {
+        "ref": "TASK-01",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/runtime/pi.ts:148-165 falha sem provider e modelo expl\u00edcitos; tests/runtime_pi_opencode.test.ts:265-301 cobre esse contrato.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-03",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/routing.ts:104-169 prioriza [runtimes], depois ROUTING e resolve runtime/provider/modelo; src/routing.ts:174-223 exp\u00f5e route --json.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-04",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/escalation.ts:145-164 limita strong a tier expl\u00edcito e ignora candidatos j\u00e1 tentados; src/run.ts:416-454 implementa breaker e bloqueio ap\u00f3s esgotar tentativas.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-05",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/run.ts:245-309 aplica tetos, avisos e aprova\u00e7\u00e3o para claude; src/budget.ts:176-179 registra gasto.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-07",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/judge.ts:172-190 exige fam\u00edlia conhecida e seleciona juiz de fam\u00edlia distinta; src/judge.ts:197-225 monta bundle limitado aos artefatos previstos; src/judge.ts:247-271 grava e sela o veredito.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-08",
+        "ok": true,
+        "regression": false,
+        "evidence": "src/plan.ts:246-299 resolve o Planner; src/plan.ts:310-366 valida, tenta novamente e grava planos como draft.",
+        "severity": "simples"
+      },
+      {
+        "ref": "TASK-09",
+        "ok": false,
+        "regression": false,
+        "evidence": "src/run.ts:224-227 injeta opencode/glm-5.3-flash-free quando o runtime escolhido \u00e9 pi sem modelo; src/runtime/pi.ts:148-165 deixa de aplicar esse padr\u00e3o no adapter, mas o fallback persiste no chamador.",
+        "severity": "grave"
+      }
+    ],
+    "summary": "Seis TASKs avaliadas como cumpridas. TASK-09 falha porque mant\u00e9m provider/modelo impl\u00edcitos no caminho de runtime fixo. O diff main...HEAD altera apenas src/judge.ts e n\u00e3o causa regress\u00e3o identificada."
+  }
+}

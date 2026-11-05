@@ -1,0 +1,5 @@
+- TASK-01 (opencode/glm-5.3-flash-free): Bun.spawnSync lança (ENOENT/EACCES) em binário inexistente/não executável em vez de retornar resultado — fora do guard do verify, o fail-closed já vem "de graça" pela exceção.
+- 2026-10-27 (dono): "o docker tem o --network, não poderíamos fazer algo similar?"
+  - Sim: `--network none` equivale a `bwrap --unshare-net`, já usado no `sandbox-done-when.sh` (rede e porta 49374 bloqueadas, testado).
+  - Uma allowlist de domínios não existe direto nem no Docker: é rede isolada + proxy de saída (bwrap + `pasta`/`slirp4netns` + proxy, ou `srt`, Apache-2.0). É a opção C do INTENT-0006.
+  - Proposta: o perfil de runtime declara `net: none | allowlist[domínios] | host`. O `done_when` usa `none`; o executor usa `allowlist` (endpoint do provider).

@@ -1,0 +1,4 @@
+- 2026-11-03 T368 RED prove-red pass; feat verify pass em ginga-plan-0035 (plan/0035). Falta judge + merge-gate.
+- 2026-11-03T20:09:17-03:00 merge-gate ginga plan/0035: exit 2 (conflito no merge)
+- 2026-11-03T20:10:47-03:00 merge-gate ginga plan/0035: exit 0 (mergeado 44c62cc)
+- 2026-11-03 judge pass; merge-gate exit 0 (mergeado 44c62cc; rodado com PYTHONDONTWRITEBYTECODE=1 porque o 1º merge falhou: o gate rodou os testes na main e regravou o .pyc).

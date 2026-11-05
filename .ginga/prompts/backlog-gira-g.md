@@ -1,0 +1,4 @@
+# Lane gira-g (2026-10-29). Go: testes com `mise exec -- go test`; lefthook via `mise exec`. Passada RED primeiro (regras de `.ginga/prompts/planner-red.md`: escreva os `tests_frozen` na worktree, `tasks/T<N>/PLAN.md` com id livre no `pinga queue --json`, `pinga prove-red` = RED, `pinga_task: T<N>` na TASK, commit `test(T<N>): RED` na `plan/NNNN`); depois despache (`dispatch-task.sh`), `pinga verify` e grave o `ready` quando todas as TASKs do repo no item tiverem `pass`.
+- [x] PLAN-0009 TASK-01 (gira-g): docsite sem caso especial por nome de projeto. Worktree `gira-g-plan-0009` (branch `plan/0009`). (T04: RED 2243375, feat ebe56e1, verify pass seq 668)
+- worktree: gira-g-plan-0009
+- [x] PLAN-0009 TASK-03 (gira-g): `gira capabilities --json`. Só depois da TASK-01 com receipt `pass` na mesma branch. (T05: RED e5bbf59, feat 2bcdf0f, verify pass seq 671)

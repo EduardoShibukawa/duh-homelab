@@ -1,0 +1,3 @@
+- 2026-10-28T10:08:32-03:00 aprovado pelo harness: deriva da visão (02) + regra do dono 'fixe tudo'/remoção do pi-harness; o dono confirmou em 2026-10-28 que decisões cobertas pela visão são do harness.
+- 2026-10-28T21:07:51-03:00 merge-gate p-inga plan/0021: exit 0 (mergeado 7362578)
+- 2026-10-28T22:50:35-03:00 Claude: ready/p-inga.json recriado às 22:48 por processo não identificado, com a branch sem commits além da main (já mergeado); movido para ready/done

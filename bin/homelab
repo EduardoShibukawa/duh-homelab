@@ -1,0 +1,247 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# HOMELAB UNIFIED CLI
+# Gerenciamento integrado de UIs (TUIOS, Web Dashboard, Hermes), P-Ingá e Gira-G
+# ==============================================================================
+set -euo pipefail
+
+DUH_ROOT="/home/shibuka/Projetos/duh-homelab"
+BUN="/home/shibuka/.local/share/mise/installs/bun/latest/bin/bun"
+PINGA_CLI="$DUH_ROOT/p-inga/bin/pinga.ts"
+LEDGER_DB="/home/shibuka/.local/state/pinga/ledger.db"
+PID_FILE="/tmp/pinga-dashboard.pid"
+
+usage() {
+    cat << 'EOF'
+🛡️  HOMELAB CLI — Gerenciador Unificado de UIs e Governança
+
+USO:
+    homelab <comando> [argumentos...]
+
+COMANDOS DE UI:
+    homelab ctl [--popup]        Inicia a Central de Controle Interativa (Gum/FZF)
+    homelab menu                 Atalho para homelab ctl
+    homelab tui                  Inicia ou anexa ao layout de 4 painéis no TUIOS
+    homelab web [ação]           Gerencia o Web Dashboard (:4242)
+                                 Ações: start | stop | restart | open | status
+    homelab hermes [args...]     Inicia o Hermes Agent com o perfil formal P-Ingá
+    homelab hud <tipo> <msg>     Envia alerta flutuante para a HUD do TUIOS (OSC 7501)
+                                 Tipos: working | done | blocked | error
+
+COMANDOS DE OPERAÇÃO & STATUS:
+    homelab status               Exibe o painel de integridade geral (disjuntores, ledger, UIs)
+    homelab verify <PLAN.md>     Executa o motor de verificação criptográfica P-Ingá
+    homelab maestro [sub]        Acessa telemetria do Maestro (scoreboard, digest, recommend)
+    homelab ast <ação> [args...] Executa cirurgia semântica via Gira-G (slice, impact, outline)
+
+EXEMPLOS:
+    homelab status
+    homelab tui
+    homelab web open
+    homelab hermes
+    homelab hud blocked "G1 Inércia disparado na tarefa T12"
+    homelab verify tasks/T01/PLAN.md
+EOF
+    exit 0
+}
+
+cmd_status() {
+    echo "================================================================="
+    echo " 🛡️  HOMELAB UNIFIED HEALTH STATUS"
+    echo "================================================================="
+
+    # 1. Disjuntores
+    echo -n " Disjuntores:      "
+    if [ -x "$HOME/.config/tuios/dock/pinga_breakers.sh" ]; then
+        "$HOME/.config/tuios/dock/pinga_breakers.sh"
+    else
+        echo "N/A"
+    fi
+
+    # 2. Tokens & Custo
+    echo -n " Consumo Ledger:   "
+    if [ -x "$HOME/.config/tuios/dock/pinga_tokens.sh" ]; then
+        "$HOME/.config/tuios/dock/pinga_tokens.sh"
+    else
+        echo "N/A"
+    fi
+
+    # 3. Web Dashboard
+    echo -n " Web Dashboard:    "
+    if curl -s -m 1 http://localhost:4242/api/receipts >/dev/null 2>&1; then
+        echo "🟢 Ativo em http://localhost:4242"
+    else
+        echo "🔴 Inativo (inicie com: homelab web start)"
+    fi
+
+    # 4. TUIOS
+    echo -n " TUIOS Sessões:    "
+    if tuios has-session -s homelab 2>/dev/null; then
+        echo "🟢 Sessão 'homelab' ativa"
+    else
+        echo "⚪ Nenhuma sessão 'homelab' em execução"
+    fi
+
+    # 5. Ledger Integrity
+    echo -n " Ledger Cripto:    "
+    if [ -f "$LEDGER_DB" ]; then
+        REC_COUNT=$(sqlite3 "$LEDGER_DB" "SELECT COUNT(*) FROM receipts;" 2>/dev/null || echo "0")
+        echo "📦 $REC_COUNT recibos íntegros em $LEDGER_DB"
+    else
+        echo "⚪ Nenhum ledger em $LEDGER_DB"
+    fi
+
+    # 6. Melhor Operário
+    echo -n " Maestro Operário: "
+    if [ -x "$HOME/.config/tuios/dock/pinga_worker.sh" ]; then
+        "$HOME/.config/tuios/dock/pinga_worker.sh"
+    else
+        echo "N/A"
+    fi
+    echo "================================================================="
+}
+
+cmd_web() {
+    local action="${1:-status}"
+    case "$action" in
+        start)
+            "$DUH_ROOT/bin/start-dashboard.sh"
+            ;;
+        stop)
+            "$DUH_ROOT/bin/stop-dashboard.sh"
+            ;;
+        restart)
+            "$DUH_ROOT/bin/stop-dashboard.sh" || true
+            sleep 1
+            "$DUH_ROOT/bin/start-dashboard.sh"
+            ;;
+        open)
+            ACTIVE_PID=$(pgrep -f "bun.*web/server\.ts" 2>/dev/null | head -n 1 || true)
+            if [ -z "$ACTIVE_PID" ]; then
+                echo "Web Dashboard não está ativo. Iniciando..."
+                "$DUH_ROOT/bin/start-dashboard.sh"
+                sleep 1
+            fi
+            if command -v xdg-open >/dev/null 2>&1; then
+                xdg-open "http://localhost:4242" >/dev/null 2>&1 &
+            fi
+            echo "Aberto no navegador: http://localhost:4242"
+            ;;
+        status)
+            ACTIVE_PID=$(pgrep -f "bun.*web/server\.ts" 2>/dev/null | head -n 1 || true)
+            if [ -n "$ACTIVE_PID" ]; then
+                echo "$ACTIVE_PID" > "$PID_FILE"
+                echo "🟢 Web Dashboard rodando em http://localhost:4242 (PID: $ACTIVE_PID)"
+                curl -s http://localhost:4242/api/receipts | jq -c '{total_recibos: .total}' 2>/dev/null || true
+            else
+                echo "🔴 Web Dashboard parado."
+            fi
+            ;;
+        *)
+            echo "Ação web inválida: $action (use start|stop|restart|open|status)"
+            exit 1
+            ;;
+    esac
+}
+
+cmd_ctl() {
+    local ctl_bin="$DUH_ROOT/bin/tuios-control-center.sh"
+    if [ "${1:-}" = "--popup" ] || [ "${1:-}" = "-p" ]; then
+        shift || true
+        local sess="${TUIOS_SESSION:-$(tuios list-sessions --json 2>/dev/null | jq -r '.[0].name // "homelab"')}"
+        tuios popup -s "$sess" --width 85% --height 75% -- "$ctl_bin" "$@"
+    else
+        "$ctl_bin" "$@"
+    fi
+}
+
+cmd_tui() {
+    "$DUH_ROOT/bin/homelab-workspace.sh"
+    tuios attach homelab
+}
+
+cmd_hermes() {
+    echo "Iniciando Hermes com perfil formal 'pinga'..."
+    hermes -p pinga "$@"
+}
+
+cmd_hud() {
+    local kind="${1:-working}"
+    shift || true
+    local msg="${*:-Notificação Homelab}"
+    if [ "$kind" = "blocked" ]; then
+        tuios status blocked --kind permission --app p-inga --msg "$msg"
+    else
+        tuios status "$kind" --app p-inga --msg "$msg"
+    fi
+    echo "Alerta HUD enviado ao TUIOS: [$kind] $msg"
+}
+
+cmd_verify() {
+    local plan="${1:-}"
+    if [ -z "$plan" ]; then
+        echo "Uso: homelab verify <caminho/para/PLAN.md>"
+        exit 1
+    fi
+    shift || true
+    if [ ! -f "$plan" ] && [ -f "$DUH_ROOT/p-inga/$plan" ]; then
+        plan="$DUH_ROOT/p-inga/$plan"
+    fi
+    (cd "$DUH_ROOT/p-inga" && "$BUN" "$PINGA_CLI" verify "$plan" "$@")
+}
+
+cmd_maestro() {
+    $BUN "$PINGA_CLI" maestro "$@"
+}
+
+cmd_ast() {
+    if [ -f "gira.yaml" ] || [ -d ".gira" ]; then
+        gira "$@"
+    else
+        (cd "$DUH_ROOT/gira-g" && gira "$@")
+    fi
+}
+
+# ------------------------------------------------------------------------------
+# Dispatcher Principal
+# ------------------------------------------------------------------------------
+COMMAND="${1:-}"
+shift || true
+
+case "$COMMAND" in
+    ctl|menu|control)
+        cmd_ctl "$@"
+        ;;
+    status)
+        cmd_status
+        ;;
+    web)
+        cmd_web "$@"
+        ;;
+    tui|tuios)
+        cmd_tui
+        ;;
+    hermes)
+        cmd_hermes "$@"
+        ;;
+    hud)
+        cmd_hud "$@"
+        ;;
+    verify)
+        cmd_verify "$@"
+        ;;
+    maestro)
+        cmd_maestro "$@"
+        ;;
+    ast|gira)
+        cmd_ast "$@"
+        ;;
+    -h|--help|help|"")
+        usage
+        ;;
+    *)
+        echo "Comando desconhecido: $COMMAND"
+        echo "Execute 'homelab --help' para ver os comandos disponíveis."
+        exit 1
+        ;;
+esac

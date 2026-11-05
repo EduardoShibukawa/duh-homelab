@@ -1,0 +1,929 @@
+
+### 00:08 PLAN-0028-ciclo-autonomo-sem-operador · manda · plan/0028 · gate 2
+- motivo: conflito no merge
+- judge: pass no HEAD e6c3d161 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0028-ciclo-autonomo-sem-operador/judge/manda-20261030T233120.log)
+  - ok [AC] src/run.ts:339, src/judge.ts:240, src/replan.ts:67 e src/cli.ts:259/277 chamam checkPaidCall antes de cada chamada paga (executor, judge, planner primário e fallback); tests/cost_cap_wiring.test.ts 9 pass e tests/replan_cli_cost.test.ts 5 pass. Em src/cli.ts o replan() interno roda após o gasto do p
+  - ok [TASK-02] src/alloc.ts allocTaskIds; tests/alloc.test.ts 3 pass; src/red.ts monta taken com fila, pinga_task de todo o bundle e tasks/T* da worktree criada antes (follow-up T167).
+  - ok [TASK-03] src/red.ts redPlan copia frozen, gera tasks/T<N>/PLAN.md, roda prove-red, commita test(T<N>): RED e grava status blocked/test_passed_on_base; tests/red.test.ts 3 pass. Resíduo sem commit na worktree após TASK bloqueada.
+  - ok [TASK-05] src/replan.ts buildReplanContext determinístico (diff truncado em 20000) e replan() com lint, bloqueando quando o planner ou o lint falha; tests/replan.test.ts 4 pass.
+  - ok [TASK-06] src/cost_cap.ts capCheck e spentUsd (session_v2 + claudeCosts, try/catch para DB inválido); tests/cost_cap.test.ts 4 pass.
+  - ok [TASK-09] src/cli.ts:~320-360 comando red com --repo/--root e saída JSON; src/red.ts valida cada tests_frozen e lança o caminho real; tests/red_cli.test.ts 2 pass.
+  - ok [TASK-10] src/cli.ts comando red usa Bun.spawnSync com env: process.env para pinga e git; tests/red_cli.test.ts pass.
+  - ok [TASK-11] src/cli.ts comando replan lê receipts via pinga queue, judge/*.json, git diff main...plan/NNNN e [roles] planner com fallback opencode; tests/replan_cli.test.ts 1 pass. git/pinga rodam com cwd=root, que pode não ser repo git no uso real.
+  - ok [TASK-12] src/cost_cap.ts loadRoundCapUsd/isPaidModel/checkPaidCall; guarda ligada em src/run.ts:339, src/judge.ts:240 e src/replan.ts:67; tests/cost_cap_wiring.test.ts 9 pass, run.test.ts 15 pass.
+  - ok [TASK-13] src/cli.ts:257-300 since=24h, claudeCosts acumulado via extractTotalCostUsd (src/cost_cap.ts), checagem antes do primário e do fallback, repasse de model/since/claudeCosts a replan(); tests/replan_cli_cost.test.ts 5 pass.
+  - ok [TASK-14] src/red.ts filtra bundle.tasks por repo, lança srcPath real quando frozen ausente e grava status: blocked; tests/red_repo.test.ts 3 pass.
+  - ok [TASK-15] src/cli.ts passa repo a redPlan; tests/red_cli_repo.test.ts 1 pass com PLAN multi-repo.
+  - ok [TASK-16] src/red.ts varre tasks/T* da worktree e inclui pinga_task de todo o bundle em taken; tests/red_taken.test.ts 3 pass.
+  - ok [TASK-17] src/red.ts cria a worktree (git worktree add) antes de montar taken; teste first-execution em tests/red_taken.test.ts passa. O frontmatter da TASK-17 não tem pinga_task: T167, embora tasks/T167/PLAN.md exista.
+- resumo do judge: Todas as TASKs repo: manda e o AC de teto de custo estão cumpridos no HEAD. Os testes done_when de cada TASK passam. Na suíte completa, 4 testes falham (judge_blind, pipeline) e os mesmos 4 falham na main, então não há regressão. Pontos menores e não reprovadores: o replan() interno pode bloquear após o planner já ter gasto, git/pinga do replan rodam com cwd=root (não é repo git), a TASK-17 não te
+
+### 00:10 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 00:15 PLAN-0028-ciclo-autonomo-sem-operador · manda · plan/0028 · gate 2
+- motivo: conflito no merge
+- judge: pass no HEAD e6c3d161 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0028-ciclo-autonomo-sem-operador/judge/manda-20261030T233120.log)
+  - ok [AC] src/run.ts:339, src/judge.ts:240, src/replan.ts:67 e src/cli.ts:259/277 chamam checkPaidCall antes de cada chamada paga (executor, judge, planner primário e fallback); tests/cost_cap_wiring.test.ts 9 pass e tests/replan_cli_cost.test.ts 5 pass. Em src/cli.ts o replan() interno roda após o gasto do p
+  - ok [TASK-02] src/alloc.ts allocTaskIds; tests/alloc.test.ts 3 pass; src/red.ts monta taken com fila, pinga_task de todo o bundle e tasks/T* da worktree criada antes (follow-up T167).
+  - ok [TASK-03] src/red.ts redPlan copia frozen, gera tasks/T<N>/PLAN.md, roda prove-red, commita test(T<N>): RED e grava status blocked/test_passed_on_base; tests/red.test.ts 3 pass. Resíduo sem commit na worktree após TASK bloqueada.
+  - ok [TASK-05] src/replan.ts buildReplanContext determinístico (diff truncado em 20000) e replan() com lint, bloqueando quando o planner ou o lint falha; tests/replan.test.ts 4 pass.
+  - ok [TASK-06] src/cost_cap.ts capCheck e spentUsd (session_v2 + claudeCosts, try/catch para DB inválido); tests/cost_cap.test.ts 4 pass.
+  - ok [TASK-09] src/cli.ts:~320-360 comando red com --repo/--root e saída JSON; src/red.ts valida cada tests_frozen e lança o caminho real; tests/red_cli.test.ts 2 pass.
+  - ok [TASK-10] src/cli.ts comando red usa Bun.spawnSync com env: process.env para pinga e git; tests/red_cli.test.ts pass.
+  - ok [TASK-11] src/cli.ts comando replan lê receipts via pinga queue, judge/*.json, git diff main...plan/NNNN e [roles] planner com fallback opencode; tests/replan_cli.test.ts 1 pass. git/pinga rodam com cwd=root, que pode não ser repo git no uso real.
+  - ok [TASK-12] src/cost_cap.ts loadRoundCapUsd/isPaidModel/checkPaidCall; guarda ligada em src/run.ts:339, src/judge.ts:240 e src/replan.ts:67; tests/cost_cap_wiring.test.ts 9 pass, run.test.ts 15 pass.
+  - ok [TASK-13] src/cli.ts:257-300 since=24h, claudeCosts acumulado via extractTotalCostUsd (src/cost_cap.ts), checagem antes do primário e do fallback, repasse de model/since/claudeCosts a replan(); tests/replan_cli_cost.test.ts 5 pass.
+  - ok [TASK-14] src/red.ts filtra bundle.tasks por repo, lança srcPath real quando frozen ausente e grava status: blocked; tests/red_repo.test.ts 3 pass.
+  - ok [TASK-15] src/cli.ts passa repo a redPlan; tests/red_cli_repo.test.ts 1 pass com PLAN multi-repo.
+  - ok [TASK-16] src/red.ts varre tasks/T* da worktree e inclui pinga_task de todo o bundle em taken; tests/red_taken.test.ts 3 pass.
+  - ok [TASK-17] src/red.ts cria a worktree (git worktree add) antes de montar taken; teste first-execution em tests/red_taken.test.ts passa. O frontmatter da TASK-17 não tem pinga_task: T167, embora tasks/T167/PLAN.md exista.
+- resumo do judge: Todas as TASKs repo: manda e o AC de teto de custo estão cumpridos no HEAD. Os testes done_when de cada TASK passam. Na suíte completa, 4 testes falham (judge_blind, pipeline) e os mesmos 4 falham na main, então não há regressão. Pontos menores e não reprovadores: o replan() interno pode bloquear após o planner já ter gasto, git/pinga do replan rodam com cwd=root (não é repo git), a TASK-17 não te
+
+### 00:15 PLAN-0032-guarda-de-escopo-no-pi · manda · plan/0032 · gate 2
+- motivo: conflito no merge
+- judge: pass no HEAD d057f23b (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0032-guarda-de-escopo-no-pi/judge/manda-20261030T054241.log)
+  - ok [TASK-01] src/runtime/scope_guard.ts:34-70 decide edit/write e bash; tests/scope_guard.test.ts verde
+  - ok [TASK-02] src/runtime/scope_path.ts resolvePath/matchesAny; scope_ignore.json com 4 padrões; tests/scope_path.test.ts verde
+  - ok [TASK-03] src/runtime/pi_scope_guard.ts registra tool_call só com env, retorna {block,reason}, try/catch libera e emite scope.guard_error; tests/pi_scope_guard.test.ts verde
+  - ok [TASK-04] src/runtime/scope_guard.ts:3,41-60 usa resolvePath/matchesAny sem casos fixos; tests/scope_guard_paths.test.ts, scope_guard.test.ts e scope_path.test.ts verdes
+  - ok [TASK-05] src/runtime/scope_events.ts emitScopeBlock/emitScopeGuardError/countByRule; tests/scope_events.test.ts e tests/events.test.ts verdes (a ligação do scope.block ao handler fica para o PLAN-0034)
+  - ok [AC] bun test dos 5 arquivos do PLAN mais events.test.ts: 31 pass 0 fail; suíte inteira 263 pass 4 fail (judge/pipeline CLI exit 30 pela guarda de LLM, em arquivos que o diff não toca)
+- resumo do judge: Todas as TASKs manda (01-05) cumprem seus done_when em HEAD e o achado anterior do judge (casos fixos em scope_guard) foi corrigido pela TASK-04. As 4 falhas da suíte inteira são testes de CLI que recebem exit 30 da guarda de LLM por rodarem dentro de um agente, e não vêm do diff. Limitações menores: scope_ignore.json não é consumido pela guarda, e nada emite scope.block em runtime ainda (ligação 
+
+### 00:20 PLAN-0028-ciclo-autonomo-sem-operador · manda · plan/0028 · gate 2
+- motivo: conflito no merge
+- judge: pass no HEAD e6c3d161 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0028-ciclo-autonomo-sem-operador/judge/manda-20261030T233120.log)
+  - ok [AC] src/run.ts:339, src/judge.ts:240, src/replan.ts:67 e src/cli.ts:259/277 chamam checkPaidCall antes de cada chamada paga (executor, judge, planner primário e fallback); tests/cost_cap_wiring.test.ts 9 pass e tests/replan_cli_cost.test.ts 5 pass. Em src/cli.ts o replan() interno roda após o gasto do p
+  - ok [TASK-02] src/alloc.ts allocTaskIds; tests/alloc.test.ts 3 pass; src/red.ts monta taken com fila, pinga_task de todo o bundle e tasks/T* da worktree criada antes (follow-up T167).
+  - ok [TASK-03] src/red.ts redPlan copia frozen, gera tasks/T<N>/PLAN.md, roda prove-red, commita test(T<N>): RED e grava status blocked/test_passed_on_base; tests/red.test.ts 3 pass. Resíduo sem commit na worktree após TASK bloqueada.
+  - ok [TASK-05] src/replan.ts buildReplanContext determinístico (diff truncado em 20000) e replan() com lint, bloqueando quando o planner ou o lint falha; tests/replan.test.ts 4 pass.
+  - ok [TASK-06] src/cost_cap.ts capCheck e spentUsd (session_v2 + claudeCosts, try/catch para DB inválido); tests/cost_cap.test.ts 4 pass.
+  - ok [TASK-09] src/cli.ts:~320-360 comando red com --repo/--root e saída JSON; src/red.ts valida cada tests_frozen e lança o caminho real; tests/red_cli.test.ts 2 pass.
+  - ok [TASK-10] src/cli.ts comando red usa Bun.spawnSync com env: process.env para pinga e git; tests/red_cli.test.ts pass.
+  - ok [TASK-11] src/cli.ts comando replan lê receipts via pinga queue, judge/*.json, git diff main...plan/NNNN e [roles] planner com fallback opencode; tests/replan_cli.test.ts 1 pass. git/pinga rodam com cwd=root, que pode não ser repo git no uso real.
+  - ok [TASK-12] src/cost_cap.ts loadRoundCapUsd/isPaidModel/checkPaidCall; guarda ligada em src/run.ts:339, src/judge.ts:240 e src/replan.ts:67; tests/cost_cap_wiring.test.ts 9 pass, run.test.ts 15 pass.
+  - ok [TASK-13] src/cli.ts:257-300 since=24h, claudeCosts acumulado via extractTotalCostUsd (src/cost_cap.ts), checagem antes do primário e do fallback, repasse de model/since/claudeCosts a replan(); tests/replan_cli_cost.test.ts 5 pass.
+  - ok [TASK-14] src/red.ts filtra bundle.tasks por repo, lança srcPath real quando frozen ausente e grava status: blocked; tests/red_repo.test.ts 3 pass.
+  - ok [TASK-15] src/cli.ts passa repo a redPlan; tests/red_cli_repo.test.ts 1 pass com PLAN multi-repo.
+  - ok [TASK-16] src/red.ts varre tasks/T* da worktree e inclui pinga_task de todo o bundle em taken; tests/red_taken.test.ts 3 pass.
+  - ok [TASK-17] src/red.ts cria a worktree (git worktree add) antes de montar taken; teste first-execution em tests/red_taken.test.ts passa. O frontmatter da TASK-17 não tem pinga_task: T167, embora tasks/T167/PLAN.md exista.
+- resumo do judge: Todas as TASKs repo: manda e o AC de teto de custo estão cumpridos no HEAD. Os testes done_when de cada TASK passam. Na suíte completa, 4 testes falham (judge_blind, pipeline) e os mesmos 4 falham na main, então não há regressão. Pontos menores e não reprovadores: o replan() interno pode bloquear após o planner já ter gasto, git/pinga do replan rodam com cwd=root (não é repo git), a TASK-17 não te
+
+### 00:20 PLAN-0032-guarda-de-escopo-no-pi · manda · plan/0032 · gate 2
+- motivo: conflito no merge
+- judge: pass no HEAD d057f23b (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0032-guarda-de-escopo-no-pi/judge/manda-20261030T054241.log)
+  - ok [TASK-01] src/runtime/scope_guard.ts:34-70 decide edit/write e bash; tests/scope_guard.test.ts verde
+  - ok [TASK-02] src/runtime/scope_path.ts resolvePath/matchesAny; scope_ignore.json com 4 padrões; tests/scope_path.test.ts verde
+  - ok [TASK-03] src/runtime/pi_scope_guard.ts registra tool_call só com env, retorna {block,reason}, try/catch libera e emite scope.guard_error; tests/pi_scope_guard.test.ts verde
+  - ok [TASK-04] src/runtime/scope_guard.ts:3,41-60 usa resolvePath/matchesAny sem casos fixos; tests/scope_guard_paths.test.ts, scope_guard.test.ts e scope_path.test.ts verdes
+  - ok [TASK-05] src/runtime/scope_events.ts emitScopeBlock/emitScopeGuardError/countByRule; tests/scope_events.test.ts e tests/events.test.ts verdes (a ligação do scope.block ao handler fica para o PLAN-0034)
+  - ok [AC] bun test dos 5 arquivos do PLAN mais events.test.ts: 31 pass 0 fail; suíte inteira 263 pass 4 fail (judge/pipeline CLI exit 30 pela guarda de LLM, em arquivos que o diff não toca)
+- resumo do judge: Todas as TASKs manda (01-05) cumprem seus done_when em HEAD e o achado anterior do judge (casos fixos em scope_guard) foi corrigido pela TASK-04. As 4 falhas da suíte inteira são testes de CLI que recebem exit 30 da guarda de LLM por rodarem dentro de um agente, e não vêm do diff. Limitações menores: scope_ignore.json não é consumido pela guarda, e nada emite scope.block em runtime ainda (ligação 
+
+### 00:40 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 01:31 PLAN-0028-ciclo-autonomo-sem-operador · manda · plan/0028 · gate 0
+- motivo: mergeado 4435c91
+- judge: pass no HEAD 53be7c9a (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0028-ciclo-autonomo-sem-operador/judge/manda-20261030T233120.log)
+  - ok [AC] src/run.ts:339, src/judge.ts:240, src/replan.ts:67 e src/cli.ts:259/277 chamam checkPaidCall antes de cada chamada paga (executor, judge, planner primário e fallback); tests/cost_cap_wiring.test.ts 9 pass e tests/replan_cli_cost.test.ts 5 pass. Em src/cli.ts o replan() interno roda após o gasto do p
+  - ok [TASK-02] src/alloc.ts allocTaskIds; tests/alloc.test.ts 3 pass; src/red.ts monta taken com fila, pinga_task de todo o bundle e tasks/T* da worktree criada antes (follow-up T167).
+  - ok [TASK-03] src/red.ts redPlan copia frozen, gera tasks/T<N>/PLAN.md, roda prove-red, commita test(T<N>): RED e grava status blocked/test_passed_on_base; tests/red.test.ts 3 pass. Resíduo sem commit na worktree após TASK bloqueada.
+  - ok [TASK-05] src/replan.ts buildReplanContext determinístico (diff truncado em 20000) e replan() com lint, bloqueando quando o planner ou o lint falha; tests/replan.test.ts 4 pass.
+  - ok [TASK-06] src/cost_cap.ts capCheck e spentUsd (session_v2 + claudeCosts, try/catch para DB inválido); tests/cost_cap.test.ts 4 pass.
+  - ok [TASK-09] src/cli.ts:~320-360 comando red com --repo/--root e saída JSON; src/red.ts valida cada tests_frozen e lança o caminho real; tests/red_cli.test.ts 2 pass.
+  - ok [TASK-10] src/cli.ts comando red usa Bun.spawnSync com env: process.env para pinga e git; tests/red_cli.test.ts pass.
+  - ok [TASK-11] src/cli.ts comando replan lê receipts via pinga queue, judge/*.json, git diff main...plan/NNNN e [roles] planner com fallback opencode; tests/replan_cli.test.ts 1 pass. git/pinga rodam com cwd=root, que pode não ser repo git no uso real.
+  - ok [TASK-12] src/cost_cap.ts loadRoundCapUsd/isPaidModel/checkPaidCall; guarda ligada em src/run.ts:339, src/judge.ts:240 e src/replan.ts:67; tests/cost_cap_wiring.test.ts 9 pass, run.test.ts 15 pass.
+  - ok [TASK-13] src/cli.ts:257-300 since=24h, claudeCosts acumulado via extractTotalCostUsd (src/cost_cap.ts), checagem antes do primário e do fallback, repasse de model/since/claudeCosts a replan(); tests/replan_cli_cost.test.ts 5 pass.
+  - ok [TASK-14] src/red.ts filtra bundle.tasks por repo, lança srcPath real quando frozen ausente e grava status: blocked; tests/red_repo.test.ts 3 pass.
+  - ok [TASK-15] src/cli.ts passa repo a redPlan; tests/red_cli_repo.test.ts 1 pass com PLAN multi-repo.
+  - ok [TASK-16] src/red.ts varre tasks/T* da worktree e inclui pinga_task de todo o bundle em taken; tests/red_taken.test.ts 3 pass.
+  - ok [TASK-17] src/red.ts cria a worktree (git worktree add) antes de montar taken; teste first-execution em tests/red_taken.test.ts passa. O frontmatter da TASK-17 não tem pinga_task: T167, embora tasks/T167/PLAN.md exista.
+- resumo do judge: Todas as TASKs repo: manda e o AC de teto de custo estão cumpridos no HEAD. Os testes done_when de cada TASK passam. Na suíte completa, 4 testes falham (judge_blind, pipeline) e os mesmos 4 falham na main, então não há regressão. Pontos menores e não reprovadores: o replan() interno pode bloquear após o planner já ter gasto, git/pinga do replan rodam com cwd=root (não é repo git), a TASK-17 não te
+
+### 01:32 PLAN-0032-guarda-de-escopo-no-pi · manda · plan/0032 · gate 0
+- motivo: mergeado 4435c91
+- judge: pass no HEAD d057f23b (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0032-guarda-de-escopo-no-pi/judge/manda-20261030T054241.log)
+  - ok [TASK-01] src/runtime/scope_guard.ts:34-70 decide edit/write e bash; tests/scope_guard.test.ts verde
+  - ok [TASK-02] src/runtime/scope_path.ts resolvePath/matchesAny; scope_ignore.json com 4 padrões; tests/scope_path.test.ts verde
+  - ok [TASK-03] src/runtime/pi_scope_guard.ts registra tool_call só com env, retorna {block,reason}, try/catch libera e emite scope.guard_error; tests/pi_scope_guard.test.ts verde
+  - ok [TASK-04] src/runtime/scope_guard.ts:3,41-60 usa resolvePath/matchesAny sem casos fixos; tests/scope_guard_paths.test.ts, scope_guard.test.ts e scope_path.test.ts verdes
+  - ok [TASK-05] src/runtime/scope_events.ts emitScopeBlock/emitScopeGuardError/countByRule; tests/scope_events.test.ts e tests/events.test.ts verdes (a ligação do scope.block ao handler fica para o PLAN-0034)
+  - ok [AC] bun test dos 5 arquivos do PLAN mais events.test.ts: 31 pass 0 fail; suíte inteira 263 pass 4 fail (judge/pipeline CLI exit 30 pela guarda de LLM, em arquivos que o diff não toca)
+- resumo do judge: Todas as TASKs manda (01-05) cumprem seus done_when em HEAD e o achado anterior do judge (casos fixos em scope_guard) foi corrigido pela TASK-04. As 4 falhas da suíte inteira são testes de CLI que recebem exit 30 da guarda de LLM por rodarem dentro de um agente, e não vêm do diff. Limitações menores: scope_ignore.json não é consumido pela guarda, e nada emite scope.block em runtime ainda (ligação 
+
+### 01:55 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 02:32 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 03:21 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 04:55 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 05:39 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 05:47 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 06:01 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 06:17 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 06:31 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 06:47 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 07:01 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 07:17 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 07:31 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 07:47 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 08:01 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 08:17 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 367ca185 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261030T213847.log)
+  - FALHA [TASK-14] HEAD não tem skills/handoff/ (SKILL.md, scripts/handoff.ts, references/formato.md); a projeção em src/install/install.ts e skills/ estão só na worktree, sem commit; tests/skill_handoff.test.ts falha (3 fail)
+  - FALHA [TASK-15] src/install/adapters/claude.ts sem entradas de hook de handoff; contrib/claude-mod-handoff/ inexistente; tests/install_handoff_claude.test.ts falha (4 fail)
+  - FALHA [AC] Atendidos: handoff <PLAN> sem LLM, log.md e LEARNINGS, kind investigation, lessons por touch, verbos handoff/learning promote/lessons import. Não atendida: a emenda do handoff automático (skill handoff e adapter Claude com hooks Stop/UserPromptSubmit) depende das TASK-14 e TASK-15, ausentes em HEAD
+  - ok [TASK-01] src/plan_log.ts (formatLogLine/appendPlanLog), gancho em src/notify/router.ts; tests/plan_log.test.ts verde
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts; tests/lint_learnings.test.ts verde
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts; tests/handoff.test.ts verde
+  - ok [TASK-04] tests/e2e/investigation.test.ts e tests/fixtures/investigation/ verdes
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts LEARNING_VERBS; tests/learning_promote.test.ts verde
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts verde
+  - ok [TASK-08] src/lessons_import.ts importLessons idempotente por hash; tests/lessons_import.test.ts verde
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts verde
+  - ok [TASK-11] src/handoff/redact.ts, modo sessão em src/handoff.ts; tests/handoff_session.test.ts verde
+  - ok [TASK-12] src/handoff/hook.ts runHook, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts verde
+  - ok [TASK-13] src/handoff/open.ts openSession, src/handoff/open_claude.ts; tests/handoff_open.test.ts verde
+  - ok [TASK-16] src/handoff.ts (repos, fila, ordem de learnings, frontmatter), src/verbs/handoff.ts; tests/handoff_full.test.ts verde
+  - ok [TASK-17] src/verbs/handoff.ts devolve path relativo ao root; tests/cli_verbs.test.ts verde
+- resumo do judge: TASKs 01-06, 08, 10-13, 16 e 17 cumpridas e verdes em HEAD. TASK-14 (skill handoff e projeção) e TASK-15 (adapter Claude e contrib) não estão em HEAD e seus testes RED seguem falhando; o trabalho da TASK-14 existe só como mudança não commitada na worktree. Nenhuma regressão contra a main, e o único outro fail da suíte (modo 755 do bin/ginga.ts) também ocorre na main.
+
+### 09:47 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD a572a5a6 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261031T094547.log)
+  - FALHA [TASK-11] src/verbs/handoff.ts:63 args usam from_session (--from-session não casa), --notes passa o caminho como texto (l.29), sem --json/--trigger no argv real; src/handoff.ts não infere PLAN por branch plan/NNNN, state.db ou log.md
+  - FALHA [TASK-12] `ginga handoff hook --runtime claude` real: 'hook' vira o arg plan, grava HANDOFF-...-hook.md e imprime JSON do verbo; runHook só reexportado em src/verbs/handoff.ts:6 e sem chamador; hook.ts: prepare não grava estado/cooldown, open nunca injetado
+  - FALHA [TASK-13] `ginga handoff --open` real: 'falta valor para --open' (src/verbs/handoff.ts:63 sem arg open); openSession sem chamador em src; open.ts:29-42 e open_claude.ts:41-52 emitem trigger 'cache', depth 0, handoff_tokens 0 fixos
+  - FALHA [TASK-14] skills/handoff/SKILL.md:11,23 manda `ginga handoff --open`, que não existe, e as notes em tests/fixtures/...; scripts/handoff.ts:14 usa --notes --parent_handoff sem valor; src/install/install.ts projectSkillsOutput só imprime linhas para <fonte>/.pi/skills, não instala skills/handoff do repo
+  - FALHA [TASK-15] src/install/adapters/claude.ts:~219 só projeta hooks quando ctx.plugin===undefined (o install real sempre passa plugin); owned só registra /hooks/UserPromptSubmit; hooks apontam para `ginga handoff hook` inoperante; contrib/claude-mod-handoff/hooks/hooks.json em formato array provavelmente inválido
+  - FALHA [AC] handoff <PLAN>, log.md, learnings→lessons ok; mas 'toda ação como verbo' (handoff --open, handoff hook) e a emenda do handoff automático com sessão nova não funcionam pelo CLI/install
+  - ok [TASK-01] src/plan_log.ts, src/notify/router.ts:90-96 chama appendPlanLog; tests/plan_log.test.ts passa
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts:57-80; tests/lint_learnings.test.ts passa
+  - ok [TASK-03] src/handoff.ts buildHandoff determinístico; src/verbs/handoff.ts registra o verbo; tests/handoff.test.ts passa
+  - ok [TASK-04] tests/e2e/investigation.test.ts e fixtures/investigation passam
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts; tests/learning_promote.test.ts passa
+  - ok [TASK-06] src/lessons.ts findLessons; tests/lessons_find.test.ts passa
+  - ok [TASK-08] src/lessons_import.ts; tests/lessons_import.test.ts passa
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg; src/lint/project_toml.ts; tests/handoff_policy.test.ts passa
+  - ok [TASK-16] src/handoff.ts frontmatter/git por repo/estado; src/verbs/handoff.ts evento válido; tests/handoff_full.test.ts passa
+  - ok [TASK-17] tests/cli_verbs.test.ts:103 caso handoff; path relativo ao root em src/verbs/handoff.ts:57; suíte completa 542 pass/0 fail
+- resumo do judge: Suíte completa 542 pass/0 fail e sem regressão contra main. Núcleo de log, lint, handoff manual, lessons e e2e está ok. O handoff automático falha de ponta a ponta: `ginga handoff hook` e `--open` não existem no CLI, a skill instrui comando inexistente, o install real não projeta os hooks e a TASK-11 não liga flags nem infere PLAN. Os testes unitários passam porque exercitam os módulos direto, não
+
+### 10:54 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD a572a5a6 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261031T094547.log)
+  - FALHA [TASK-11] src/verbs/handoff.ts:63 args usam from_session (--from-session não casa), --notes passa o caminho como texto (l.29), sem --json/--trigger no argv real; src/handoff.ts não infere PLAN por branch plan/NNNN, state.db ou log.md
+  - FALHA [TASK-12] `ginga handoff hook --runtime claude` real: 'hook' vira o arg plan, grava HANDOFF-...-hook.md e imprime JSON do verbo; runHook só reexportado em src/verbs/handoff.ts:6 e sem chamador; hook.ts: prepare não grava estado/cooldown, open nunca injetado
+  - FALHA [TASK-13] `ginga handoff --open` real: 'falta valor para --open' (src/verbs/handoff.ts:63 sem arg open); openSession sem chamador em src; open.ts:29-42 e open_claude.ts:41-52 emitem trigger 'cache', depth 0, handoff_tokens 0 fixos
+  - FALHA [TASK-14] skills/handoff/SKILL.md:11,23 manda `ginga handoff --open`, que não existe, e as notes em tests/fixtures/...; scripts/handoff.ts:14 usa --notes --parent_handoff sem valor; src/install/install.ts projectSkillsOutput só imprime linhas para <fonte>/.pi/skills, não instala skills/handoff do repo
+  - FALHA [TASK-15] src/install/adapters/claude.ts:~219 só projeta hooks quando ctx.plugin===undefined (o install real sempre passa plugin); owned só registra /hooks/UserPromptSubmit; hooks apontam para `ginga handoff hook` inoperante; contrib/claude-mod-handoff/hooks/hooks.json em formato array provavelmente inválido
+  - FALHA [AC] handoff <PLAN>, log.md, learnings→lessons ok; mas 'toda ação como verbo' (handoff --open, handoff hook) e a emenda do handoff automático com sessão nova não funcionam pelo CLI/install
+  - ok [TASK-01] src/plan_log.ts, src/notify/router.ts:90-96 chama appendPlanLog; tests/plan_log.test.ts passa
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts:57-80; tests/lint_learnings.test.ts passa
+  - ok [TASK-03] src/handoff.ts buildHandoff determinístico; src/verbs/handoff.ts registra o verbo; tests/handoff.test.ts passa
+  - ok [TASK-04] tests/e2e/investigation.test.ts e fixtures/investigation passam
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts; tests/learning_promote.test.ts passa
+  - ok [TASK-06] src/lessons.ts findLessons; tests/lessons_find.test.ts passa
+  - ok [TASK-08] src/lessons_import.ts; tests/lessons_import.test.ts passa
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg; src/lint/project_toml.ts; tests/handoff_policy.test.ts passa
+  - ok [TASK-16] src/handoff.ts frontmatter/git por repo/estado; src/verbs/handoff.ts evento válido; tests/handoff_full.test.ts passa
+  - ok [TASK-17] tests/cli_verbs.test.ts:103 caso handoff; path relativo ao root em src/verbs/handoff.ts:57; suíte completa 542 pass/0 fail
+- resumo do judge: Suíte completa 542 pass/0 fail e sem regressão contra main. Núcleo de log, lint, handoff manual, lessons e e2e está ok. O handoff automático falha de ponta a ponta: `ginga handoff hook` e `--open` não existem no CLI, a skill instrui comando inexistente, o install real não projeta os hooks e a TASK-11 não liga flags nem infere PLAN. Os testes unitários passam porque exercitam os módulos direto, não
+
+### 12:35 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD a572a5a6 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261031T094547.log)
+  - FALHA [TASK-11] src/verbs/handoff.ts:63 args usam from_session (--from-session não casa), --notes passa o caminho como texto (l.29), sem --json/--trigger no argv real; src/handoff.ts não infere PLAN por branch plan/NNNN, state.db ou log.md
+  - FALHA [TASK-12] `ginga handoff hook --runtime claude` real: 'hook' vira o arg plan, grava HANDOFF-...-hook.md e imprime JSON do verbo; runHook só reexportado em src/verbs/handoff.ts:6 e sem chamador; hook.ts: prepare não grava estado/cooldown, open nunca injetado
+  - FALHA [TASK-13] `ginga handoff --open` real: 'falta valor para --open' (src/verbs/handoff.ts:63 sem arg open); openSession sem chamador em src; open.ts:29-42 e open_claude.ts:41-52 emitem trigger 'cache', depth 0, handoff_tokens 0 fixos
+  - FALHA [TASK-14] skills/handoff/SKILL.md:11,23 manda `ginga handoff --open`, que não existe, e as notes em tests/fixtures/...; scripts/handoff.ts:14 usa --notes --parent_handoff sem valor; src/install/install.ts projectSkillsOutput só imprime linhas para <fonte>/.pi/skills, não instala skills/handoff do repo
+  - FALHA [TASK-15] src/install/adapters/claude.ts:~219 só projeta hooks quando ctx.plugin===undefined (o install real sempre passa plugin); owned só registra /hooks/UserPromptSubmit; hooks apontam para `ginga handoff hook` inoperante; contrib/claude-mod-handoff/hooks/hooks.json em formato array provavelmente inválido
+  - FALHA [AC] handoff <PLAN>, log.md, learnings→lessons ok; mas 'toda ação como verbo' (handoff --open, handoff hook) e a emenda do handoff automático com sessão nova não funcionam pelo CLI/install
+  - ok [TASK-01] src/plan_log.ts, src/notify/router.ts:90-96 chama appendPlanLog; tests/plan_log.test.ts passa
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts:57-80; tests/lint_learnings.test.ts passa
+  - ok [TASK-03] src/handoff.ts buildHandoff determinístico; src/verbs/handoff.ts registra o verbo; tests/handoff.test.ts passa
+  - ok [TASK-04] tests/e2e/investigation.test.ts e fixtures/investigation passam
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts; tests/learning_promote.test.ts passa
+  - ok [TASK-06] src/lessons.ts findLessons; tests/lessons_find.test.ts passa
+  - ok [TASK-08] src/lessons_import.ts; tests/lessons_import.test.ts passa
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg; src/lint/project_toml.ts; tests/handoff_policy.test.ts passa
+  - ok [TASK-16] src/handoff.ts frontmatter/git por repo/estado; src/verbs/handoff.ts evento válido; tests/handoff_full.test.ts passa
+  - ok [TASK-17] tests/cli_verbs.test.ts:103 caso handoff; path relativo ao root em src/verbs/handoff.ts:57; suíte completa 542 pass/0 fail
+- resumo do judge: Suíte completa 542 pass/0 fail e sem regressão contra main. Núcleo de log, lint, handoff manual, lessons e e2e está ok. O handoff automático falha de ponta a ponta: `ginga handoff hook` e `--open` não existem no CLI, a skill instrui comando inexistente, o install real não projeta os hooks e a TASK-11 não liga flags nem infere PLAN. Os testes unitários passam porque exercitam os módulos direto, não
+
+### 13:04 PLAN-0029-rota-de-falhas-e-disjuntor · manda · plan/0029 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 18c25bcb (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0029-rota-de-falhas-e-disjuntor/judge/manda-20261031T130300.log)
+  - FALHA [TASK-09] No HEAD src/attempt_watch.ts é o stub do commit RED (git show HEAD:src/attempt_watch.ts devolve {outcome:'done'} sempre), então o done_when 'bun test tests/attempt_watch.test.ts' falha. A implementação está só como mudança não commitada na working tree (M src/attempt_watch.ts). Além disso nada em sr
+  - FALHA [AC] done_when do PLAN 'cd manda && bun test' não fecha no HEAD: tests/attempt_watch.test.ts falha contra o stub (TASK-09). Há mais 4 falhas na suíte; as 2 de pipeline/lane também falham na main, as 2 de judge CLI não foram conferidas na main e não tocam arquivos do diff.
+  - ok [TASK-01] src/run_state.ts:24-90 classifyRun com 4 estados; tests/run_state.test.ts passa. Ressalvas: /5\d\d/ em isRecusado (l.29) casa qualquer número 5xx; probe_ok é boolean e não boolean|null (l.9)
+  - ok [TASK-02] src/probe.ts:3-43 probeArgv por prefixo, probe com stdin ignore e timeout 30s; tests/probe.test.ts
+  - ok [TASK-03] src/breaker.ts:34-80 model_breaker, níveis 10/30/120, half_open ao vencer, recordSuccess remove a linha; tests/breaker.test.ts
+  - ok [TASK-04] src/ladder.ts:10-45 free primeiro, iceman só com mitRepo, pago só com allowPaid&&capOk, null com motivo; tests/ladder.test.ts
+  - ok [TASK-05] src/runtime/env.ts runtimeEnv + SPAWN_STDIN; src/runtime/index.ts:16-45 withDefaults aplicado a pi/opencode/claude/codex/agy; tests/runtime_env.test.ts
+  - ok [TASK-06] src/free_retry.ts:10-47 freeRetryWait 15/30/60 e waitForFree com probe e stop; tests/free_retry.test.ts
+  - ok [TASK-07] src/blocked.ts + src/failure_rules.json (regras de dados), emite gate.fail com classification; 8 fixtures em tests/fixtures/blocked; tests/blocked.test.ts
+  - ok [TASK-08] src/judge_pick.ts:4-23 pula família do executor, breaker open e quota>=100; tests/judge_pick.test.ts
+  - ok [TASK-10] src/breaker_cli.ts breakerStatus/breakerReset; src/cli.ts:9,52-54 registra o subcomando breaker e o help; tests/breaker_cli.test.ts
+- resumo do judge: TASK-01..08 e 10 estão implementadas e testadas no HEAD, sem regressão. A TASK-09 não está cumprida: o HEAD tem só o stub RED de attempt_watch.ts (a implementação está solta na working tree) e run.ts não usa o watcher. Por isso o done_when do PLAN não fecha.
+
+### 14:30 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD deb15cde (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261031T142901.log)
+  - FALHA [TASK-13] `ginga handoff --open --runtime claude` real falha com 'falta valor para --open' (src/verbs/handoff.ts: sem arg open); openSession só chamado em src/handoff/hook.ts:191; src/handoff/open.ts:29-42 emite trigger 'cache', depth 0, handoff_tokens 0 fixos
+  - FALHA [TASK-14] skills/handoff/SKILL.md manda `ginga handoff --open` (inexistente) e notes em tests/fixtures/...; skills/handoff/scripts/handoff.ts usa `--notes --parent_handoff` sem valor e res.stdout de string; src/install/install.ts:248-263 só projeta .pi/skills, não skills/handoff
+  - FALHA [TASK-15] src/install/adapters/claude.ts: hooks só projetados se ctx.plugin===undefined (install real sempre passa plugin); owned só registra /hooks/UserPromptSubmit; contrib/claude-mod-handoff/hooks/hooks.json em formato array com 'event', provavelmente inválido para o Claude
+  - FALHA [AC] handoff <PLAN>, log.md, investigation e learnings→lessons ok; mas 'toda ação como verbo' (handoff --open) e a emenda do handoff automático (skill, install dos hooks, abertura da sessão) não funcionam pelo CLI/install real
+  - ok [TASK-01] src/plan_log.ts; src/notify/router.ts appendPlanLog; tests/plan_log.test.ts passa
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts lintPlanLearnings; tests/lint_learnings.test.ts passa
+  - ok [TASK-03] src/handoff.ts buildHandoff; src/verbs/handoff.ts; tests/handoff.test.ts passa
+  - ok [TASK-04] tests/e2e/investigation.test.ts passa
+  - ok [TASK-05] src/lessons.ts promote; src/verbs/learning.ts; tests/learning_promote.test.ts passa
+  - ok [TASK-06] src/lessons.ts findLessons; tests/lessons_find.test.ts passa
+  - ok [TASK-08] src/lessons_import.ts; tests/lessons_import.test.ts passa
+  - ok [TASK-10] src/handoff/policy.ts; src/lint/project_toml.ts; tests/handoff_policy.test.ts passa
+  - ok [TASK-11] src/verbs/handoff.ts:27-45 flags, notes por arquivo, inferPlan; src/cli.ts:75 normaliza --from-session; tests/handoff_session.test.ts e handoff_cli_session.test.ts passam
+  - ok [TASK-12] src/verbs/handoff.ts:17 HANDOFF_HOOK_VERB despacha runHook; registry.ts getVerb HIDDEN_VERBS; tests/handoff_hook.test.ts e handoff_cli_hook.test.ts passam
+  - ok [TASK-16] src/handoff.ts; src/verbs/handoff.ts evento válido; tests/handoff_full.test.ts passa
+  - ok [TASK-17] tests/cli_verbs.test.ts:103 caso handoff; path relativo ao root em src/verbs/handoff.ts; suíte 547 pass/0 fail
+  - ok [TASK-18] tests/handoff_cli_session.test.ts passa; src/cli.ts:75; inferPlan em src/handoff.ts
+  - ok [TASK-19] tests/handoff_cli_hook.test.ts passa; HANDOFF_HOOK_VERB fora de VERBS enumerado
+- resumo do judge: Suíte completa 547 pass/0 fail e sem regressão contra a main. Log, lint, handoff manual e em modo sessão, hook via CLI, lessons e e2e estão ok. Continuam falhando: `ginga handoff --open` não existe no CLI e o evento de abertura sai com trigger/depth/tokens fixos (TASK-13). A skill instrui comandos inexistentes, o script está quebrado e o install não projeta skills/handoff (TASK-14). O install real
+
+### 14:45 PLAN-0029-rota-de-falhas-e-disjuntor · manda · plan/0029 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 18c25bcb (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0029-rota-de-falhas-e-disjuntor/judge/manda-20261031T130300.log)
+  - FALHA [TASK-09] No HEAD src/attempt_watch.ts é o stub do commit RED (git show HEAD:src/attempt_watch.ts devolve {outcome:'done'} sempre), então o done_when 'bun test tests/attempt_watch.test.ts' falha. A implementação está só como mudança não commitada na working tree (M src/attempt_watch.ts). Além disso nada em sr
+  - FALHA [AC] done_when do PLAN 'cd manda && bun test' não fecha no HEAD: tests/attempt_watch.test.ts falha contra o stub (TASK-09). Há mais 4 falhas na suíte; as 2 de pipeline/lane também falham na main, as 2 de judge CLI não foram conferidas na main e não tocam arquivos do diff.
+  - ok [TASK-01] src/run_state.ts:24-90 classifyRun com 4 estados; tests/run_state.test.ts passa. Ressalvas: /5\d\d/ em isRecusado (l.29) casa qualquer número 5xx; probe_ok é boolean e não boolean|null (l.9)
+  - ok [TASK-02] src/probe.ts:3-43 probeArgv por prefixo, probe com stdin ignore e timeout 30s; tests/probe.test.ts
+  - ok [TASK-03] src/breaker.ts:34-80 model_breaker, níveis 10/30/120, half_open ao vencer, recordSuccess remove a linha; tests/breaker.test.ts
+  - ok [TASK-04] src/ladder.ts:10-45 free primeiro, iceman só com mitRepo, pago só com allowPaid&&capOk, null com motivo; tests/ladder.test.ts
+  - ok [TASK-05] src/runtime/env.ts runtimeEnv + SPAWN_STDIN; src/runtime/index.ts:16-45 withDefaults aplicado a pi/opencode/claude/codex/agy; tests/runtime_env.test.ts
+  - ok [TASK-06] src/free_retry.ts:10-47 freeRetryWait 15/30/60 e waitForFree com probe e stop; tests/free_retry.test.ts
+  - ok [TASK-07] src/blocked.ts + src/failure_rules.json (regras de dados), emite gate.fail com classification; 8 fixtures em tests/fixtures/blocked; tests/blocked.test.ts
+  - ok [TASK-08] src/judge_pick.ts:4-23 pula família do executor, breaker open e quota>=100; tests/judge_pick.test.ts
+  - ok [TASK-10] src/breaker_cli.ts breakerStatus/breakerReset; src/cli.ts:9,52-54 registra o subcomando breaker e o help; tests/breaker_cli.test.ts
+- resumo do judge: TASK-01..08 e 10 estão implementadas e testadas no HEAD, sem regressão. A TASK-09 não está cumprida: o HEAD tem só o stub RED de attempt_watch.ts (a implementação está solta na working tree) e run.ts não usa o watcher. Por isso o done_when do PLAN não fecha.
+
+### 15:01 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD deb15cde (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261031T142901.log)
+  - FALHA [TASK-13] `ginga handoff --open --runtime claude` real falha com 'falta valor para --open' (src/verbs/handoff.ts: sem arg open); openSession só chamado em src/handoff/hook.ts:191; src/handoff/open.ts:29-42 emite trigger 'cache', depth 0, handoff_tokens 0 fixos
+  - FALHA [TASK-14] skills/handoff/SKILL.md manda `ginga handoff --open` (inexistente) e notes em tests/fixtures/...; skills/handoff/scripts/handoff.ts usa `--notes --parent_handoff` sem valor e res.stdout de string; src/install/install.ts:248-263 só projeta .pi/skills, não skills/handoff
+  - FALHA [TASK-15] src/install/adapters/claude.ts: hooks só projetados se ctx.plugin===undefined (install real sempre passa plugin); owned só registra /hooks/UserPromptSubmit; contrib/claude-mod-handoff/hooks/hooks.json em formato array com 'event', provavelmente inválido para o Claude
+  - FALHA [AC] handoff <PLAN>, log.md, investigation e learnings→lessons ok; mas 'toda ação como verbo' (handoff --open) e a emenda do handoff automático (skill, install dos hooks, abertura da sessão) não funcionam pelo CLI/install real
+  - ok [TASK-01] src/plan_log.ts; src/notify/router.ts appendPlanLog; tests/plan_log.test.ts passa
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts lintPlanLearnings; tests/lint_learnings.test.ts passa
+  - ok [TASK-03] src/handoff.ts buildHandoff; src/verbs/handoff.ts; tests/handoff.test.ts passa
+  - ok [TASK-04] tests/e2e/investigation.test.ts passa
+  - ok [TASK-05] src/lessons.ts promote; src/verbs/learning.ts; tests/learning_promote.test.ts passa
+  - ok [TASK-06] src/lessons.ts findLessons; tests/lessons_find.test.ts passa
+  - ok [TASK-08] src/lessons_import.ts; tests/lessons_import.test.ts passa
+  - ok [TASK-10] src/handoff/policy.ts; src/lint/project_toml.ts; tests/handoff_policy.test.ts passa
+  - ok [TASK-11] src/verbs/handoff.ts:27-45 flags, notes por arquivo, inferPlan; src/cli.ts:75 normaliza --from-session; tests/handoff_session.test.ts e handoff_cli_session.test.ts passam
+  - ok [TASK-12] src/verbs/handoff.ts:17 HANDOFF_HOOK_VERB despacha runHook; registry.ts getVerb HIDDEN_VERBS; tests/handoff_hook.test.ts e handoff_cli_hook.test.ts passam
+  - ok [TASK-16] src/handoff.ts; src/verbs/handoff.ts evento válido; tests/handoff_full.test.ts passa
+  - ok [TASK-17] tests/cli_verbs.test.ts:103 caso handoff; path relativo ao root em src/verbs/handoff.ts; suíte 547 pass/0 fail
+  - ok [TASK-18] tests/handoff_cli_session.test.ts passa; src/cli.ts:75; inferPlan em src/handoff.ts
+  - ok [TASK-19] tests/handoff_cli_hook.test.ts passa; HANDOFF_HOOK_VERB fora de VERBS enumerado
+- resumo do judge: Suíte completa 547 pass/0 fail e sem regressão contra a main. Log, lint, handoff manual e em modo sessão, hook via CLI, lessons e e2e estão ok. Continuam falhando: `ginga handoff --open` não existe no CLI e o evento de abertura sai com trigger/depth/tokens fixos (TASK-13). A skill instrui comandos inexistentes, o script está quebrado e o install não projeta skills/handoff (TASK-14). O install real
+
+### 15:45 PLAN-0029-rota-de-falhas-e-disjuntor · manda · plan/0029 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 40b4afae (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0029-rota-de-falhas-e-disjuntor/judge/manda-20261031T154411.log)
+  - FALHA [AC] done_when `cd manda && bun test` termina com 5 falhas: 4 também falham na main (judge CLI x2, pipeline/lane x2) e 1 é tests/attempt_watch_run.test.ts:108 (state.db não criado)
+  - FALHA [TASK-09] src/attempt_watch.ts:61 watchAttempt existe e tests/attempt_watch.test.ts passa, mas src/run.ts não foi alterado e nada em src chama watchAttempt; o `manda run` não vigia a tentativa, que é o objetivo da TASK
+  - FALHA [TASK-11] tests/attempt_watch_run.test.ts:108 falha (state.db não é criado). src/run.ts sem diff em main...HEAD e sem uso de watchAttempt/recordFailure/pickModel; o commit 40b4afa é só o RED
+  - ok [TASK-01] src/run_state.ts classifyRun; tests/run_state.test.ts passa
+  - ok [TASK-02] src/probe.ts probeArgv/probe; tests/probe.test.ts passa
+  - ok [TASK-03] src/breaker.ts: tabela model_breaker, 10/30/120 min, half_open ao vencer, recordSuccess remove a linha; tests/breaker.test.ts passa
+  - ok [TASK-04] src/ladder.ts:11 pickModel (free antes do pago, iceman só com mitRepo, pago só com allowPaid e capOk); tests/ladder.test.ts passa
+  - ok [TASK-05] src/runtime/env.ts runtimeEnv/SPAWN_STDIN; src/runtime/index.ts:16 withDefaults aplicado a todos os 5 runtimes; tests/runtime_env.test.ts passa
+  - ok [TASK-06] src/free_retry.ts freeRetryWait 15/30/60 e waitForFree com probe e stop; tests/free_retry.test.ts passa
+  - ok [TASK-07] src/blocked.ts classifyBlocked + src/failure_rules.json, emite gate.fail com classification; tests/blocked.test.ts passa com 8 fixtures
+  - ok [TASK-08] src/judge_pick.ts pickJudge (pula a família do executor, breaker open e quota >= 100); tests/judge_pick.test.ts passa
+  - ok [TASK-10] src/breaker_cli.ts breakerStatus/breakerReset; src/cli.ts:52 registra `breaker`; tests/breaker_cli.test.ts passa
+- resumo do judge: TASK-01 a 08 e 10 estão implementadas, com módulos e testes passando. O `manda run` real não foi ligado à vigia: `src/run.ts` não foi tocado e `watchAttempt` fica sem uso em produção. Por isso a TASK-09 não cumpre o objetivo e a TASK-11 está RED. As 4 falhas restantes do `bun test` já existem na main, então não há regressão.
+
+### 16:01 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD deb15cde (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261031T142901.log)
+  - FALHA [TASK-13] `ginga handoff --open --runtime claude` real falha com 'falta valor para --open' (src/verbs/handoff.ts: sem arg open); openSession só chamado em src/handoff/hook.ts:191; src/handoff/open.ts:29-42 emite trigger 'cache', depth 0, handoff_tokens 0 fixos
+  - FALHA [TASK-14] skills/handoff/SKILL.md manda `ginga handoff --open` (inexistente) e notes em tests/fixtures/...; skills/handoff/scripts/handoff.ts usa `--notes --parent_handoff` sem valor e res.stdout de string; src/install/install.ts:248-263 só projeta .pi/skills, não skills/handoff
+  - FALHA [TASK-15] src/install/adapters/claude.ts: hooks só projetados se ctx.plugin===undefined (install real sempre passa plugin); owned só registra /hooks/UserPromptSubmit; contrib/claude-mod-handoff/hooks/hooks.json em formato array com 'event', provavelmente inválido para o Claude
+  - FALHA [AC] handoff <PLAN>, log.md, investigation e learnings→lessons ok; mas 'toda ação como verbo' (handoff --open) e a emenda do handoff automático (skill, install dos hooks, abertura da sessão) não funcionam pelo CLI/install real
+  - ok [TASK-01] src/plan_log.ts; src/notify/router.ts appendPlanLog; tests/plan_log.test.ts passa
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts lintPlanLearnings; tests/lint_learnings.test.ts passa
+  - ok [TASK-03] src/handoff.ts buildHandoff; src/verbs/handoff.ts; tests/handoff.test.ts passa
+  - ok [TASK-04] tests/e2e/investigation.test.ts passa
+  - ok [TASK-05] src/lessons.ts promote; src/verbs/learning.ts; tests/learning_promote.test.ts passa
+  - ok [TASK-06] src/lessons.ts findLessons; tests/lessons_find.test.ts passa
+  - ok [TASK-08] src/lessons_import.ts; tests/lessons_import.test.ts passa
+  - ok [TASK-10] src/handoff/policy.ts; src/lint/project_toml.ts; tests/handoff_policy.test.ts passa
+  - ok [TASK-11] src/verbs/handoff.ts:27-45 flags, notes por arquivo, inferPlan; src/cli.ts:75 normaliza --from-session; tests/handoff_session.test.ts e handoff_cli_session.test.ts passam
+  - ok [TASK-12] src/verbs/handoff.ts:17 HANDOFF_HOOK_VERB despacha runHook; registry.ts getVerb HIDDEN_VERBS; tests/handoff_hook.test.ts e handoff_cli_hook.test.ts passam
+  - ok [TASK-16] src/handoff.ts; src/verbs/handoff.ts evento válido; tests/handoff_full.test.ts passa
+  - ok [TASK-17] tests/cli_verbs.test.ts:103 caso handoff; path relativo ao root em src/verbs/handoff.ts; suíte 547 pass/0 fail
+  - ok [TASK-18] tests/handoff_cli_session.test.ts passa; src/cli.ts:75; inferPlan em src/handoff.ts
+  - ok [TASK-19] tests/handoff_cli_hook.test.ts passa; HANDOFF_HOOK_VERB fora de VERBS enumerado
+- resumo do judge: Suíte completa 547 pass/0 fail e sem regressão contra a main. Log, lint, handoff manual e em modo sessão, hook via CLI, lessons e e2e estão ok. Continuam falhando: `ginga handoff --open` não existe no CLI e o evento de abertura sai com trigger/depth/tokens fixos (TASK-13). A skill instrui comandos inexistentes, o script está quebrado e o install não projeta skills/handoff (TASK-14). O install real
+
+### 16:21 PLAN-0029-rota-de-falhas-e-disjuntor · manda · plan/0029 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 40b4afae (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0029-rota-de-falhas-e-disjuntor/judge/manda-20261031T154411.log)
+  - FALHA [AC] done_when `cd manda && bun test` termina com 5 falhas: 4 também falham na main (judge CLI x2, pipeline/lane x2) e 1 é tests/attempt_watch_run.test.ts:108 (state.db não criado)
+  - FALHA [TASK-09] src/attempt_watch.ts:61 watchAttempt existe e tests/attempt_watch.test.ts passa, mas src/run.ts não foi alterado e nada em src chama watchAttempt; o `manda run` não vigia a tentativa, que é o objetivo da TASK
+  - FALHA [TASK-11] tests/attempt_watch_run.test.ts:108 falha (state.db não é criado). src/run.ts sem diff em main...HEAD e sem uso de watchAttempt/recordFailure/pickModel; o commit 40b4afa é só o RED
+  - ok [TASK-01] src/run_state.ts classifyRun; tests/run_state.test.ts passa
+  - ok [TASK-02] src/probe.ts probeArgv/probe; tests/probe.test.ts passa
+  - ok [TASK-03] src/breaker.ts: tabela model_breaker, 10/30/120 min, half_open ao vencer, recordSuccess remove a linha; tests/breaker.test.ts passa
+  - ok [TASK-04] src/ladder.ts:11 pickModel (free antes do pago, iceman só com mitRepo, pago só com allowPaid e capOk); tests/ladder.test.ts passa
+  - ok [TASK-05] src/runtime/env.ts runtimeEnv/SPAWN_STDIN; src/runtime/index.ts:16 withDefaults aplicado a todos os 5 runtimes; tests/runtime_env.test.ts passa
+  - ok [TASK-06] src/free_retry.ts freeRetryWait 15/30/60 e waitForFree com probe e stop; tests/free_retry.test.ts passa
+  - ok [TASK-07] src/blocked.ts classifyBlocked + src/failure_rules.json, emite gate.fail com classification; tests/blocked.test.ts passa com 8 fixtures
+  - ok [TASK-08] src/judge_pick.ts pickJudge (pula a família do executor, breaker open e quota >= 100); tests/judge_pick.test.ts passa
+  - ok [TASK-10] src/breaker_cli.ts breakerStatus/breakerReset; src/cli.ts:52 registra `breaker`; tests/breaker_cli.test.ts passa
+- resumo do judge: TASK-01 a 08 e 10 estão implementadas, com módulos e testes passando. O `manda run` real não foi ligado à vigia: `src/run.ts` não foi tocado e `watchAttempt` fica sem uso em produção. Por isso a TASK-09 não cumpre o objetivo e a TASK-11 está RED. As 4 falhas restantes do `bun test` já existem na main, então não há regressão.
+
+### 16:38 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD deb15cde (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261031T142901.log)
+  - FALHA [TASK-13] `ginga handoff --open --runtime claude` real falha com 'falta valor para --open' (src/verbs/handoff.ts: sem arg open); openSession só chamado em src/handoff/hook.ts:191; src/handoff/open.ts:29-42 emite trigger 'cache', depth 0, handoff_tokens 0 fixos
+  - FALHA [TASK-14] skills/handoff/SKILL.md manda `ginga handoff --open` (inexistente) e notes em tests/fixtures/...; skills/handoff/scripts/handoff.ts usa `--notes --parent_handoff` sem valor e res.stdout de string; src/install/install.ts:248-263 só projeta .pi/skills, não skills/handoff
+  - FALHA [TASK-15] src/install/adapters/claude.ts: hooks só projetados se ctx.plugin===undefined (install real sempre passa plugin); owned só registra /hooks/UserPromptSubmit; contrib/claude-mod-handoff/hooks/hooks.json em formato array com 'event', provavelmente inválido para o Claude
+  - FALHA [AC] handoff <PLAN>, log.md, investigation e learnings→lessons ok; mas 'toda ação como verbo' (handoff --open) e a emenda do handoff automático (skill, install dos hooks, abertura da sessão) não funcionam pelo CLI/install real
+  - ok [TASK-01] src/plan_log.ts; src/notify/router.ts appendPlanLog; tests/plan_log.test.ts passa
+  - ok [TASK-02] src/lint/learnings.ts, src/lint/index.ts lintPlanLearnings; tests/lint_learnings.test.ts passa
+  - ok [TASK-03] src/handoff.ts buildHandoff; src/verbs/handoff.ts; tests/handoff.test.ts passa
+  - ok [TASK-04] tests/e2e/investigation.test.ts passa
+  - ok [TASK-05] src/lessons.ts promote; src/verbs/learning.ts; tests/learning_promote.test.ts passa
+  - ok [TASK-06] src/lessons.ts findLessons; tests/lessons_find.test.ts passa
+  - ok [TASK-08] src/lessons_import.ts; tests/lessons_import.test.ts passa
+  - ok [TASK-10] src/handoff/policy.ts; src/lint/project_toml.ts; tests/handoff_policy.test.ts passa
+  - ok [TASK-11] src/verbs/handoff.ts:27-45 flags, notes por arquivo, inferPlan; src/cli.ts:75 normaliza --from-session; tests/handoff_session.test.ts e handoff_cli_session.test.ts passam
+  - ok [TASK-12] src/verbs/handoff.ts:17 HANDOFF_HOOK_VERB despacha runHook; registry.ts getVerb HIDDEN_VERBS; tests/handoff_hook.test.ts e handoff_cli_hook.test.ts passam
+  - ok [TASK-16] src/handoff.ts; src/verbs/handoff.ts evento válido; tests/handoff_full.test.ts passa
+  - ok [TASK-17] tests/cli_verbs.test.ts:103 caso handoff; path relativo ao root em src/verbs/handoff.ts; suíte 547 pass/0 fail
+  - ok [TASK-18] tests/handoff_cli_session.test.ts passa; src/cli.ts:75; inferPlan em src/handoff.ts
+  - ok [TASK-19] tests/handoff_cli_hook.test.ts passa; HANDOFF_HOOK_VERB fora de VERBS enumerado
+- resumo do judge: Suíte completa 547 pass/0 fail e sem regressão contra a main. Log, lint, handoff manual e em modo sessão, hook via CLI, lessons e e2e estão ok. Continuam falhando: `ginga handoff --open` não existe no CLI e o evento de abertura sai com trigger/depth/tokens fixos (TASK-13). A skill instrui comandos inexistentes, o script está quebrado e o install não projeta skills/handoff (TASK-14). O install real
+
+### 16:47 PLAN-0029-rota-de-falhas-e-disjuntor · manda · plan/0029 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 40b4afae (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0029-rota-de-falhas-e-disjuntor/judge/manda-20261031T154411.log)
+  - FALHA [AC] done_when `cd manda && bun test` termina com 5 falhas: 4 também falham na main (judge CLI x2, pipeline/lane x2) e 1 é tests/attempt_watch_run.test.ts:108 (state.db não criado)
+  - FALHA [TASK-09] src/attempt_watch.ts:61 watchAttempt existe e tests/attempt_watch.test.ts passa, mas src/run.ts não foi alterado e nada em src chama watchAttempt; o `manda run` não vigia a tentativa, que é o objetivo da TASK
+  - FALHA [TASK-11] tests/attempt_watch_run.test.ts:108 falha (state.db não é criado). src/run.ts sem diff em main...HEAD e sem uso de watchAttempt/recordFailure/pickModel; o commit 40b4afa é só o RED
+  - ok [TASK-01] src/run_state.ts classifyRun; tests/run_state.test.ts passa
+  - ok [TASK-02] src/probe.ts probeArgv/probe; tests/probe.test.ts passa
+  - ok [TASK-03] src/breaker.ts: tabela model_breaker, 10/30/120 min, half_open ao vencer, recordSuccess remove a linha; tests/breaker.test.ts passa
+  - ok [TASK-04] src/ladder.ts:11 pickModel (free antes do pago, iceman só com mitRepo, pago só com allowPaid e capOk); tests/ladder.test.ts passa
+  - ok [TASK-05] src/runtime/env.ts runtimeEnv/SPAWN_STDIN; src/runtime/index.ts:16 withDefaults aplicado a todos os 5 runtimes; tests/runtime_env.test.ts passa
+  - ok [TASK-06] src/free_retry.ts freeRetryWait 15/30/60 e waitForFree com probe e stop; tests/free_retry.test.ts passa
+  - ok [TASK-07] src/blocked.ts classifyBlocked + src/failure_rules.json, emite gate.fail com classification; tests/blocked.test.ts passa com 8 fixtures
+  - ok [TASK-08] src/judge_pick.ts pickJudge (pula a família do executor, breaker open e quota >= 100); tests/judge_pick.test.ts passa
+  - ok [TASK-10] src/breaker_cli.ts breakerStatus/breakerReset; src/cli.ts:52 registra `breaker`; tests/breaker_cli.test.ts passa
+- resumo do judge: TASK-01 a 08 e 10 estão implementadas, com módulos e testes passando. O `manda run` real não foi ligado à vigia: `src/run.ts` não foi tocado e `watchAttempt` fica sem uso em produção. Por isso a TASK-09 não cumpre o objetivo e a TASK-11 está RED. As 4 falhas restantes do `bun test` já existem na main, então não há regressão.
+
+### 17:34 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 3f13f5cf (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261031T173227.log)
+  - FALHA [TASK-11] redact.ts e buildHandoff passam em tests/handoff_session.test.ts, mas src/verbs/handoff.ts só aceita from_session (não --from-session), --notes não lê arquivo e não há inferência do PLAN por branch/state.db/log.md
+  - FALHA [TASK-12] src/handoff/hook.ts:85 runHook e transcript_usage.ts passam nos testes, mas src/verbs/handoff.ts:5-6 só importa/reexporta runHook; não há subverbo 'ginga handoff hook' lendo stdin na CLI
+  - FALHA [TASK-13] src/handoff/open.ts:67 openSession passa em tests/handoff_open.test.ts, mas nenhum verbo chama openSession nem aceita --open (src/verbs/handoff.ts args); goal 'ginga handoff --open' não entregue
+  - FALHA [TASK-14] skills/handoff/SKILL.md e projeção passam em tests/skill_handoff.test.ts, mas skills/handoff/scripts/handoff.ts:13-15 usa --open inexistente e res.stdout.split sobre string (lança erro)
+  - FALHA [TASK-15] HEAD só tem o commit RED 3f13f5c: tests/install_handoff_claude.test.ts falha (4 testes); implementação em claude.ts e contrib/claude-mod-handoff/ está só no worktree, não commitada, e com ela 6 testes de install/adapters falham
+  - FALHA [TASK-18] tests/handoff_cli_session.test.ts não existe; src/cli.ts sem alteração no diff; --from-session/--notes arquivo/inferência de PLAN não ligados
+  - FALHA [TASK-19] tests/handoff_cli_hook.test.ts não existe; sem despacho de 'handoff hook' em registry.ts/cli.ts; sem persistência de estado do prepare/cooldown na CLI
+  - FALHA [AC-verbos-e-handoff-automatico] verbos learning promote/lessons import registrados, mas handoff automático (hook, --open, adapter Claude) não está ligado à CLI nem commitado em HEAD (TASKs 12,13,15,18,19)
+  - ok [TASK-01] src/plan_log.ts:27,60; gancho em src/notify/router.ts; tests/plan_log.test.ts pass
+  - ok [TASK-02] src/lint/learnings.ts:19 lintLearnings; tests/lint_learnings.test.ts pass
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts:13; tests/handoff.test.ts pass
+  - ok [TASK-04] tests/e2e/investigation.test.ts pass
+  - ok [TASK-05] src/lessons.ts:217 promote; tests/learning_promote.test.ts pass; item de Inbox 'promover?' não encontrado (lacuna menor)
+  - ok [TASK-06] src/lessons.ts:112 findLessons; tests/lessons_find.test.ts pass; --symbol não implementado (opcional)
+  - ok [TASK-08] src/lessons_import.ts:78 importLessons; tests/lessons_import.test.ts pass
+  - ok [TASK-10] src/handoff/policy.ts:58,66; src/lint/project_toml.ts; tests/handoff_policy.test.ts pass
+  - ok [TASK-16] src/handoff.ts/src/verbs/handoff.ts evento com source, plan, file, context_tokens; tests/handoff_full.test.ts pass
+  - ok [TASK-17] path relativo em src/verbs/handoff.ts (relPath); caso handoff em tests/cli_verbs.test.ts pass
+  - ok [AC-handoff-PLAN-sem-LLM] buildHandoff determinístico com git injetado, tests/handoff.test.ts e handoff_full.test.ts pass
+  - ok [AC-log-learnings-investigation] plan_log.ts, lint/learnings.ts, tests/e2e/investigation.test.ts pass
+  - ok [AC-learnings-LESSON-touch] promote/findLessons/importLessons em src/lessons*.ts com testes passando (parte manda/TASK-07 julgada no outro repo)
+- resumo do judge: Nenhuma regressão: a suíte em HEAD limpo só falha nos testes RED da TASK-15 (mais um artefato de extração do bin/ginga.ts). Mas o PLAN não está completo: TASK-18 e 19 não foram feitas, a CLI não expõe `handoff hook`, `--open`, `--from-session` nem a inferência do PLAN, o script da skill está quebrado e o adapter Claude (TASK-15) só existe como mudança não commitada, que quebra 6 testes de install/
+
+### 18:59 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 57f34be5 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261031T185821.log)
+  - FALHA [TASK-14] skills/handoff/ existe e o script foi corrigido, mas src/install/install.ts:247 projectSkillsOutput lê <source>/.pi/skills (não skills/ do repo ginga) e só imprime no dry-run; o --apply não instala a skill; tests/skill_handoff.test.ts passa só copiando a skill para a fonte falsa
+  - FALHA [TASK-15] src/install/adapters/claude.ts: ensureHandoffHooks só roda se ctx.plugin === undefined; src/install/install.ts:856 sempre passa plugin, então o ginga install real nunca projeta Stop/UserPromptSubmit; contrib/claude-mod-handoff não é instalado por nada; owned declara só /hooks/UserPromptSubmit; o tes
+  - FALHA [AC] ACs de handoff, log.md/LEARNINGS, lessons e verbos estão cobertos; o encadeamento automático do handoff no Claude (hooks via ginga install) não chega ao usuário pelo install real (claude.ts + install.ts:856)
+  - ok [TASK-01] src/plan_log.ts, gancho em src/notify/router.ts; tests/plan_log.test.ts passa (bun test completo 550 pass/0 fail)
+  - ok [TASK-02] src/lint/learnings.ts lintLearnings, src/lint/index.ts; tests/lint_learnings.test.ts passa
+  - ok [TASK-03] src/handoff.ts buildHandoff; src/verbs/handoff.ts HANDOFF_VERBS registrado em src/verbs/registry.ts
+  - ok [TASK-04] tests/e2e/investigation.test.ts e fixtures passam
+  - ok [TASK-05] src/lessons.ts promote, src/verbs/learning.ts; tests/learning_promote.test.ts passa; item de Inbox 'promover?' ausente (lacuna menor)
+  - ok [TASK-06] src/lessons.ts findLessons, verbo lessons find; tests/lessons_find.test.ts passa; --symbol ausente (opcional)
+  - ok [TASK-08] src/lessons_import.ts importLessons; tests/lessons_import.test.ts passa
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff/parseHandoffCfg, src/lint/project_toml.ts; tests/handoff_policy.test.ts passa
+  - ok [TASK-11] src/handoff/redact.ts, buildHandoff modo sessão; CLI liga --from-session/--notes/inferPlan (src/verbs/handoff.ts:30-55); tests/handoff_session.test.ts e handoff_cli_session.test.ts passam
+  - ok [TASK-12] src/handoff/hook.ts runHook, transcript_usage.ts; verbo oculto 'handoff hook' (src/verbs/handoff.ts HANDOFF_HOOK_VERB, registry.ts HIDDEN_VERBS); tests/handoff_hook.test.ts e handoff_cli_hook.test.ts passam
+  - ok [TASK-13] src/handoff/open.ts openSession + open_claude.ts; CLI chama openSession com --open (src/verbs/handoff.ts:84-111); evento sai com trigger 'cache' e depth 0 fixos (lacuna menor); tests/handoff_open.test.ts passa
+  - ok [TASK-16] src/handoff.ts (git por repo, estado das TASKs, ordem); tests/handoff_full.test.ts e tests/handoff.test.ts passam
+  - ok [TASK-17] path relativo ao root em src/verbs/handoff.ts:78; tests/cli_verbs.test.ts passa
+  - ok [TASK-18] src/cli.ts:75 normaliza --from-session; inferPlan em src/handoff.ts; tests/handoff_cli_session.test.ts passa
+  - ok [TASK-19] HIDDEN_VERBS em src/verbs/registry.ts, runHookVerb em src/verbs/handoff.ts:20; tests/handoff_cli_hook.test.ts passa
+  - ok [TASK-20] args open/model e openSession em src/verbs/handoff.ts:84-111; skills/handoff/scripts/handoff.ts parseia string via res.split; tests/handoff_cli_open.test.ts passa
+- resumo do judge: A suíte do ginga passa (550/0) e não há regressão em relação à main. As TASKs 01-13 e 16-20 cumprem o goal no código em HEAD. A TASK-15 não projeta os hooks de handoff no `ginga install` real, porque o adapter só os grava sem `ctx.plugin`, e o install sempre o define. A TASK-14 não projeta a skill do repo ginga: o install lê `<source>/.pi/skills` e só imprime no dry-run.
+
+### 20:20 PLAN-0029-rota-de-falhas-e-disjuntor · manda · plan/0029 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 13116e18 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0029-rota-de-falhas-e-disjuntor/judge/manda-20261031T201921.log)
+  - FALHA [AC] PLAN done_when 'bun test' sai com 4 fail (judge CLI x2, pipeline/lane x2), os mesmos da main, e o objetivo de classificar/vigiar a tentativa no manda run não está ligado: src/run.ts só chama planNextAfterFailure/recordSuccess no fim da tentativa (run.ts:395-411)
+  - FALHA [TASK-09] src/attempt_watch.ts:105 watchAttempt existe e passa em tests/attempt_watch.test.ts, mas nada em src/run.ts o chama (grep): o goal 'manda run observa a tentativa a cada 30 s e mata travada' não é cumprido
+  - FALHA [TASK-11] src/run.ts:395-411 só grava o disjuntor e calcula next_model depois do fim da tentativa; não há watchAttempt, amostragem de /proc, probe nem kill do pid no run real, e o laço de attemptSpecs não consulta breakerOf; tests/attempt_watch_run.test.ts só cobre recusa→disjuntor→next_model
+  - ok [TASK-01] src/run_state.ts classifyRun; tests/run_state.test.ts passa; desvio menor: RunObs.probe_ok é boolean (PLAN: boolean|null), isRecusado usa /5\d\d/ largo e o default é 'ok'
+  - ok [TASK-02] src/probe.ts probeArgv/probe (opencode, pi:, claude/), stdin ignore, timeout 30s; tests/probe.test.ts passa
+  - ok [TASK-03] src/breaker.ts: tabela model_breaker, 10/30/120 min, half_open após until, recordSuccess apaga; tests/breaker.test.ts passa (inclui dois Database no mesmo arquivo)
+  - ok [TASK-04] src/ladder.ts pickModel: free primeiro, pula open e iceman sem mitRepo, pago só com allowPaid&&capOk; tests/ladder.test.ts passa
+  - ok [TASK-05] src/runtime/env.ts runtimeEnv/SPAWN_STDIN; src/runtime/index.ts:15-43 withDefaults aplicado a pi/opencode/claude/codex/agy; tests/runtime_env.test.ts passa
+  - ok [TASK-06] src/free_retry.ts freeRetryWait 15/30/60/60 e waitForFree com probe/sleep/stop injetados; tests/free_retry.test.ts passa (não ligado à lane, fora do escopo da TASK)
+  - ok [TASK-07] src/blocked.ts + src/failure_rules.json, 8 fixtures em tests/fixtures/blocked, emite gate.fail com classification; tests/blocked.test.ts passa
+  - ok [TASK-08] src/judge_pick.ts pickJudge pula família do executor, breaker open e quota>=100; tests/judge_pick.test.ts passa
+  - ok [TASK-10] src/breaker_cli.ts breakerStatus/breakerReset; src/cli.ts registra 'breaker' e o help; tests/breaker_cli.test.ts passa
+- resumo do judge: Módulos 01-08 e 10 implementados e testados, sem regressão (os 4 testes que falham já falhavam na main). A integração real da vigia ao manda run (TASK-09/TASK-11) não existe: run.ts só registra o disjuntor e o next_model depois da tentativa, não observa o processo vivo, não mata travado, e a escada não consulta o breaker ao escolher o modelo.
+
+### 21:07 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD d2873b65 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261031T210522.log)
+  - FALHA [TASK-14] src/install/install.ts:247 projectSkillsOutput lê só .pi/skills e não instala no --apply; tests/skill_handoff_install.test.ts falha (3 testes)
+  - FALHA [TASK-15] src/install/adapters/claude.ts:219 projeta hooks só se ctx.plugin===undefined, mas install.ts:856 sempre passa plugin; owned (l.131) só declara UserPromptSubmit; mod contrib/claude-mod-handoff não é registrado
+  - FALHA [TASK-21] só o commit RED 5117045; tests/skill_handoff_install.test.ts: 3 fail em HEAD, sem implementação em src/install/install.ts
+  - FALHA [TASK-22] só o commit RED d2873b6; tests/install_handoff_real.test.ts: 4 fail em HEAD, claude.ts inalterado
+  - FALHA [AC-handoff-automatico-via-install] hooks Stop/UserPromptSubmit e skill não chegam ao HOME pelo ginga install real (claude.ts:219, install.ts:247)
+  - ok [TASK-01] src/plan_log.ts, src/notify/router.ts; tests/plan_log.test.ts passa
+  - ok [TASK-02] src/lint/learnings.ts; tests/lint_learnings.test.ts passa
+  - ok [TASK-03] src/handoff.ts, src/verbs/handoff.ts; tests/handoff.test.ts passa
+  - ok [TASK-04] tests/e2e/investigation.test.ts passa
+  - ok [TASK-05] src/lessons.ts, src/verbs/learning.ts; tests/learning_promote.test.ts passa
+  - ok [TASK-06] findLessons em src/lessons.ts; tests/lessons_find.test.ts passa
+  - ok [TASK-08] src/lessons_import.ts; tests/lessons_import.test.ts passa
+  - ok [TASK-10] src/handoff/policy.ts; tests/handoff_policy.test.ts passa
+  - ok [TASK-11] src/handoff/redact.ts, src/handoff.ts; tests/handoff_session.test.ts passa
+  - ok [TASK-12] src/handoff/hook.ts, transcript_usage.ts; tests/handoff_hook.test.ts passa
+  - ok [TASK-13] src/handoff/open.ts, open_claude.ts; --open ligado em src/verbs/handoff.ts:29,96; tests/handoff_open.test.ts passa
+  - ok [TASK-16] tests/handoff_full.test.ts passa
+  - ok [TASK-17] tests/cli_verbs.test.ts passa
+  - ok [TASK-18] tests/handoff_cli_session.test.ts passa
+  - ok [TASK-19] tests/handoff_cli_hook.test.ts passa; runHookVerb em src/verbs/handoff.ts:20
+  - ok [TASK-20] src/verbs/handoff.ts:124 args open/model; tests/handoff_cli_open.test.ts passa
+  - ok [AC-handoff-sem-LLM] buildHandoff determinístico; tests/handoff.test.ts e handoff_full.test.ts passam
+  - ok [AC-log-learnings-investigation] plan_log.ts, lint/learnings.ts, e2e investigation passam
+  - ok [AC-learning-promote-find] lessons.ts promote/findLessons; testes passam (lado manda/TASK-07 fora deste repo)
+- resumo do judge: Handoff, log, learnings, lessons, política, hook CLI e --open estão entregues e verdes. Mas a projeção real pelo ginga install não existe: a skill handoff não é instalada no --apply (TASK-14/21) e os hooks Stop/UserPromptSubmit e o mod não são projetados no install real (TASK-15/22). TASK-21 e TASK-22 têm só o commit RED, com 7 testes falhando em HEAD. Nenhuma regressão contra a main.
+
+### 21:40 PLAN-0029-rota-de-falhas-e-disjuntor · manda · plan/0029 · gate 2
+- motivo: conflito no merge
+- judge: pass no HEAD 2ee2fbde (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0029-rota-de-falhas-e-disjuntor/judge/manda-20261031T213923.log)
+  - ok [AC] bun test em HEAD: 341 pass / 4 fail; os mesmos 4 falham na main (tests/judge_blind.test.ts:237,242 e pipeline/lane, exit 30 em vez de 2), sem relação com este PLAN
+  - ok [TASK-01] src/run_state.ts classifyRun; tests/run_state.test.ts passa
+  - ok [TASK-02] src/probe.ts probeArgv/probe; tests/probe.test.ts passa
+  - ok [TASK-03] src/breaker.ts breakerOf/recordFailure/recordSuccess; tests/breaker.test.ts passa
+  - ok [TASK-04] src/ladder.ts pickModel; tests/ladder.test.ts passa
+  - ok [TASK-05] src/runtime/env.ts; withDefaults em src/runtime/index.ts:16 aplicado a todos os runtimes; defaultSpawn mescla process.env (port.ts:96); tests/runtime_env.test.ts passa
+  - ok [TASK-06] src/free_retry.ts freeRetryWait/waitForFree; tests/free_retry.test.ts passa
+  - ok [TASK-07] src/blocked.ts + src/failure_rules.json + 8 fixtures, emite gate.fail (blocked.ts:42,48); tests/blocked.test.ts passa
+  - ok [TASK-08] src/judge_pick.ts pickJudge; tests/judge_pick.test.ts passa
+  - ok [TASK-09] src/attempt_watch.ts watchAttempt usa classifyRun, probe, recordFailure, pickModel e waitForFree; tests/attempt_watch.test.ts passa
+  - ok [TASK-10] src/breaker_cli.ts breakerStatus/breakerReset; cli.ts:52 registra breaker; tests/breaker_cli.test.ts passa
+  - ok [TASK-11] src/run.ts:481 watchAttempt integrado, recordSuccess run.ts:571, planNextAfterFailure com next_model; tests/attempt_watch_run.test.ts passa
+  - ok [TASK-12] src/run.ts:330 breakerOf pula modelo aberto; onPid nos 4 adapters e em port.ts; watchAttempt em paralelo com kill pelo pid via killByPid (run.ts:256); src/proc_sample.ts; tests/attempt_watch_live.test.ts passa
+- resumo do judge: Todas as TASKs manda (01-12) estão cumpridas em HEAD e a vigia está ligada ao manda run. Os 4 testes que falham na suíte completa também falham na main, então não são regressão deste diff.
+
+### 22:38 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 8aa09a2e (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261031T223524.log)
+  - FALHA [TASK-22] src/install/adapters/claude.ts:219 projeta hooks só com ctx.plugin===undefined; owned declara só /hooks/UserPromptSubmit (l.131); tests/install_handoff_real.test.ts: 4 testes falham no HEAD (implementação só no working tree não commitado)
+  - FALHA [TASK-15] No install real (install.ts passa plugin no ctx) os hooks Stop/UserPromptSubmit e o mod contrib/claude-mod-handoff não são projetados; claude.ts:219
+  - FALHA [AC-encadeamento-automatico-via-install] Depende de TASK-22/15: ginga install real não grava os hooks de handoff no settings.json do Claude
+  - FALHA [TASK-21] REGRESSÃO src/install/install.ts projectSkillsOutput/dry-run: o 2º --dry-run após apply imprime '=== skills ===' (6 linhas) em vez de vazio; tests/install/adapters.test.ts (T13 idempotência, linha 195) passa na main e falha no HEAD
+  - ok [TASK-01] src/plan_log.ts:60 appendPlanLog; src/notify/router.ts:94; tests/plan_log.test.ts passa
+  - ok [TASK-02] src/lint/learnings.ts:19, src/lint/frontmatter.ts:21 kind change|investigation, src/lint/index.ts:78
+  - ok [TASK-03] src/handoff.ts buildHandoff, src/verbs/handoff.ts HANDOFF_VERBS registrado em registry.ts:62; testes passam
+  - ok [TASK-04] tests/e2e/investigation.test.ts passa
+  - ok [TASK-05] src/lessons.ts:214-277 promote marca '· promovida'; src/verbs/learning.ts emite learning promoted:true
+  - ok [TASK-06] findLessons em src/lessons.ts; tests/lessons_find.test.ts passa
+  - ok [TASK-08] importLessons em src/lessons_import.ts; tests/lessons_import.test.ts passa
+  - ok [TASK-10] src/handoff/policy.ts decideHandoff; src/lint/project_toml.ts:39-53 valida [handoff]
+  - ok [TASK-11] src/handoff/redact.ts; tests/handoff_session.test.ts passa
+  - ok [TASK-12] src/handoff/hook.ts, src/handoff/transcript_usage.ts; tests/handoff_hook.test.ts passa
+  - ok [TASK-13] src/handoff/open.ts e open_claude.ts (--bg, sem --resume/--fork-session); ligado à CLI em src/verbs/handoff.ts:96
+  - ok [TASK-14] skills/handoff/SKILL.md, scripts/handoff.ts parseia string; tests/skill_handoff.test.ts passa
+  - ok [TASK-16] tests/handoff_full.test.ts passa
+  - ok [TASK-17] tests/cli_verbs.test.ts passa
+  - ok [TASK-18] tests/handoff_cli_session.test.ts passa
+  - ok [TASK-19] verbo 'handoff hook' HANDOFF_HOOK_VERB em registry.ts:13; tests/handoff_cli_hook.test.ts passa
+  - ok [TASK-20] src/verbs/handoff.ts args open/model e chamada a openSession; tests/handoff_cli_open.test.ts passa
+- resumo do judge: Falha: a TASK-22 está só em RED no HEAD (a implementação está no working tree não commitado, que também quebra o T13), então TASK-15 e o AC de encadeamento automático via ginga install não chegam ao usuário. Além disso, a TASK-21 faz o dry-run listar skills já instaladas, e o teste de idempotência T13 (tests/install/adapters.test.ts:195) passa na main e falha no HEAD. As demais TASKs de repo ginga
+
+### 22:48 PLAN-0029-rota-de-falhas-e-disjuntor · manda · plan/0029 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 04516094 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0029-rota-de-falhas-e-disjuntor/judge/manda-20261031T224624.log)
+  - FALHA [TASK-12] src/proc_sample.ts:~118 probe_ok fixo em false → na_fila inalcançável e travado dispara só por 15 min de silêncio, e watchAttempt mata mesmo com probe ok; src/run.ts:~520 stopWatch=true após o kill aborta o waitForFree e o laço dá break; stream_bytes/since_last_event_s vêm de $GINGA_EVENTS compartil
+  - ok [AC] 12 arquivos de teste das TASKs: 78 pass/0 fail; bun test completo 379 pass/4 fail, as 4 são exit 30 da guarda de ancestral LLM (src/cli.ts:430-437), não alterada pelo diff
+  - ok [TASK-01] src/run_state.ts classifyRun; tests/run_state.test.ts passa. Ressalva: probe_ok é boolean (run_state.ts:7) e não boolean|null; regex /5\d\d/ larga
+  - ok [TASK-02] src/probe.ts probeArgv/probe com stdin ignore e timeout 30s; tests/probe.test.ts passa
+  - ok [TASK-03] src/breaker.ts model_breaker 10/30/120, half_open ao vencer, recordSuccess; tests/breaker.test.ts passa
+  - ok [TASK-04] src/ladder.ts:12-45 free primeiro, iceman só com mitRepo, pago só com allowPaid&&capOk; tests/ladder.test.ts passa
+  - ok [TASK-05] src/runtime/env.ts runtimeEnv/SPAWN_STDIN; src/runtime/index.ts:withDefaults aplicado aos 5 runtimes; tests/runtime_env.test.ts passa
+  - ok [TASK-06] src/free_retry.ts freeRetryWait 15/30/60 e waitForFree com probe e stop; tests/free_retry.test.ts passa
+  - ok [TASK-07] src/blocked.ts + src/failure_rules.json, 8 fixtures, emite gate.fail com classification; tests/blocked.test.ts passa
+  - ok [TASK-08] src/judge_pick.ts pula família do executor, breaker open e quota>=100; tests/judge_pick.test.ts passa
+  - ok [TASK-09] src/attempt_watch.ts:105-190 watchAttempt: travado→probe→kill→recordFailure→pickModel→waitForFree, emite attempt; tests/attempt_watch.test.ts passa. Ressalva: kill ocorre mesmo com probe ok (attempt_watch.ts:~150)
+  - ok [TASK-10] src/breaker_cli.ts breakerStatus/breakerReset, subcomando breaker em src/cli.ts:56; tests/breaker_cli.test.ts passa
+  - ok [TASK-11] src/run.ts usa openStateDb/planNextAfterFailure/recordSuccess, next_model no attempt, sem evento duplicado; tests/attempt_watch_run.test.ts passa
+- resumo do judge: Tudo cumprido exceto a TASK-12: a ligação ao vivo existe (onPid, watchAttempt em paralelo, breakerOf no laço) mas o sampler real fixa probe_ok=false, então o modelo saudável e lento é morto, na_fila nunca acontece e a espera sem modelo é abortada pelo stop. As 4 falhas de bun test são exit 30 da guarda de ancestral LLM (ambiente), sem regressão contra a main.
+
+### 23:13 PLAN-0013-handoff-e-learnings · ginga · plan/0013 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD e3ad04e0 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0013-handoff-e-learnings/judge/ginga-20261031T231124.log)
+  - FALHA [TASK-05] src/lessons.ts promote/learning promote ok, mas o item de Inbox 'promover?' ao fechar o PLAN não existe (grep 'promover' em src vazio; src/verbs/read.ts:77 inbox não o produz)
+  - FALHA [TASK-06] src/verbs/learning.ts lessonsFind: devolve só matched[0], title:"" fixo, único --touch; o contrato pede todas as LESSONs que casam e title no --json
+  - FALHA [TASK-11] src/verbs/handoff.ts:57-67 emite data.trigger idle|manual, mas src/events/validate.ts:63 só aceita boundary|context|cache: ingest descarta o evento
+  - FALHA [TASK-12] src/handoff/hook.ts usa buildHandoff(cwd,…) e grava em <cwd>/handoffs (tests/handoff_cli_hook.test.ts:97 consagra isso) em vez de .ginga/handoffs; sem plans/ no root o handoff sai sem conteúdo do PLAN
+  - FALHA [TASK-13] src/handoff/open_claude.ts:41-52 e open.ts:60-64 emitem sempre trigger 'cache', depth 0, tokens 0; a TASK pede trigger e depth reais
+  - FALHA [TASK-18] CLI de sessão liga --from-session/--notes/inferPlan (src/verbs/handoff.ts:36-56), mas o evento com trigger idle/manual é inválido pelo schema (validate.ts:63)
+  - FALHA [TASK-19] src/handoff/hook.ts redirect passa model:"" a openSession, gerando claude --model ""; handoff gravado em <cwd>/handoffs fora de .ginga
+  - FALHA [AC lessons-por-touch] AC 'Learnings promovidos viram LESSON e o Planner os encontra pelo touch': lessons find trunca para matched[0] com title vazio (src/verbs/learning.ts)
+  - FALHA [AC handoff-automatico] Hook automático com model vazio no redirect e handoff fora de .ginga (src/handoff/hook.ts); evento trigger idle inválido pelo schema
+  - ok [TASK-01] src/plan_log.ts:41-75 appendPlanLog idempotente por id; gancho em src/notify/router.ts:90-95; tests/plan_log.test.ts passa
+  - ok [TASK-02] src/lint/learnings.ts + src/lint/index.ts:56-80 (aviso approved sem LEARNINGS.md, formato validado)
+  - ok [TASK-03] src/handoff.ts buildHandoff determinístico; src/verbs/handoff.ts:28-85 evento + registry
+  - ok [TASK-04] tests/e2e/investigation.test.ts passa
+  - ok [TASK-08] src/lessons_import.ts + verbo lessons import; tests/lessons_import.test.ts passa
+  - ok [TASK-10] src/handoff/policy.ts:70-110 decideHandoff + parseHandoffCfg; src/lint/project_toml.ts
+  - ok [TASK-14] skills/handoff/SKILL.md + scripts/handoff.ts parseia a saída como string; tests/skill_handoff.test.ts passa
+  - ok [TASK-15] src/install/adapters/claude.ts ensureHandoffHooks idempotente; contrib/claude-mod-handoff/hooks/hooks.json usa um formato de array que o Claude provavelmente não lê (só observação)
+  - ok [TASK-16] src/handoff.ts loadQueueForRepo, ordem descartada/armadilha, frontmatter; tests/handoff_full.test.ts passa
+  - ok [TASK-17] tests/cli_verbs.test.ts passa; path relativo em src/verbs/handoff.ts:88
+  - ok [TASK-20] src/verbs/handoff.ts:96-127 --open/--model chamam openSession; skills/handoff/scripts/handoff.ts usa res.split; tests/handoff_cli_open.test.ts passa
+  - ok [TASK-21] src/install/install.ts sourceSkills/installProjectedSkills (skills/ + .pi/skills legado, idempotente, skill alheia preservada)
+  - ok [TASK-22] src/install/adapters/claude.ts: shouldProjectHooks = plugin undefined || fonte com handoff; owned Stop/UserPromptSubmit; mod registrado em installed_plugins/enabledPlugins
+  - ok [TASK-23] src/install/install.ts projectSkillsOutput(source, home) idempotente + removeProjectedSkills no revert; tests/install/adapters.test.ts e tests/install_dryrun_guard.test.ts passam
+- resumo do judge: A suíte completa passa em HEAD (561 pass, 0 fail) e não há regressão contra a main. Falha por dois defeitos graves: `lessons find` devolve só a primeira LESSON e deixa o título vazio, e o hook de handoff redireciona com `--model ""` e grava o handoff fora de `.ginga/`. Há ainda três lacunas menores: evento `handoff` com trigger/depth fixos, triggers `idle`/`manual` fora do schema de eventos e item
+
+### 23:20 PLAN-0029-rota-de-falhas-e-disjuntor · manda · plan/0029 · gate 11
+- motivo: judge reprovou (fail)
+- judge: fail no HEAD 04516094 (log /home/shibuka/Projetos/duh-homelab/.ginga/plans/PLAN-0029-rota-de-falhas-e-disjuntor/judge/manda-20261031T224624.log)
+  - FALHA [TASK-12] src/proc_sample.ts:~118 probe_ok fixo em false → na_fila inalcançável e travado dispara só por 15 min de silêncio, e watchAttempt mata mesmo com probe ok; src/run.ts:~520 stopWatch=true após o kill aborta o waitForFree e o laço dá break; stream_bytes/since_last_event_s vêm de $GINGA_EVENTS compartil
+  - ok [AC] 12 arquivos de teste das TASKs: 78 pass/0 fail; bun test completo 379 pass/4 fail, as 4 são exit 30 da guarda de ancestral LLM (src/cli.ts:430-437), não alterada pelo diff
+  - ok [TASK-01] src/run_state.ts classifyRun; tests/run_state.test.ts passa. Ressalva: probe_ok é boolean (run_state.ts:7) e não boolean|null; regex /5\d\d/ larga
+  - ok [TASK-02] src/probe.ts probeArgv/probe com stdin ignore e timeout 30s; tests/probe.test.ts passa
+  - ok [TASK-03] src/breaker.ts model_breaker 10/30/120, half_open ao vencer, recordSuccess; tests/breaker.test.ts passa
+  - ok [TASK-04] src/ladder.ts:12-45 free primeiro, iceman só com mitRepo, pago só com allowPaid&&capOk; tests/ladder.test.ts passa
+  - ok [TASK-05] src/runtime/env.ts runtimeEnv/SPAWN_STDIN; src/runtime/index.ts:withDefaults aplicado aos 5 runtimes; tests/runtime_env.test.ts passa
+  - ok [TASK-06] src/free_retry.ts freeRetryWait 15/30/60 e waitForFree com probe e stop; tests/free_retry.test.ts passa
+  - ok [TASK-07] src/blocked.ts + src/failure_rules.json, 8 fixtures, emite gate.fail com classification; tests/blocked.test.ts passa
+  - ok [TASK-08] src/judge_pick.ts pula família do executor, breaker open e quota>=100; tests/judge_pick.test.ts passa
+  - ok [TASK-09] src/attempt_watch.ts:105-190 watchAttempt: travado→probe→kill→recordFailure→pickModel→waitForFree, emite attempt; tests/attempt_watch.test.ts passa. Ressalva: kill ocorre mesmo com probe ok (attempt_watch.ts:~150)
+  - ok [TASK-10] src/breaker_cli.ts breakerStatus/breakerReset, subcomando breaker em src/cli.ts:56; tests/breaker_cli.test.ts passa
+  - ok [TASK-11] src/run.ts usa openStateDb/planNextAfterFailure/recordSuccess, next_model no attempt, sem evento duplicado; tests/attempt_watch_run.test.ts passa
+- resumo do judge: Tudo cumprido exceto a TASK-12: a ligação ao vivo existe (onPid, watchAttempt em paralelo, breakerOf no laço) mas o sampler real fixa probe_ok=false, então o modelo saudável e lento é morto, na_fila nunca acontece e a espera sem modelo é abortada pelo stop. As 4 falhas de bun test são exit 30 da guarda de ancestral LLM (ambiente), sem regressão contra a main.

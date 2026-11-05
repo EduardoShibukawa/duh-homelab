@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "gira": {
+      "args": [
+        "serve",
+        "mcp",
+        "--index",
+        "/home/shibuka/.cache/gira/indexes/duh-homelab/macro-map.json"
+      ],
+      "command": "gira",
+      "type": "stdio"
+    }
+  }
+}

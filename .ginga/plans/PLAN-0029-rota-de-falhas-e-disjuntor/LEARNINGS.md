@@ -1,0 +1,5 @@
+- TASK-01 (opencode-go/iceman-contributor-free): Prioridades importam - 'recusado' precisa vir primeiro e 'na_fila além da paciência' deve virar 'travado' conforme a regra.
+- TASK-06 (pi:nvidia/stepfun-ai/step-5-preview): o laço precisava de duas fases — varredura sem dormir (bate o teste dos múltiplos modelos, `m2` ok sem sleep) e só depois o backoff sobre o 1º free (bate `[15min,30min]`); um laço único reprobando o 1º modelo não fecharia os dois casos.
+- TASK-08 (pi:nvidia/minimaxai/minimax-m3.1-flash): quota ausente (`null`) mantém o modelo elegível para probe; só `used_pct >= 100` o bloqueia.
+- TASK-12 (pi:nvidia/stepfun-ai/step-5-preview): o watcher não pode correr "em corrida" bruta com o run — o truco foi o `onPid` capturar o pid antes de o adapter spawnar e o `stop` ser honrado entre awaits do `watchAttempt`, senão o teste congelado da T308 veria evento `attempt` duplicado.
+- TASK-13 (pi:nvidia/minimaxai/minimax-m3.1-flash): o fixture congelado pré-abre todos os breakers e ainda exige uma primeira tentativa vigiada.

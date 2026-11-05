@@ -1,0 +1,3 @@
+- TASK-01 (opencode-go/beam-free): os testes copiados assumem helper ROOT em tests/install/helpers (../../..) e bin/ginga.ts, e a suíte exige tanto "pinga install" quanto "ginga install" na mensagem de uso.
+- TASK-01 (opencode-go/beam-free): plugin_param exigiu parametrizar adapters e guard para container ausente, além da cópia.
+- TASK-02 (opencode-go/beam-free): a condição `! rg` exige evitar a substring literal até em comentários, então literais inevitáveis foram quebrados em concatenações de string.

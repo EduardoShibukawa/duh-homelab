@@ -1,0 +1,4 @@
+- TASK-01 (pi:nvidia/minimaxai/minimax-m3.1-flash): O fixture exige que agregações ignorem PLANs sem arquivos TASK-*.md, mesmo quando seus logs citam TASKs.
+- TASK-03 (pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b): MCP stdio handler with 12 read-only tools works correctly; truncation to 8000 chars confirmed; JSON-RPC 2.0 initialize/list/call all functional`
+- TASK-05 (pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b): A ternary operator with multiple comma-separated values is invalid TypeScript; restructured using if/else to build the array incrementally.
+- TASK-04 (pi:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b): O test já existia (tests_frozen) e precisei criar apenas os dois novos arquivos — config.ts e c-skill.md — sem modificar o teste.

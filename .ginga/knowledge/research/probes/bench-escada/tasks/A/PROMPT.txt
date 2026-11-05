@@ -1,0 +1,4 @@
+Implemente a classe LRUCache em um novo arquivo lru.py, de modo que "python3 -m unittest" passe. NÃO altere test_lru.py (leia-o: ele é a especificação).
+Resumo da API: LRUCache(capacity, ttl=None, clock=time.monotonic); get(key, default=None); put(key, value, ttl=None); delete(key) -> bool; purge() -> int (quantos expirados removeu); keys() -> lista do menos ao mais recente; stats() -> dict com hits, misses, evictions, expirations; len(cache) e "key in cache".
+Regras: um item expira quando clock() >= instante_de_expiração; ttl por item sobrepõe o padrão; get e put atualizam a recência, mas só o put renova o TTL; "in" não atualiza recência nem estatísticas; len e keys ignoram expirados; ao encher, prefere remover expirados antes do menos recente; capacidade <= 0 ou ttl <= 0 levanta ValueError.
+Rode "python3 -m unittest" para confirmar. Responda só: feito.

@@ -1,0 +1,6 @@
+- TASK-02 (opencode/deepseek-v4.1-flash-free): a falha real era o fallback selar `PLAN-0005-x` (pasta inteira) como id da task, então o regex tinha de cortar o sufixo descritivo em ambos os segmentos
+- TASK-02 (opencode/deepseek-v4.1-flash-free): refs legadas não têm validação de `T<N>` — o fallback é apenas o nome da pasta pai, então pastas arbitrárias continuam funcionando.
+- TASK-03 (opencode/deepseek-v4.1-flash-free): o `.baseline.json` aninhado em `.pinga/` já cai no gitignore `.pinga/` sem barra inicial, então o teste de delta só falhava pelo caminho lido pelo `verify`
+- TASK-04 (opencode/deepseek-v4.1-flash-free): sem `--root` a validação teve de reusar exatamente o caminho de hoje (inclusive o fallback para a pasta do arquivo), então o helper foi escrito como duas metades independentes; e ele vive em `prove.ts` porque `verify` e `judge` já dependem dele, evitando ciclo de imports.
+- TASK-05 (opencode/deepseek-v4.1-flash-free): o `cli.ts` já trazia imports mortos (`isPlanDocument`/`verifyPlanFolder`) da tentativa anterior; o erro só aparecia em runtime como SyntaxError, não no teste.
+- TASK-06 (opencode/deepseek-v4.1-flash-free): o `parsePlan` já aceitava o frontmatter das TASKs do bundle, mas o `return` antecipado quando `tasks/` não existia impedia qualquer varredura extra.

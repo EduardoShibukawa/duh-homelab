@@ -1,0 +1,31 @@
+# Repos irmãos: cada um tem o seu próprio git (ver bootstrap.sh)
+/ginga/
+/manda/
+/p-inga/
+/gira-g/
+/docs-benchmark/
+/spring-petclinic-modern/
+
+# Pesado ou local da máquina
+/llm-bench/
+/_archive/
+/dreams/
+/tasks/
+/.pinga/
+/.gira/
+/.claude/settings.local.json
+.ginga/_archive/
+.ginga/state/
+.ginga/OPERATOR.lock
+.ginga/empty-queue.json
+
+# Saídas de execução e backups
+**/runs/
+*.log
+*.jsonl
+*.bak-*
+*.orig*
+__pycache__/
+*.pyc
+node_modules/
+.DS_Store
